@@ -3,6 +3,7 @@ import { GetServerSidePropsContext } from "next"
 import Head from "next/head"
 import React, { useEffect } from 'react';
 import { Button } from "components/Button/Button"
+import Navbar from "components/Navbar/Navbar";
 import { auth } from '../firebase';
 import { LP_GRID_ITEMS } from "../lp-items"
 
@@ -38,6 +39,9 @@ export default function Web() {
         <meta name="twitter:card" content="summary_large_image" />
         <title>ScoreConnect Web</title>
       </Head>
+
+      <Navbar />
+
       <section className="bg-white dark:bg-gray-900">
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">
@@ -62,6 +66,7 @@ export default function Web() {
           </div>
         </div>
       </section>
+
       <section className="bg-white dark:bg-gray-900">
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
           <div className="justify-center space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">
