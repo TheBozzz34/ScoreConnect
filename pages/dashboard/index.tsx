@@ -10,15 +10,9 @@ export default function Profile() {
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                const uid = user.uid;
-                // ...
-                console.log("uid", uid)
-            } else {
+            if (!user) {
                 router.push('/login')
-            }
+            } 
         });
 
     }, [router])
@@ -52,7 +46,7 @@ export default function Profile() {
                                 <span className="rounded bg-gray-300 p-1 w-fit" style={{ display: 'inline-flex', alignItems: 'center' }}>
                                     Disconnected
                                     <svg height="1em" width="1em" style={{ marginLeft: '0.3em' }}>
-                                        <circle cx="0.5em" cy="0.5em" r="0.4em" stroke="black" stroke-width="0.1em" fill="red" />
+                                        <circle cx="0.5em" cy="0.5em" r="0.4em" stroke="black" strokeWidth="0.1em" fill="red" />
                                     </svg>
                                 </span>
                             </p>
@@ -61,7 +55,7 @@ export default function Profile() {
                                 <span className="rounded bg-gray-300 p-1 w-fit" style={{ display: 'inline-flex', alignItems: 'center' }}>
                                     Disconnected
                                     <svg height="1em" width="1em" style={{ marginLeft: '0.3em' }}>
-                                        <circle cx="0.5em" cy="0.5em" r="0.4em" stroke="black" stroke-width="0.1em" fill="red" />
+                                        <circle cx="0.5em" cy="0.5em" r="0.4em" stroke="black" strokeWidth="0.1em" fill="red" />
                                     </svg>
                                 </span>
                             </p>

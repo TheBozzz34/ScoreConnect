@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { SetStateAction, useEffect, useState } from 'react';
 import { auth } from '../../firebase';
+import Clock from "components/Clock/Clock";
 
 
 const navItems = [
@@ -101,7 +102,9 @@ export default function NavBar() {
                             className="rounded-full border-2 border-blue-600"
                             alt="Profile Picture"
                         />
+                        
                     ) : null}
+                    
                 </div>
             </nav>
         </div>
