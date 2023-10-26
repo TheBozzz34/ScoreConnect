@@ -1,29 +1,25 @@
 import { onAuthStateChanged } from "firebase/auth";
 import Head from "next/head"
 import { useRouter } from "next/navigation";
-import React, { useEffect } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import NavBar from "components/Navbar/Navbar";
 import { auth } from '../../firebase';
 
 export default function Profile() {
     const router = useRouter()
+    const [user, setUser] = useState<SetStateAction<any>>(null)
 
     useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
-                const uid = user.uid;
-                // ...
-                console.log("uid", uid)
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                router.push('/login');
             } else {
-                // User is signed out
-                // ...
-                router.push('/login')
+                setUser(user);
             }
         });
 
-    }, [])
+        return () => unsubscribe(); // Cleanup the listener on unmount
+    }, [router]);
 
     return (
         <>
@@ -45,18 +41,23 @@ export default function Profile() {
                         <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
                             Profile
                         </h1>
-                        <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
-                            Hello {auth.currentUser?.displayName} !
-                        </p>
+                        {user && user.displayName && (
+                            <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
+                                Hello {user.displayName}!
+                            </p>
+                        )}
                         <div className="flex flex-col space-y-4 border-2 border-gray-200 rounded-lg p-4">
-                            <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                                Email: <span className="rounded bg-gray-300 p-1 w-fit">{auth.currentUser?.email}</span>
-                            </p>
-                            <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                                UID: <span className="rounded bg-gray-300 p-1 w-fit">{auth.currentUser?.uid}</span>
-                            </p>
+                            {user && user.email && (
+                                <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+                                    Email: <span className="rounded bg-gray-300 p-1 w-fit">{user.email}</span>
+                                </p>
+                            )}
+                            {user && user.uid && (
+                                <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+                                    UID: <span className="rounded bg-gray-300 p-1 w-fit">{user.uid}</span>
+                                </p>
+                            )}
                         </div>
-
                     </div>
                 </div>
             </section>
