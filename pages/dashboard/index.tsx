@@ -17,8 +17,6 @@ export default function Profile() {
                 // ...
                 console.log("uid", uid)
             } else {
-                // User is signed out
-                // ...
                 router.push('/login')
             }
         });
@@ -43,17 +41,17 @@ export default function Profile() {
                 <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
                     <div className="mx-auto place-self-center">
                         <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
-                            Profile
+                            Dashboard
                         </h1>
                         <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
-                            Hello {auth.currentUser?.displayName} !
+                            Connection Status:
                         </p>
                         <div className="flex flex-col space-y-4 border-2 border-gray-200 rounded-lg p-4">
                             <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                                Email: <span className="rounded bg-gray-300 p-1 w-fit">{auth.currentUser?.email}</span>
+                                Backend: <span className="rounded bg-gray-300 p-1 w-fit">Connected</span>
                             </p>
                             <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                                UID: <span className="rounded bg-gray-300 p-1 w-fit">{auth.currentUser?.uid}</span>
+                                Scoreboard: <span className="rounded bg-gray-300 p-1 w-fit">Connected</span>
                             </p>
                         </div>
 
