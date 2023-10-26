@@ -1,10 +1,8 @@
-import { TooltipArrow } from "@radix-ui/react-tooltip";
 import { signInWithPopup } from "firebase/auth";
 import Head from "next/head"
 import { useRouter } from 'next/navigation'
 import NavBar from "components/Navbar/Navbar";
 import { auth, provider } from '../firebase';
-import { Tooltip } from "components/Tooltip/Tooltip";
 
 export default function Login() {
     const router = useRouter()

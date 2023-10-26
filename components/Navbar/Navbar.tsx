@@ -1,11 +1,11 @@
 "use client";
 
 import { onAuthStateChanged } from "firebase/auth";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { SetStateAction, useEffect, useState } from 'react';
 import { auth } from '../../firebase';
-import Image from "next/image";
 
 
 const navItems = [

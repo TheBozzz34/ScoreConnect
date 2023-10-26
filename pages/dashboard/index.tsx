@@ -21,7 +21,7 @@ export default function Profile() {
             }
         });
 
-    }, [])
+    }, [router])
 
     return (
         <>
@@ -48,12 +48,25 @@ export default function Profile() {
                         </p>
                         <div className="flex flex-col space-y-4 border-2 border-gray-200 rounded-lg p-4">
                             <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                                Backend: <span className="rounded bg-gray-300 p-1 w-fit">Connected</span>
+                                Backend:
+                                <span className="rounded bg-gray-300 p-1 w-fit" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                    Disconnected
+                                    <svg height="1em" width="1em" style={{ marginLeft: '0.3em' }}>
+                                        <circle cx="0.5em" cy="0.5em" r="0.4em" stroke="black" stroke-width="0.1em" fill="red" />
+                                    </svg>
+                                </span>
                             </p>
                             <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                                Scoreboard: <span className="rounded bg-gray-300 p-1 w-fit">Connected</span>
+                                Scoreboard:
+                                <span className="rounded bg-gray-300 p-1 w-fit" style={{ display: 'inline-flex', alignItems: 'center' }}>
+                                    Disconnected
+                                    <svg height="1em" width="1em" style={{ marginLeft: '0.3em' }}>
+                                        <circle cx="0.5em" cy="0.5em" r="0.4em" stroke="black" stroke-width="0.1em" fill="red" />
+                                    </svg>
+                                </span>
                             </p>
                         </div>
+
 
                     </div>
                 </div>
