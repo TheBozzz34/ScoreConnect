@@ -1,9 +1,30 @@
+import { onAuthStateChanged } from "firebase/auth";
 import { GetServerSidePropsContext } from "next"
 import Head from "next/head"
+import React, { useEffect } from 'react';
 import { Button } from "components/Button/Button"
+import { auth } from '../firebase';
 import { LP_GRID_ITEMS } from "../lp-items"
 
 export default function Web() {
+
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          const uid = user.uid;
+          // ...
+          console.log("uid", uid)
+        } else {
+          // User is signed out
+          // ...
+          console.log("user is logged out")
+        }
+      });
+     
+}, [])
+
   return (
     <>
       <Head>
@@ -15,27 +36,28 @@ export default function Web() {
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta name="twitter:card" content="summary_large_image" />
-        <title>Next.js Enterprise Boilerplate</title>
+        <title>ScoreConnect Web</title>
       </Head>
       <section className="bg-white dark:bg-gray-900">
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">
             <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
-              Next.js Enterprise Boilerplate
+              ScoreConnect Web
             </h1>
             <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
-              Jumpstart your enterprise project with our feature-packed, high-performance Next.js boilerplate!
-              Experience rapid UI development, AI-powered code reviews, and an extensive suite of tools for a smooth and
-              enjoyable development process.
+            ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers. 
+            The software offers wireless connectivity, customization options, and compatibility with various scoreboards, 
+            making it an essential tool for efficient score management.
             </p>
-            <Button href="https://github.com/Blazity/next-enterprise" className="mr-3">
+            <Button href="/contact" className="mr-3 hover:bg-white hover:text-blue-400">
               Get started
             </Button>
             <Button
-              href="https://vercel.com/new/git/external?repository-url=https://github.com/Blazity/next-enterprise"
+              href="/login"
               intent="secondary"
+              className="hover:bg-blue-400 hover:text-white"
             >
-              Deploy Now
+              Login
             </Button>
           </div>
         </div>
