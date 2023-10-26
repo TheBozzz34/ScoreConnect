@@ -1,18 +1,18 @@
-# Next.js Enterprise Boilerplate
+# ScoreConnect
 
 ![Project intro image](./project-logo.png)
 
-Welcome to the _Next.js Enterprise Boilerplate_, an open-source template for enterprise projects! It's loaded with features that'll help you build a high-performance, maintainable, and enjoyable app. We've done all the heavy lifting for you, so sit back, relax, and get ready to conquer the world with your incredible app! 🌍
+Welcome to the ScoreConnect repo! Here you will find the open source components of the [ScoreConnect](https://necrozma.xyz/scoreconnect) software! ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers. 
 
 <br />
-<a href="https://discord.gg/fyWtyNKmfX" style="width: 100%; display: flex; justify-content: center;">
-  <img src="https://discordapp.com/api/guilds/1111676875782234175/widget.png?style=banner2" alt="Blazity Discord Banner"/>
+<a href="https://dsc.gg/t0ast" style="width: 100%; display: flex; justify-content: center;">
+  <img src="https://discordapp.com/api/guilds/771017297816846387/widget.png?style=banner2" alt="Blazity Discord Banner"/>
 </a>
 <br />
 
 ## 📚 Features
 
-With this template, you get all the awesomeness you need:
+The software offers wireless connectivity, customization options, and compatibility with various scoreboards, making it an essential tool for efficient score management. Some of the technologies used are listed below.
 
 - 🏎️ **[Next.js](https://nextjs.org/)** - Fast by default, with config optimized for performance
 - 💅 **[Tailwind CSS](https://tailwindcss.com/)** - A utility-first CSS framework for rapid UI development
@@ -66,7 +66,7 @@ With this template, you get all the awesomeness you need:
 
 ## 🎯 Getting Started
 
-To get started with this boilerplate, follow these steps:
+To get started with, follow these steps:
 
 1. Fork & clone repository:
 
@@ -95,12 +95,6 @@ yarn dev
 brew install pre-commit
 pre-commit install -t commit-msg
 ```
-
-## 🚀 Deployment
-
-Easily deploy your Next.js app with [Vercel](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=github&utm_campaign=next-enterprise) by clicking the button below:
-
-[![Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/Blazity/next-enterprise)
 
 ## 📃 Scripts Overview
 
@@ -138,7 +132,7 @@ This will create a `graph.svg` file, which contains a graphical representation o
 
 ## 🧪 Testing
 
-This boilerplate comes with various testing setups to ensure your application's reliability and robustness.
+This repository comes with various testing setups to ensure the application's reliability and robustness.
 
 ### Running Tests
 
@@ -266,9 +260,6 @@ Contributions are always welcome! To contribute, please follow these steps:
 4. Push your changes to the forked repository.
 5. Create a pull request, and we'll review your changes.
 
-## Support
-
-If you're looking for help or simply want to share your thoughts about the project, we encourage you to join our Discord community. Here's the link: [https://blazity.com/discord](https://blazity.com/discord). It's a space where we exchange ideas and help one another. Everyone's input is appreciated, and we look forward to welcoming you.
 
 ## 📜 License
 
@@ -279,23 +270,6 @@ This project is licensed under the MIT License. For more information, see the [L
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://bstefanski.com/"><img src="https://avatars.githubusercontent.com/u/28964599?v=4?s=100" width="100px;" alt="Bart Stefanski"/><br /><sub><b>Bart Stefanski</b></sub></a><br /><a href="https://github.com/Blazity/next-enterprise/commits?author=bmstefanski" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/jjablonski-it"><img src="https://avatars.githubusercontent.com/u/51968772?v=4?s=100" width="100px;" alt="Jakub Jabłoński"/><br /><sub><b>Jakub Jabłoński</b></sub></a><br /><a href="#infra-jjablonski-it" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td align="center" size="13px" colspan="7">
-        <img src="https://raw.githubusercontent.com/all-contributors/all-contributors-cli/1b8533af435da9854653492b1327a23a4dbd0a10/assets/logo-small.svg">
-          <a href="https://all-contributors.js.org/docs/en/bot/usage">Add your contributions</a>
-        </img>
-      </td>
-    </tr>
-  </tfoot>
-</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
