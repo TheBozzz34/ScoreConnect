@@ -1,22 +1,20 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth"
 import { GetServerSidePropsContext } from "next"
 import Head from "next/head"
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react"
 import { Button } from "components/Button/Button"
-import Navbar from "components/Navbar/Navbar";
-import { auth } from '../firebase';
+import Navbar from "components/Navbar/Navbar"
+import { auth } from "../firebase"
 import { LP_GRID_ITEMS } from "../lp-items"
 
 export default function Web() {
-
-  useEffect(()=>{
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-        if (user) {
-        } else {
-        }
-      });
-     
-}, [])
+      if (user) {
+      } else {
+      }
+    })
+  }, [])
 
   return (
     <>
@@ -41,18 +39,14 @@ export default function Web() {
               ScoreConnect Web
             </h1>
             <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
-            ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers. 
-            The software offers wireless connectivity, customization options, and compatibility with various scoreboards, 
-            making it an essential tool for efficient score management.
+              ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event
+              organizers. The software offers wireless connectivity, customization options, and compatibility with
+              various scoreboards, making it an essential tool for efficient score management.
             </p>
             <Button href="/contact" className="mr-3 hover:bg-white hover:text-blue-400">
               Get started
             </Button>
-            <Button
-              href="/login"
-              intent="secondary"
-              className="hover:bg-blue-400 hover:text-white"
-            >
+            <Button href="/login" intent="secondary" className="hover:bg-blue-400 hover:text-white">
               Login
             </Button>
           </div>
