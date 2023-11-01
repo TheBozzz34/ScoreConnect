@@ -1,6 +1,5 @@
 # ScoreConnect
-
-![Project intro image](./project-logo.png)
+[![Linting](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml)
 
 Welcome to the ScoreConnect repo! Here you will find the open source components of the [ScoreConnect](https://necrozma.xyz/scoreconnect) software! ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers. 
 
