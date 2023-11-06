@@ -6,10 +6,28 @@ import NavBar from "components/Navbar/Navbar"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 
+
 export default function Profile() {
   const router = useRouter()
   const { messages, sendMessage, connectionStatus } = useWebSocket()
   const [inputText, setInputText] = useState("")
+
+  const sendMessageWithToken = async () => {
+    try {
+      const token = await auth.currentUser?.getIdToken(); // Fetch the token asynchronously
+      const testMessageJson = {
+        id: Math.floor(Math.random() * 100000),
+        type: 1,
+        text: "ping!",
+        token: token,
+      };
+  
+      sendMessage(JSON.stringify(testMessageJson));
+    } catch (error) {
+      // Handle any errors that may occur while fetching the token
+      console.error("Error fetching token:", error);
+    }
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value)
@@ -27,8 +45,9 @@ export default function Profile() {
   // const time = new Date();
 
   function messageFmt(message: string) {
-    message = message.slice(10)
-    return `server - ${message}`
+    return message;
+    //message = message.slice(10)
+    // return `server - ${message}` 
   }
 
   return (
@@ -107,7 +126,7 @@ export default function Profile() {
                 value={inputText}
               />
               <button
-                onClick={() => sendMessage(inputText)}
+                onClick={sendMessageWithToken}
                 className="rounded-lg border-2 border-gray-200 p-4 transition duration-200 ease-in-out hover:bg-gray-200 hover:text-gray-800"
               >
                 Send Message
