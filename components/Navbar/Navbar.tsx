@@ -6,12 +6,14 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { SetStateAction, useEffect, useState } from "react"
 import { auth } from "../../firebase"
-import Clock from "components/Clock/Clock"
-
 const navItems = [
   {
     path: "/",
     name: "Home",
+  },
+  {
+    path: "/scoreboard",
+    name: "Scoreboard",
   },
   {
     path: "/dashboard",
@@ -44,7 +46,6 @@ export default function NavBar() {
   return (
     <div className="sticky top-4 z-[100] mx-2 mb-12 rounded-lg bg-blue-400 p-[0.4rem] backdrop-blur-md">
       <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
-
         <Image
           src="/ScoreConnectLogo-transformed-croppeed.png"
           width={40}
@@ -52,8 +53,6 @@ export default function NavBar() {
           className="rounded-full border-2 border-blue-600"
           alt="ScoreConnect Logo"
         />
-        
-
 
         {navItems.map((item) => {
           const isActive = item.path === pathname

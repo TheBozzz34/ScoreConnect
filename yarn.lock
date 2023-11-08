@@ -13762,6 +13762,11 @@ react-element-to-jsx-string@^15.0.0:
     is-plain-object "5.0.0"
     react-is "18.1.0"
 
+react-icons@^4.11.0:
+  version "4.11.0"
+  resolved "https://registry.npmjs.org/react-icons/-/react-icons-4.11.0.tgz"
+  integrity sha512-V+4khzYcE5EBk/BvcuYRq6V/osf11ODUM2J8hg2FDSswRrGvqiYUYPRy4OdrWaQOBj4NcpJfmHZLNaD+VH0TyA==
+
 react-inspector@^6.0.0:
   version "6.0.2"
   resolved "https://registry.npmjs.org/react-inspector/-/react-inspector-6.0.2.tgz"
@@ -13820,7 +13825,7 @@ react-style-singleton@^2.2.1:
     invariant "^2.2.4"
     tslib "^2.0.0"
 
-"react@^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.4 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 0.14.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", react@>=16, react@>=16.8.0, "react@16.8.0 - 18":
+react@*, "react@^0.14.8 || ^15.0.1 || ^16.0.0 || ^17.0.1 || ^18.0.0", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.4 || ^17.0.0 || ^18.0.0", react@^18.0.0, react@^18.2.0, "react@>= 0.14.0", "react@>= 16.8.0 || 17.x.x || ^18.0.0-0", react@>=16, react@>=16.8.0, "react@16.8.0 - 18":
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==

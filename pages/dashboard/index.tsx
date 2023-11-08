@@ -6,7 +6,6 @@ import NavBar from "components/Navbar/Navbar"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 
-
 export default function Profile() {
   const router = useRouter()
   const { messages, sendMessage, connectionStatus } = useWebSocket()
@@ -14,20 +13,20 @@ export default function Profile() {
 
   const sendMessageWithToken = async () => {
     try {
-      const token = await auth.currentUser?.getIdToken(); // Fetch the token asynchronously
+      const token = await auth.currentUser?.getIdToken() // Fetch the token asynchronously
       const testMessageJson = {
         id: Math.floor(Math.random() * 100000),
-        type: 1,
+        type: parseInt(inputText),
         text: "ping!",
         token: token,
-      };
-  
-      sendMessage(JSON.stringify(testMessageJson));
+      }
+
+      sendMessage(JSON.stringify(testMessageJson))
     } catch (error) {
       // Handle any errors that may occur while fetching the token
-      console.error("Error fetching token:", error);
+      console.error("Error fetching token:", error)
     }
-  };
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value)
@@ -45,9 +44,9 @@ export default function Profile() {
   // const time = new Date();
 
   function messageFmt(message: string) {
-    return message;
+    return message
     //message = message.slice(10)
-    // return `server - ${message}` 
+    // return `server - ${message}`
   }
 
   return (
@@ -119,8 +118,8 @@ export default function Profile() {
                 WebSocket Test
               </p>
               <input
-                type="text"
-                placeholder="Enter a message"
+                type="number"
+                placeholder="Message type"
                 className="rounded-lg border-2 border-gray-200 p-4"
                 onChange={handleChange}
                 value={inputText}

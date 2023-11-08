@@ -54,6 +54,7 @@
     "next-compose-plugins": "^2.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.11.0",
     "tailwind-merge": "^1.14.0",
     "ws": "^8.14.2",
     "zod": "^3.22.4"
