@@ -1,6 +1,6 @@
 # Score Connect Software
 
-[Scoreboard Demo](https://necrozma.xyz/pub/ScoreConnectDemo.mkv)
+[Scoreboard Demo](https://necrozma.xyz/pub/Demo.mp4)
 
 ScoreConnect is a powerful and user-friendly digital scoreboard control software, meticulously crafted for sports venues and event organizers. This README will guide you through the key features, setup instructions, and the array of modern development tools utilized in ScoreConnect.
 
