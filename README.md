@@ -6,6 +6,10 @@ ScoreConnect is a powerful and user-friendly digital scoreboard control software
 
 Used in conjuction with [ScoreConnect Server](https://github.com/TheBozzz34/ScoreConnectServer), you can access and control your digital scoreboard from anywhere, safely and securely.
 
+![1](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/ti7f707o.png)
+![2](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/y4lzpi1t.png)
+![3](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/yu0a3gql.png)
+
 ## Table of Contents
 
   - Features
