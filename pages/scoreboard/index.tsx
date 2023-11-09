@@ -1,12 +1,14 @@
 import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import Navbar from "components/Navbar/Navbar"
+import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 
 export default function Scoreboard() {
+  const { messages, sendMessage, connectionStatus } = useWebSocket()
   const [teamAScore, setTeamAScore] = useState(0)
   const [teamBScore, setTeamBScore] = useState(0)
 
@@ -19,14 +21,56 @@ export default function Scoreboard() {
   const [showTeamAPopup, setShowTeamAPopup] = useState(false)
   const [showTeamBPopup, setShowTeamBPopup] = useState(false)
 
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const canvasWidth = 640
+  const canvasHeight = 360
+
+  const hasInitialized = useRef(false);
+
+
   const router = useRouter()
+    
   useEffect(() => {
+    const getInitalData = async () => {
+      console.log("Getting initial data")
+      try {
+        const token = await auth.currentUser?.getIdToken() // Fetch the token asynchronously
+        const testMessageJson = {
+          id: Math.floor(Math.random() * 100000),
+          type: 8,
+          text: "getInitialData",
+          token: token,
+        }
+  
+        sendMessage(JSON.stringify(testMessageJson))
+      } catch (error) {
+        // Handle any errors that may occur while fetching the token
+        console.error("Error fetching token:", error)
+      }}
+
+    if (!hasInitialized.current) {
+      getInitalData();
+      hasInitialized.current = true; 
+    }
+
+
+    messages.forEach((message) => {
+      const messageJson = JSON.parse(message) as { type: number, text: string };
+      if (messageJson.type === 18) {
+        const data = JSON.parse(messageJson.text)
+        setTeamAName((data as { teamAName: string }).teamAName)
+        setTeamBName((data as { teamBName: string }).teamBName)
+        setTeamAScore(parseInt((data as { teamAScore: string }).teamAScore))
+        setTeamBScore(parseInt((data as { teamBScore: string }).teamBScore))
+      }
+    })
+
     onAuthStateChanged(auth, (user) => {
       if (!user) {
         router.push("/login")
       }
     })
-  }, [router])
+  }, [router, sendMessage, messages])
 
   const incrementTeamAScore = () => {
     setTeamAScore(teamAScore + 1) // You can change this value to the appropriate increment
@@ -46,6 +90,27 @@ export default function Scoreboard() {
     setTeamBName(newName)
     setShowTeamBPopup(false)
   }
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext("2d")
+
+    if (ctx) {
+      ctx.fillStyle = "#000000"
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight)
+
+      ctx.fillStyle = "#FFFFFF"
+      ctx.font = "bold 48px Arial"
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+      ctx.fillText(teamAName, canvasWidth / 4, canvasHeight / 2)
+      ctx.fillText(teamBName, (canvasWidth / 4) * 3, canvasHeight / 2)
+
+      ctx.font = "bold 72px Arial"
+      ctx.fillText(teamAScore.toString(), canvasWidth / 4, (canvasHeight / 4) * 3)
+      ctx.fillText(teamBScore.toString(), (canvasWidth / 4) * 3, (canvasHeight / 4) * 3)
+    }
+  }, [teamAScore, teamBScore, teamAName, teamBName])
 
   return (
     <>
@@ -70,6 +135,45 @@ export default function Scoreboard() {
           <h1 className="flex items-center justify-center border-b-2 border-gray-200 p-2 text-2xl font-semibold">
             Settings
           </h1>
+
+          <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
+            <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+              WS Server:
+              <span
+                className="w-fit rounded bg-gray-300 p-1"
+                style={{ display: "inline-flex", alignItems: "center" }}
+              >
+                {connectionStatus === "Connected" ? "Connected" : "Disconnected"}
+              </span>
+            </p>
+            <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+              Scoreboard:
+              <span
+                className="w-fit rounded bg-gray-300 p-1"
+                style={{ display: "inline-flex", alignItems: "center" }}
+              >
+                Disconnected
+              </span>
+            </p>
+            <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+              Audio:
+              <span
+                className="w-fit rounded bg-gray-300 p-1"
+                style={{ display: "inline-flex", alignItems: "center" }}
+              >
+                Disconnected
+              </span>
+            </p>
+
+            <button
+              className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              onClick={() => sendMessage(JSON.stringify({ id: Math.floor(Math.random() * 100000), type: 8, text: "getInitialData" }))}
+            >
+              Refresh
+            </button>
+
+            </div>
+
         </div>
         <section className="grow bg-white dark:bg-gray-900">
           <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
@@ -219,12 +323,14 @@ export default function Scoreboard() {
         </div>
       )}
 
-      <div className="m-3 flex-none rounded-lg border-2 border-gray-200">
+      <div className="justify-center flex">
+      <div className="m-3 flex-none rounded-lg border-2 border-gray-200 w-fit">
         <h1 className="flex items-center justify-center border-b-2 border-gray-200 p-2 text-2xl font-semibold">
           Preview
         </h1>
 
-        <canvas id="scoreboardCanvas" width="1920" height="1080" className="border-2 border-gray-200"></canvas>
+        <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="rounded-lg m-3" />
+      </div>
       </div>
     </>
   )
