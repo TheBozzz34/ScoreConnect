@@ -2,6 +2,7 @@ import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
 import React, { SetStateAction, useEffect, useState } from "react"
+import { AiOutlineInfoCircle } from "react-icons/ai"
 import NavBar from "components/Navbar/Navbar"
 import { auth } from "../../firebase"
 
@@ -9,7 +10,19 @@ export default function Profile() {
   const router = useRouter()
   const [user, setUser] = useState<SetStateAction<any>>(null)
 
+  const [isDevVisible, setIsDevVisible] = useState(false)
+  const toggleDevVisibility = () => {
+    if(window.location.hostname === 'localhost') {
+      setIsDevVisible(!isDevVisible)
+    } else {
+      alert('You must be on localhost to view this information.')
+    }
+  }
+
   useEffect(() => {
+    if (user) {
+      console.log("user", user)
+    }
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
         router.push("/login")
@@ -19,7 +32,7 @@ export default function Profile() {
     })
 
     return () => unsubscribe() // Cleanup the listener on unmount
-  }, [router])
+  }, [router, user])
 
   return (
     <>
@@ -49,17 +62,83 @@ export default function Profile() {
             <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
               {user && user.email && (
                 <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                  Email: <span className="w-fit rounded bg-gray-300 p-1">{user.email}</span>
+                  Email: <span className="w-fit rounded bg-gray-300 text-gray-300 p-1 hover:text-gray-500 transition-all">{user.email}</span>
                 </p>
               )}
               {user && user.uid && (
                 <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                  UID: <span className="w-fit rounded bg-gray-300 p-1">{user.uid}</span>
+                  UID: <span className="w-fit rounded bg-gray-300 p-1 text-gray-300 hover:text-gray-500 transition-all">{user.uid}</span>
                 </p>
               )}
+              <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
+                Details have been hidden for privacy reasons, hover over each entry to see the details.
+              </p>
+
+              <div>
+                <div className="bg-white rounded p-4 shadow">
+                  <button
+                    className="bg-blue-500 text-white px-3 py-1 rounded"
+                    onClick={toggleDevVisibility}
+                  >
+                    Toggle Developer Info
+                  </button>
+                  {isDevVisible && (
+                    <div className="mt-4">
+                      <h2 className="text-lg font-bold mb-2">User Information</h2>
+                      <p>
+                        <strong>UID:</strong> {user.uid}
+                      </p>
+                      <p>
+                        <strong>Email:</strong> {user.email}
+                      </p>
+                      <p>
+                        <strong>Display Name:</strong> {user.displayName || 'N/A'}
+                      </p>
+                      <p>
+                        <strong>Provider ID: {user.providerId}</strong>
+                      </p>
+                      <p>
+                        <strong>Creation Time:</strong> {user.metadata.creationTime}
+                      </p>
+                      <p>
+                        <strong>Last Sign In Time:</strong> {user.metadata.lastSignInTime}
+                      </p>
+                      <p>
+                        <strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}
+                      </p>
+                      <p>
+                        <strong>Email Verified:</strong> {user.emailVerified ? 'Yes' : 'No'}
+                      </p>
+                      <p>
+                        <strong>Client Version:</strong> {user.auth.clientVersion}
+                      </p>
+                      <p>
+                        <strong>API Host:</strong> {user.auth.config.apiHost}
+                      </p>
+                      <p>
+                        <strong>API Key:</strong> {user.auth.config.apiKey}
+                      </p>
+                      <p>
+                        <strong>API Client Scheme:</strong> {user.auth.config.apiScheme}
+                      </p>
+                      <p>
+                        <strong>API Client Auth Domain:</strong> {user.auth.config.authDomain}
+                      </p>
+                      <p>
+                        <strong>API Client Platform:</strong> {user.auth.config.clientPlatform}
+                      </p>
+                      <p>
+                        <strong>API Client TOken Host:</strong> {user.auth.config.tokenApiHost}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                </div>
+
+              </div>
             </div>
           </div>
-        </div>
       </section>
     </>
   )

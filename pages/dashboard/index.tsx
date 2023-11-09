@@ -64,16 +64,16 @@ export default function Profile() {
       </Head>
       <NavBar />
       <section className="bg-white dark:bg-gray-900">
-        <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
+        <div className="mx-auto grid px-4 py-8 text-center lg:py-16 w-1/3">
           <div className="mx-auto place-self-center">
-            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
+            <h1 className="mb-4  text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
               Dashboard
             </h1>
-            <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
+            <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
               Connection Status:
             </p>
             <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
-              <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+              <p className="mb-3 font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
                 WS Server:
                 <span
                   className="w-fit rounded bg-gray-300 p-1"
@@ -82,7 +82,7 @@ export default function Profile() {
                   {connectionStatus === "Connected" ? "Connected" : "Disconnected"}
                 </span>
               </p>
-              <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+              <p className="mb-3 font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
                 Scoreboard:
                 <span
                   className="w-fit rounded bg-gray-300 p-1"
