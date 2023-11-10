@@ -12,10 +12,10 @@ export default function Profile() {
 
   const [isDevVisible, setIsDevVisible] = useState(false)
   const toggleDevVisibility = () => {
-    if(window.location.hostname === 'localhost') {
+    if (window.location.hostname === "localhost") {
       setIsDevVisible(!isDevVisible)
     } else {
-      alert('You must be on localhost to view this information.')
+      alert("You must be on localhost to view this information.")
     }
   }
 
@@ -62,12 +62,18 @@ export default function Profile() {
             <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
               {user && user.email && (
                 <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                  Email: <span className="w-fit rounded bg-gray-300 text-gray-300 p-1 hover:text-gray-500 transition-all">{user.email}</span>
+                  Email:{" "}
+                  <span className="w-fit rounded bg-gray-300 p-1 text-gray-300 transition-all hover:text-gray-500">
+                    {user.email}
+                  </span>
                 </p>
               )}
               {user && user.uid && (
                 <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-                  UID: <span className="w-fit rounded bg-gray-300 p-1 text-gray-300 hover:text-gray-500 transition-all">{user.uid}</span>
+                  UID:{" "}
+                  <span className="w-fit rounded bg-gray-300 p-1 text-gray-300 transition-all hover:text-gray-500">
+                    {user.uid}
+                  </span>
                 </p>
               )}
               <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
@@ -75,16 +81,13 @@ export default function Profile() {
               </p>
 
               <div>
-                <div className="bg-white rounded p-4 shadow">
-                  <button
-                    className="bg-blue-500 text-white px-3 py-1 rounded"
-                    onClick={toggleDevVisibility}
-                  >
+                <div className="rounded bg-white p-4 shadow">
+                  <button className="rounded bg-blue-500 px-3 py-1 text-white" onClick={toggleDevVisibility}>
                     Toggle Developer Info
                   </button>
                   {isDevVisible && (
                     <div className="mt-4">
-                      <h2 className="text-lg font-bold mb-2">User Information</h2>
+                      <h2 className="mb-2 text-lg font-bold">User Information</h2>
                       <p>
                         <strong>UID:</strong> {user.uid}
                       </p>
@@ -92,7 +95,7 @@ export default function Profile() {
                         <strong>Email:</strong> {user.email}
                       </p>
                       <p>
-                        <strong>Display Name:</strong> {user.displayName || 'N/A'}
+                        <strong>Display Name:</strong> {user.displayName || "N/A"}
                       </p>
                       <p>
                         <strong>Provider ID: {user.providerId}</strong>
@@ -104,10 +107,10 @@ export default function Profile() {
                         <strong>Last Sign In Time:</strong> {user.metadata.lastSignInTime}
                       </p>
                       <p>
-                        <strong>Phone Number:</strong> {user.phoneNumber || 'N/A'}
+                        <strong>Phone Number:</strong> {user.phoneNumber || "N/A"}
                       </p>
                       <p>
-                        <strong>Email Verified:</strong> {user.emailVerified ? 'Yes' : 'No'}
+                        <strong>Email Verified:</strong> {user.emailVerified ? "Yes" : "No"}
                       </p>
                       <p>
                         <strong>Client Version:</strong> {user.auth.clientVersion}
@@ -133,12 +136,10 @@ export default function Profile() {
                     </div>
                   )}
                 </div>
-
-                </div>
-
               </div>
             </div>
           </div>
+        </div>
       </section>
     </>
   )

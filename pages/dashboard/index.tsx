@@ -64,7 +64,7 @@ export default function Profile() {
       </Head>
       <NavBar />
       <section className="bg-white dark:bg-gray-900">
-        <div className="mx-auto grid px-4 py-8 text-center lg:py-16 w-1/3">
+        <div className="mx-auto grid w-1/3 px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">
             <h1 className="mb-4  text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
               Dashboard

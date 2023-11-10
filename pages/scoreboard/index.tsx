@@ -25,11 +25,10 @@ export default function Scoreboard() {
   const canvasWidth = 640
   const canvasHeight = 360
 
-  const hasInitialized = useRef(false);
-
+  const hasInitialized = useRef(false)
 
   const router = useRouter()
-    
+
   useEffect(() => {
     const getInitalData = async () => {
       console.log("Getting initial data")
@@ -41,21 +40,21 @@ export default function Scoreboard() {
           text: "getInitialData",
           token: token,
         }
-  
+
         sendMessage(JSON.stringify(testMessageJson))
       } catch (error) {
         // Handle any errors that may occur while fetching the token
         console.error("Error fetching token:", error)
-      }}
-
-    if (!hasInitialized.current) {
-      getInitalData();
-      hasInitialized.current = true; 
+      }
     }
 
+    if (!hasInitialized.current) {
+      getInitalData()
+      hasInitialized.current = true
+    }
 
     messages.forEach((message) => {
-      const messageJson = JSON.parse(message) as { type: number, text: string };
+      const messageJson = JSON.parse(message) as { type: number; text: string }
       if (messageJson.type === 18) {
         const data = JSON.parse(messageJson.text)
         setTeamAName((data as { teamAName: string }).teamAName)
@@ -139,41 +138,32 @@ export default function Scoreboard() {
           <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
             <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               WS Server:
-              <span
-                className="w-fit rounded bg-gray-300 p-1"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
+              <span className="w-fit rounded bg-gray-300 p-1" style={{ display: "inline-flex", alignItems: "center" }}>
                 {connectionStatus === "Connected" ? "Connected" : "Disconnected"}
               </span>
             </p>
             <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Scoreboard:
-              <span
-                className="w-fit rounded bg-gray-300 p-1"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
+              <span className="w-fit rounded bg-gray-300 p-1" style={{ display: "inline-flex", alignItems: "center" }}>
                 Disconnected
               </span>
             </p>
             <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Audio:
-              <span
-                className="w-fit rounded bg-gray-300 p-1"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
+              <span className="w-fit rounded bg-gray-300 p-1" style={{ display: "inline-flex", alignItems: "center" }}>
                 Disconnected
               </span>
             </p>
 
             <button
               className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
-              onClick={() => sendMessage(JSON.stringify({ id: Math.floor(Math.random() * 100000), type: 8, text: "getInitialData" }))}
+              onClick={() =>
+                sendMessage(JSON.stringify({ id: Math.floor(Math.random() * 100000), type: 8, text: "getInitialData" }))
+              }
             >
               Refresh
             </button>
-
-            </div>
-
+          </div>
         </div>
         <section className="grow bg-white dark:bg-gray-900">
           <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
@@ -323,14 +313,14 @@ export default function Scoreboard() {
         </div>
       )}
 
-      <div className="justify-center flex">
-      <div className="m-3 flex-none rounded-lg border-2 border-gray-200 w-fit">
-        <h1 className="flex items-center justify-center border-b-2 border-gray-200 p-2 text-2xl font-semibold">
-          Preview
-        </h1>
+      <div className="flex justify-center">
+        <div className="m-3 w-fit flex-none rounded-lg border-2 border-gray-200">
+          <h1 className="flex items-center justify-center border-b-2 border-gray-200 p-2 text-2xl font-semibold">
+            Preview
+          </h1>
 
-        <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="rounded-lg m-3" />
-      </div>
+          <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="m-3 rounded-lg" />
+        </div>
       </div>
     </>
   )
