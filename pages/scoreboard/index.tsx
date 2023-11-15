@@ -1,7 +1,8 @@
+import { useChannel } from 'ably/react';
 import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
-import React, { useEffect, useRef, useState } from "react"
+import React, { use, useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import Navbar from "components/Navbar/Navbar"
 import { useWebSocket } from "../../context/WebSocketContext"
@@ -28,6 +29,20 @@ export default function Scoreboard() {
   const hasInitialized = useRef(false)
 
   const router = useRouter()
+
+  type MessageType = {
+    connectionId: string;
+    data: string;
+    id: string;
+    name: string;
+    timestamp: string;
+  };
+
+  const [subMessages, updateSubMessages] = useState<MessageType[]>([]);
+  const { channel } = useChannel('notifications', (message2: any) => {
+    updateSubMessages((subMessages: any) => [...subMessages, message2]);
+  });
+
 
   useEffect(() => {
     const getInitalData = async () => {
@@ -224,9 +239,23 @@ export default function Scoreboard() {
         </section>
         <div className="mr-3 w-1/6 flex-none rounded-lg border-2 border-gray-200">
           <h1 className="flex items-center justify-center border-b-2 border-gray-200 p-2 text-2xl font-semibold">
-            Audio
+            Misc
           </h1>
+
+          <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
+            <p className='mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl'>
+              Alerts:
+            </p>
+            {subMessages.map((message: MessageType) => (
+              <div key={message.id} className="border rounded p-2">
+                <p>{message.data}</p>
+                {/* Display other message properties here */}
+              </div>
+            ))}
+          </div>
+
         </div>
+
       </div>
 
       {/*

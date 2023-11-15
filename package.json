@@ -47,6 +47,7 @@
     "@semantic-release/release-notes-generator": "^12.0.0",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@vercel/otel": "^0.3.0",
+    "ably": "^1.2.47",
     "class-variance-authority": "^0.7.0",
     "firebase": "^10.5.0",
     "konva": "^9.2.3",
