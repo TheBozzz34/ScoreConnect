@@ -1,4 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth"
+import Head from "next/head"
 import { useRouter } from "next/navigation"
 import React, { ChangeEvent, useEffect, useState } from "react"
 import { useWebSocket } from "../../context/WebSocketContext"
@@ -49,6 +50,9 @@ export default function Profile() {
 
   return (
     <>
+      <Head>
+        <title>ScoreConnect Dashboard</title>
+      </Head>
       <section className="text-[#454138]">
         <div className="mx-auto grid w-1/3 px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">

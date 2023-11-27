@@ -1,4 +1,5 @@
 import { signInWithPopup } from "firebase/auth"
+import Head from "next/head"
 import { useRouter } from "next/navigation"
 import { auth, provider } from "../firebase"
 
@@ -31,6 +32,9 @@ export default function Login() {
 
   return (
     <>
+      <Head>
+        <title>ScoreConnect Login</title>
+      </Head>
       <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">

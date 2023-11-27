@@ -1,5 +1,6 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { GetServerSidePropsContext } from "next"
+import Head from "next/head"
 import React, { useEffect } from "react"
 import EmailSignup from "components/Email/EmailSignup"
 import { auth } from "../firebase"
@@ -18,6 +19,9 @@ export default function Web() {
 
   return (
     <>
+      <Head>
+        <title>ScoreConnect Home</title>
+      </Head>
       <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">

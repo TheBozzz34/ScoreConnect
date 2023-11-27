@@ -1,4 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth"
+import Head from "next/head"
 import { useRouter } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
@@ -111,6 +112,9 @@ export default function Scoreboard() {
 
   return (
     <>
+      <Head>
+        <title>ScoreConnect ScoreBoard</title>
+      </Head>
       <div className="flex">
         {" "}
         {/* This container makes the two "WIP" divs appear on the same line */}

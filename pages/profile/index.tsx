@@ -1,4 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth"
+import Head from "next/head"
 import { useRouter } from "next/navigation"
 import React, { SetStateAction, useEffect, useState } from "react"
 import { auth } from "../../firebase"
@@ -29,6 +30,9 @@ export default function Profile() {
 
   return (
     <>
+      <Head>
+        <title>ScoreConnect Profile</title>
+      </Head>
       <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">

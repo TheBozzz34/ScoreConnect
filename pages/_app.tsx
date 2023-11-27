@@ -25,7 +25,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers."
           />
           <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
-          <title>ScoreConnect Web</title>
+          <meta name="twitter:card" content="summary_large_image"></meta>
+          <meta property="og:type" content="website" />
         </Head>
 
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
