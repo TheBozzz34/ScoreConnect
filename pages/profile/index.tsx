@@ -1,12 +1,11 @@
+import Hotjar from "@hotjar/browser"
 import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
+import Script from "next/script"
 import React, { SetStateAction, useEffect, useState } from "react"
-import { AiOutlineInfoCircle } from "react-icons/ai"
 import NavBar from "components/Navbar/Navbar"
 import { auth } from "../../firebase"
-import Script from "next/script"
-import Hotjar from "@hotjar/browser"
 
 export default function Profile() {
   const router = useRouter()
@@ -17,7 +16,7 @@ export default function Profile() {
     setIsDevVisible(!isDevVisible)
   }
 
-  Hotjar.init(2349532, 6);
+  Hotjar.init(2349532, 6)
 
   useEffect(() => {
     if (user) {
@@ -39,7 +38,10 @@ export default function Profile() {
       <Head>
         <meta property="og:url" content="https://sc.necrozma.xyz" />
         <meta property="og:title" content="ScoreConnect Web" />
-        <meta property="og:description" content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers." />
+        <meta
+          property="og:description"
+          content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers."
+        />
         <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
         <title>ScoreConnect Web</title>
       </Head>
@@ -54,7 +56,7 @@ export default function Profile() {
           gtag('config', 'G-G3GH38QDFZ');
         `}
       </Script>
-      
+
       <NavBar />
       <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
@@ -71,7 +73,7 @@ export default function Profile() {
               {user && user.email && (
                 <p className="mb-3 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
                   Email:{" "}
-                  <span className="w-fit rounded bg-[#454138] p-1 text-[#454138] transition-all hover:text-[#dcd8c0] hover:bg-[#454138]">
+                  <span className="w-fit rounded bg-[#454138] p-1 text-[#454138] transition-all hover:bg-[#454138] hover:text-[#dcd8c0]">
                     {user.email}
                   </span>
                 </p>
@@ -79,7 +81,7 @@ export default function Profile() {
               {user && user.uid && (
                 <p className="mb-3 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
                   UID:{" "}
-                  <span className="w-fit rounded bg-[#454138] p-1 text-[#454138] transition-all hover:text-[#dcd8c0] hover:bg-[#454138]">
+                  <span className="w-fit rounded bg-[#454138] p-1 text-[#454138] transition-all hover:bg-[#454138] hover:text-[#dcd8c0]">
                     {user.uid}
                   </span>
                 </p>
@@ -90,7 +92,10 @@ export default function Profile() {
 
               <div>
                 <div className="rounded p-4 shadow">
-                  <button className="rounded border-2 bg-[#454138] p-1 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border-[#454138] outline-none" onClick={toggleDevVisibility}>
+                  <button
+                    className="rounded border-2 border-[#454138] bg-[#454138] p-1 text-[#dcd8c0] outline-none transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+                    onClick={toggleDevVisibility}
+                  >
                     Toggle Developer Info
                   </button>
                   {isDevVisible && (

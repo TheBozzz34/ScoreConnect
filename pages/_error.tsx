@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import React from 'react';
-import '../styles/yorha.module.css';
-import Script from 'next/script';
-import NavBar from 'components/Navbar/Navbar';
+import Head from "next/head"
+import Script from "next/script"
+import React from "react"
+import "../styles/yorha.module.css"
+import NavBar from "components/Navbar/Navbar"
 
 const Custom404 = () => {
   return (
@@ -30,7 +30,7 @@ const Custom404 = () => {
         </p>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Custom404;
+export default Custom404

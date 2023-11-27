@@ -1,19 +1,18 @@
 import Hotjar from "@hotjar/browser"
 import { onAuthStateChanged } from "firebase/auth"
-import { GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext } from "next"
 import Head from "next/head"
-import Script from 'next/script'
+import Script from "next/script"
 import React, { useEffect } from "react"
 import EmailSignup from "components/Email/EmailSignup"
 import Navbar from "components/Navbar/Navbar"
 import { auth } from "../firebase"
-import { getIsSsrMobile } from "../utils/getIsSsrMobile";
-import { useIsMobile } from "../utils/useIsMobile";
-
+import { getIsSsrMobile } from "../utils/getIsSsrMobile"
+import { useIsMobile } from "../utils/useIsMobile"
 
 export default function Web() {
-  const isMobile = useIsMobile();
-  Hotjar.init(2349532, 6);
+  const isMobile = useIsMobile()
+  Hotjar.init(2349532, 6)
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -27,7 +26,10 @@ export default function Web() {
       <Head>
         <meta property="og:url" content="https://sc.necrozma.xyz" />
         <meta property="og:title" content="ScoreConnect Web" />
-        <meta property="og:description" content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers." />
+        <meta
+          property="og:description"
+          content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers."
+        />
         <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
         <title>ScoreConnect Web</title>
       </Head>
@@ -71,7 +73,10 @@ export default function Web() {
         <section>
           <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
             <div className="mx-auto place-self-center">
-              <h2>This website is not optimized for mobile devices. Please use a desktop or laptop computer to view this site.</h2>
+              <h2>
+                This website is not optimized for mobile devices. Please use a desktop or laptop computer to view this
+                site.
+              </h2>
             </div>
           </div>
         </section>
@@ -105,7 +110,7 @@ export default function Web() {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
-      isSsrMobile: getIsSsrMobile(context)
-    }
-  };
+      isSsrMobile: getIsSsrMobile(context),
+    },
+  }
 }

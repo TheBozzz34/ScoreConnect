@@ -1,9 +1,8 @@
-import Hotjar from '@hotjar/browser';
-import { useChannel } from 'ably/react';
+import Hotjar from "@hotjar/browser"
 import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
-import Script from 'next/script';
+import Script from "next/script"
 import React, { useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import Navbar from "components/Navbar/Navbar"
@@ -32,7 +31,7 @@ export default function Scoreboard() {
 
   const router = useRouter()
 
-  Hotjar.init(2349532, 6);
+  Hotjar.init(2349532, 6)
 
   useEffect(() => {
     const getInitalData = async () => {
@@ -121,7 +120,10 @@ export default function Scoreboard() {
       <Head>
         <meta property="og:url" content="https://sc.necrozma.xyz" />
         <meta property="og:title" content="ScoreConnect Web" />
-        <meta property="og:description" content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers." />
+        <meta
+          property="og:description"
+          content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers."
+        />
         <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
         <title>ScoreConnect Web</title>
       </Head>
@@ -150,25 +152,34 @@ export default function Scoreboard() {
           <div className="flex flex-col space-y-4 rounded-lg p-4">
             <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               WS Server:
-              <span className="w-fit text-[#dcd8c0] rounded bg-[#454138] p-1" style={{ display: "inline-flex", alignItems: "center" }}>
+              <span
+                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                style={{ display: "inline-flex", alignItems: "center" }}
+              >
                 {connectionStatus === "Connected" ? "Connected" : "Disconnected"}
               </span>
             </p>
             <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Scoreboard:
-              <span className="w-fit text-[#dcd8c0] rounded bg-[#454138] p-1" style={{ display: "inline-flex", alignItems: "center" }}>
+              <span
+                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                style={{ display: "inline-flex", alignItems: "center" }}
+              >
                 Disconnected
               </span>
             </p>
             <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Audio:
-              <span className="w-fit text-[#dcd8c0] rounded bg-[#454138] p-1" style={{ display: "inline-flex", alignItems: "center" }}>
+              <span
+                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                style={{ display: "inline-flex", alignItems: "center" }}
+              >
                 Disconnected
               </span>
             </p>
 
             <button
-              className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border border-[#454138]"
+              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
               onClick={() =>
                 sendMessage(JSON.stringify({ id: Math.floor(Math.random() * 100000), type: 8, text: "getInitialData" }))
               }
@@ -191,20 +202,20 @@ export default function Scoreboard() {
                 <p className="text-lg font-bold text-[#454138]">{teamAScore}</p>
                 <button
                   onClick={incrementTeamAScore}
-                  className="mr-1 mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
+                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Increment score
                 </button>
                 <button
                   onClick={() => setTeamAScore(teamAScore - 1)}
-                  className="mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
+                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Decrement score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamAScore(0)}
-                  className="mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
+                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Reset score
                 </button>
@@ -220,20 +231,20 @@ export default function Scoreboard() {
                 <p className="text-lg font-bold text-[#454138]">{teamBScore}</p>
                 <button
                   onClick={incrementTeamBScore}
-                  className="mr-1 mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
+                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Increment score
                 </button>
                 <button
                   onClick={() => setTeamBScore(teamBScore - 1)}
-                  className="mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
+                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Decrement score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamBScore(0)}
-                  className="mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
+                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Reset score
                 </button>
@@ -257,9 +268,7 @@ export default function Scoreboard() {
             ))}
           </div>
           */}
-
         </div>
-
       </div>
 
       {/*
@@ -289,17 +298,17 @@ export default function Scoreboard() {
               type="text"
               value={teamANameTemp}
               onChange={(e) => setTeamANameTemp(e.target.value)}
-              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 outline-none text-[#454138]"
+              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 text-[#454138] outline-none"
             />
             <div className="flex justify-between">
               <button
-                className="rounded bg-[#dcd8c0] px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#dcd8c0]"
+                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 onClick={() => handleTeamANameChange(teamANameTemp)}
               >
                 Save
               </button>
               <button
-                className="rounded bg-[#dcd8c0] px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#dcd8c0]"
+                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 onClick={() => setShowTeamAPopup(false)}
               >
                 Cancel
@@ -319,17 +328,17 @@ export default function Scoreboard() {
               type="text"
               value={teamBNameTemp}
               onChange={(e) => setTeamBNameTemp(e.target.value)}
-              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 outline-none text-[#454138]"
+              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 text-[#454138] outline-none"
             />
             <div className="flex justify-between">
               <button
-                className="rounded bg-[#dcd8c0] px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#dcd8c0]"
+                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 onClick={() => handleTeamBNameChange(teamBNameTemp)}
               >
                 Save
               </button>
               <button
-                className="rounded bg-[#dcd8c0] px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#dcd8c0]"
+                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 onClick={() => setShowTeamBPopup(false)}
               >
                 Cancel

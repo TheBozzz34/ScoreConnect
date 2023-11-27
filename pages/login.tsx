@@ -1,16 +1,15 @@
+import Hotjar from "@hotjar/browser"
 import { signInWithPopup } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
 import Script from "next/script"
 import NavBar from "components/Navbar/Navbar"
 import { auth, provider } from "../firebase"
-import Hotjar from '@hotjar/browser';
 
 export default function Login() {
   const router = useRouter()
 
-
-  Hotjar.init(2349532, 6);
+  Hotjar.init(2349532, 6)
 
   const signIn = () => {
     signInWithPopup(auth, provider)
@@ -42,7 +41,10 @@ export default function Login() {
       <Head>
         <meta property="og:url" content="https://sc.necrozma.xyz" />
         <meta property="og:title" content="ScoreConnect Web" />
-        <meta property="og:description" content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers." />
+        <meta
+          property="og:description"
+          content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers."
+        />
         <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
         <title>ScoreConnect Web</title>
       </Head>
@@ -57,7 +59,7 @@ export default function Login() {
           gtag('config', 'G-G3GH38QDFZ');
         `}
       </Script>
-      
+
       <NavBar />
       <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
@@ -67,7 +69,7 @@ export default function Login() {
             </h1>
             <button
               onClick={signIn}
-              className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border border-[#454138]"
+              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
             >
               Sign in with Google
             </button>
