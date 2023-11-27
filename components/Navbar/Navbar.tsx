@@ -19,10 +19,10 @@ export default function NavBar() {
   const [user, setUser] = useState<SetStateAction<any>>(null)
   const [userProfilePic, setUserProfilePic] = useState<SetStateAction<any>>(null)
   const [hovered, setHovered] = useState(false);
+  const [hasHovered, setHasHovered] = useState(false);
   const router = useRouter()
   const konamiSequence = useRef(['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'KeyB', 'KeyA']);
   const [konamiCode, setKonamiCode] = useState<string[]>([]);
-
 
   useEffect(() => {
     const checkKonamiCode = (e: KeyboardEvent) => {
@@ -118,13 +118,17 @@ export default function NavBar() {
                 height={40}
                 className="rounded-full border-2 border-[#302d29] cursor-pointer transition-opacity duration-300"
                 alt="Profile Picture"
-                onMouseEnter={() => setHovered(true)}
+                onMouseEnter={() => {setHovered(true)}}
               />
             ) : null}
             
-          <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-[#dcd8c0]">
-            <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-red-500 animate-ping"></span>
-          </div>
+     
+          {user && (
+            <div className="absolute top-0 right-0 w-3 h-3 rounded-full bg-[#dcd8c0]">
+              <span className="absolute top-0 right-0 w-3 h-3 rounded-full bg-red-500 animate-ping"></span>
+            </div>
+          )}
+          
           
           </div>
         </nav>
