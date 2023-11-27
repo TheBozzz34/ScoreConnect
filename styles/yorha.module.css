@@ -1,0 +1,42 @@
+/* 404.module.css */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #dcd8c0;
+}
+
+.error-container h1 {
+  font-size: 4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5rem;
+  text-shadow: 0.3rem 0.3rem 0 #bab5a1;
+}
+
+.error-container h2 {
+  font-size: 2rem;
+  font-weight: lighter;
+  border: solid #454138;
+  border-width: 0.1rem 0;
+  padding: 0.5rem 2rem;
+  margin: 1rem 0;
+}
+
+.error-container p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.error-container a {
+  color: #bab5a1;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.error-container a:hover {
+  color: #ccc8b1;
+}
