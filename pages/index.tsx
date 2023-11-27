@@ -1,18 +1,13 @@
-import Hotjar from "@hotjar/browser"
 import { onAuthStateChanged } from "firebase/auth"
 import { GetServerSidePropsContext } from "next"
-import Head from "next/head"
-import Script from "next/script"
 import React, { useEffect } from "react"
 import EmailSignup from "components/Email/EmailSignup"
-import Navbar from "components/Navbar/Navbar"
 import { auth } from "../firebase"
 import { getIsSsrMobile } from "../utils/getIsSsrMobile"
 import { useIsMobile } from "../utils/useIsMobile"
 
 export default function Web() {
   const isMobile = useIsMobile()
-  Hotjar.init(2349532, 6)
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -23,30 +18,6 @@ export default function Web() {
 
   return (
     <>
-      <Head>
-        <meta property="og:url" content="https://sc.necrozma.xyz" />
-        <meta property="og:title" content="ScoreConnect Web" />
-        <meta
-          property="og:description"
-          content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers."
-        />
-        <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
-        <title>ScoreConnect Web</title>
-      </Head>
-
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
-      <Script id="google-analytics">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-G3GH38QDFZ');
-        `}
-      </Script>
-
-      <Navbar />
-
       <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">

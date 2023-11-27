@@ -1,11 +1,9 @@
 import React from "react"
-import NavBar from "components/Navbar/Navbar"
 import TechnologyList from "components/ScrollingList/TechnologyList"
 
 const about = () => {
   return (
     <div>
-      <NavBar />
       <div className="mx-auto mt-8 w-[80%] rounded-lg bg-[#454138] p-4 shadow-md">
         <h2 className="border-b-[#dcd8c0] text-xl font-semibold text-[#dcd8c0]">About</h2>
         <div className="relative overflow-hidden">

@@ -1,10 +1,6 @@
-import Hotjar from "@hotjar/browser"
 import { onAuthStateChanged } from "firebase/auth"
-import Head from "next/head"
 import { useRouter } from "next/navigation"
-import Script from "next/script"
 import React, { SetStateAction, useEffect, useState } from "react"
-import NavBar from "components/Navbar/Navbar"
 import { auth } from "../../firebase"
 
 export default function Profile() {
@@ -15,8 +11,6 @@ export default function Profile() {
   const toggleDevVisibility = () => {
     setIsDevVisible(!isDevVisible)
   }
-
-  Hotjar.init(2349532, 6)
 
   useEffect(() => {
     if (user) {
@@ -35,29 +29,6 @@ export default function Profile() {
 
   return (
     <>
-      <Head>
-        <meta property="og:url" content="https://sc.necrozma.xyz" />
-        <meta property="og:title" content="ScoreConnect Web" />
-        <meta
-          property="og:description"
-          content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers."
-        />
-        <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
-        <title>ScoreConnect Web</title>
-      </Head>
-
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
-      <Script id="google-analytics">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-G3GH38QDFZ');
-        `}
-      </Script>
-
-      <NavBar />
       <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">

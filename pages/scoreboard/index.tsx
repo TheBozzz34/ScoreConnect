@@ -1,11 +1,7 @@
-import Hotjar from "@hotjar/browser"
 import { onAuthStateChanged } from "firebase/auth"
-import Head from "next/head"
 import { useRouter } from "next/navigation"
-import Script from "next/script"
 import React, { useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
-import Navbar from "components/Navbar/Navbar"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 
@@ -30,8 +26,6 @@ export default function Scoreboard() {
   const hasInitialized = useRef(false)
 
   const router = useRouter()
-
-  Hotjar.init(2349532, 6)
 
   useEffect(() => {
     const getInitalData = async () => {
@@ -117,30 +111,6 @@ export default function Scoreboard() {
 
   return (
     <>
-      <Head>
-        <meta property="og:url" content="https://sc.necrozma.xyz" />
-        <meta property="og:title" content="ScoreConnect Web" />
-        <meta
-          property="og:description"
-          content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers."
-        />
-        <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
-        <title>ScoreConnect Web</title>
-      </Head>
-
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
-      <Script id="google-analytics">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-G3GH38QDFZ');
-        `}
-      </Script>
-
-      <Navbar />
-
       <div className="flex">
         {" "}
         {/* This container makes the two "WIP" divs appear on the same line */}
