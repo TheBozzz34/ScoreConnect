@@ -138,7 +138,7 @@ ScoreConnect is powered by an array of modern development tools, including:
 We welcome contributions from the community. If you'd like to contribute to ScoreConnect, please follow our Contribution Guidelines.
 License
 
-ScoreConnect is open-source software released under the MIT License. Feel free to use, modify, and distribute it in accordance with the terms of this license.
+ScoreConnect is open-source software released under the AGPL-3.0 license. Feel free to use, modify, and distribute it in accordance with the terms of this license.
 
 Thank you for choosing ScoreConnect for your digital scoreboard control needs. We hope you find it valuable for your sports venue or event management requirements.
 
