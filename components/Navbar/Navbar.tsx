@@ -64,6 +64,9 @@ export default function NavBar() {
             if (item.name === "Dashboard") {
               return null
             }
+            if (item.name === "Scoreboard") {
+              return null
+            }
           }
 
           return (
