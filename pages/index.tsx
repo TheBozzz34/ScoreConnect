@@ -6,6 +6,7 @@ import React, { useEffect } from "react"
 import Navbar from "components/Navbar/Navbar"
 import { auth } from "../firebase"
 import Hotjar from "@hotjar/browser"
+import EmailSignup from "components/Email/EmailSignup"
 
 export default function Web() {
   Hotjar.init(2349532, 6);
@@ -61,6 +62,8 @@ export default function Web() {
           </div>
         </div>
       </section>
+
+      <EmailSignup />
 
       {/*
       <section>
