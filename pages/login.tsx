@@ -1,10 +1,13 @@
-import { signInWithPopup } from "firebase/auth"
+import { signInWithPopup, signOut } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
 import { auth, provider } from "../firebase"
 
 export default function Login() {
   const router = useRouter()
+
+  const allowedDomains = ["sfprep.org"]
+
   const signIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
@@ -13,9 +16,20 @@ export default function Login() {
         // const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user
-        console.log("user", user)
 
-        router.push("/profile")
+        const email = user.email
+
+        if (!email) {
+          return
+        }
+
+        const domain = email.split("@")[1]
+
+        if (!allowedDomains.includes(domain)) {
+          router.push("/not-allowed")
+        } else {
+          router.push("/profile")
+        }
       })
       .catch((error) => {
         // Handle Errors here.
