@@ -47,7 +47,7 @@ export default function Login() {
             </h1>
             <button
               onClick={signIn}
-              className="mr-3 rounded-lg bg-blue-400 p-4 text-white hover:border hover:border-blue-400 hover:bg-white hover:text-blue-400"
+              className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border border-[#454138]"
             >
               Sign in with Google
             </button>
