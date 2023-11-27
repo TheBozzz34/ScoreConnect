@@ -5,8 +5,10 @@ import Script from 'next/script'
 import React, { useEffect } from "react"
 import Navbar from "components/Navbar/Navbar"
 import { auth } from "../firebase"
+import Hotjar from "@hotjar/browser"
 
 export default function Web() {
+  Hotjar.init(2349532, 6);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {

@@ -6,6 +6,7 @@ import { AiOutlineInfoCircle } from "react-icons/ai"
 import NavBar from "components/Navbar/Navbar"
 import { auth } from "../../firebase"
 import Script from "next/script"
+import Hotjar from "@hotjar/browser"
 
 export default function Profile() {
   const router = useRouter()
@@ -15,6 +16,8 @@ export default function Profile() {
   const toggleDevVisibility = () => {
     setIsDevVisible(!isDevVisible)
   }
+
+  Hotjar.init(2349532, 6);
 
   useEffect(() => {
     if (user) {

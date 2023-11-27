@@ -8,6 +8,7 @@ import Navbar from "components/Navbar/Navbar"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import Script from 'next/script';
+import Hotjar from '@hotjar/browser';
 
 export default function Scoreboard() {
   const { messages, sendMessage, connectionStatus } = useWebSocket()
@@ -30,6 +31,8 @@ export default function Scoreboard() {
   const hasInitialized = useRef(false)
 
   const router = useRouter()
+
+  Hotjar.init(2349532, 6);
 
   type MessageType = {
     connectionId: string;

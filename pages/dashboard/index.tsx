@@ -6,11 +6,14 @@ import NavBar from "components/Navbar/Navbar"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import Script from "next/script"
+import Hotjar from "@hotjar/browser"
 
 export default function Profile() {
   const router = useRouter()
   const { messages, sendMessage, connectionStatus } = useWebSocket()
   const [inputText, setInputText] = useState("")
+
+  Hotjar.init(2349532, 6);
 
   const sendMessageWithToken = async () => {
     try {

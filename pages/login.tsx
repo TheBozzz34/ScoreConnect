@@ -4,9 +4,13 @@ import { useRouter } from "next/navigation"
 import Script from "next/script"
 import NavBar from "components/Navbar/Navbar"
 import { auth, provider } from "../firebase"
+import Hotjar from '@hotjar/browser';
 
 export default function Login() {
   const router = useRouter()
+
+
+  Hotjar.init(2349532, 6);
 
   const signIn = () => {
     signInWithPopup(auth, provider)
