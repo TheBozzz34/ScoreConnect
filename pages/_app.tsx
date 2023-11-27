@@ -2,6 +2,7 @@ import * as Ably from 'ably';
 import { AblyProvider } from 'ably/react';
 import "../styles/tailwind.css"
 import { AppProps } from "next/app"
+import Footer from 'components/Footer/Footer';
 import { WebSocketProvider } from "../context/WebSocketContext"
 
 
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <WebSocketProvider>
         <Component {...pageProps} />
       </WebSocketProvider>
+      <Footer />
     </AblyProvider>
   )
 }

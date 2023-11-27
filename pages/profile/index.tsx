@@ -12,11 +12,7 @@ export default function Profile() {
 
   const [isDevVisible, setIsDevVisible] = useState(false)
   const toggleDevVisibility = () => {
-    if (window.location.hostname === "localhost") {
-      setIsDevVisible(!isDevVisible)
-    } else {
-      alert("You must be on localhost to view this information.")
-    }
+    setIsDevVisible(!isDevVisible)
   }
 
   useEffect(() => {

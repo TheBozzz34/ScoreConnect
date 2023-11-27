@@ -48,8 +48,6 @@ export default function Web() {
         </div>
       </section>
 
-      <Footer />
-
       {/*
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
