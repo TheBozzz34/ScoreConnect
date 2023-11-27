@@ -2,6 +2,7 @@ import Head from 'next/head';
 import React from 'react';
 import '../styles/yorha.module.css';
 import Script from 'next/script';
+import NavBar from 'components/Navbar/Navbar';
 
 const Custom404 = () => {
   return (
@@ -20,6 +21,7 @@ const Custom404 = () => {
         `}
       </Script>
       <div className="error-container">
+        <NavBar />
         <h1>404</h1>
         <h2>Page Not Found</h2>
         <p>Looks like the information you seek is lost in the depths of the system.</p>
