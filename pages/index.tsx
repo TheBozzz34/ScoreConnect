@@ -1,14 +1,18 @@
+import Hotjar from "@hotjar/browser"
 import { onAuthStateChanged } from "firebase/auth"
-import { GetServerSidePropsContext } from "next"
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head"
 import Script from 'next/script'
 import React, { useEffect } from "react"
+import EmailSignup from "components/Email/EmailSignup"
 import Navbar from "components/Navbar/Navbar"
 import { auth } from "../firebase"
-import Hotjar from "@hotjar/browser"
-import EmailSignup from "components/Email/EmailSignup"
+import { getIsSsrMobile } from "../utils/getIsSsrMobile";
+import { useIsMobile } from "../utils/useIsMobile";
+
 
 export default function Web() {
+  const isMobile = useIsMobile();
   Hotjar.init(2349532, 6);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -63,7 +67,19 @@ export default function Web() {
         </div>
       </section>
 
-      <EmailSignup />
+      {isMobile ? (
+        <section>
+          <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
+            <div className="mx-auto place-self-center">
+              <h2>This website is not optimized for mobile devices. Please use a desktop or laptop computer to view this site.</h2>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section>
+          <EmailSignup />
+        </section>
+      )}
 
       {/*
       <section>
@@ -86,17 +102,10 @@ export default function Web() {
   )
 }
 
-export async function getServerSideProps({ req }: GetServerSidePropsContext) {
-  if (req.headers?.host?.includes("next-enterprise.vercel.app")) {
-    return {
-      redirect: {
-        destination: "https://blazity.com/open-source/nextjs-enterprise-boilerplate",
-        permanent: true,
-      },
-    }
-  }
-
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
-    props: {},
-  }
+    props: {
+      isSsrMobile: getIsSsrMobile(context)
+    }
+  };
 }
