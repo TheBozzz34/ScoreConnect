@@ -27,7 +27,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
   const [connectionStatus, setConnectionStatus] = useState<string>("Disconnected")
 
   useEffect(() => {
-    const newSocket = new WebSocket("ws://127.0.0.1:8887")
+    const newSocket = new WebSocket("wss://wss.catgirlsaresexy.org")
 
     newSocket.onopen = () => {
       console.log("WebSocket connected")

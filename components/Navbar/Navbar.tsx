@@ -30,6 +30,7 @@ export default function NavBar() {
   const isLoginPath = pathname === "/login"
   const [user, setUser] = useState<SetStateAction<any>>(null)
   const [userProfilePic, setUserProfilePic] = useState<SetStateAction<any>>(null)
+  const [hovered, setHovered] = useState(false);
   const router = useRouter()
 
   useEffect(() => {
@@ -46,13 +47,18 @@ export default function NavBar() {
   return (
     <div className="sticky top-4 z-[100] mx-2 mb-12 rounded-lg bg-[#454138] p-[0.4rem] backdrop-blur-md">
       <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
+        <div 
+        onMouseEnter={() => setHovered(true)}
+        className="border-2 border-[#302d29] rounded-full transition-opacity duration-300"
+        >
         <Image
           src="/yorha-no-2-type-b-1.png"
           width={40}
           height={40}
-          className="rounded-full border-2 border-[#302d29]"
+          className={`rounded-full transition-opacity duration-300 ${hovered ? 'opacity-100' : 'opacity-0'}`}
           alt="ScoreConnect Logo"
         />
+        </div>
 
         {navItems.map((item) => {
           const isActive = item.path === pathname

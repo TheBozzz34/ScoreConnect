@@ -34,6 +34,9 @@ export default function Profile() {
     <>
       <Head>
         <meta property="og:url" content="https://sc.necrozma.xyz" />
+        <meta property="og:title" content="ScoreConnect Web" />
+        <meta property="og:description" content="ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event organizers." />
+        <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
         <title>ScoreConnect Web</title>
       </Head>
       <NavBar />
