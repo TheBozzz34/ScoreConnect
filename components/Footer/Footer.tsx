@@ -1,7 +1,8 @@
+import { GetServerSidePropsContext } from "next";
+import Image from 'next/image';
 import React from 'react';
 import { getIsSsrMobile } from "../../utils/getIsSsrMobile";
 import { useIsMobile } from "../../utils/useIsMobile";
-import { GetServerSidePropsContext } from "next";
 
 
 const Footer = () => {
