@@ -15,6 +15,7 @@ export default function Login() {
         // const credential = GoogleAuthProvider.credentialFromResult(result);
         // const token = credential.accessToken;
         // The signed-in user info.
+
         const user = result.user
 
         const email = user.email
@@ -33,14 +34,14 @@ export default function Login() {
       })
       .catch((error) => {
         // Handle Errors here.
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
+        const errorCode = error.code;
+        const errorMessage = error.message;
         // // The email of the user's account used.
-        // const email = error.email;
+        const email = error.email;
         // // The AuthCredential type that was used.
         // const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
-        console.log("error", error)
+        router.push("/not-allowed")
       })
   }
 
