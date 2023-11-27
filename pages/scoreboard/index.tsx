@@ -7,6 +7,7 @@ import { BsPencilSquare } from "react-icons/bs"
 import Navbar from "components/Navbar/Navbar"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
+import Script from 'next/script';
 
 export default function Scoreboard() {
   const { messages, sendMessage, connectionStatus } = useWebSocket()
@@ -135,6 +136,17 @@ export default function Scoreboard() {
         <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
         <title>ScoreConnect Web</title>
       </Head>
+
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-G3GH38QDFZ');
+        `}
+      </Script>
 
       <Navbar />
 

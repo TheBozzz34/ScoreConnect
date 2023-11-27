@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import '../styles/yorha.module.css';
+import Script from 'next/script';
 
 const Custom404 = () => {
   return (
@@ -8,6 +9,16 @@ const Custom404 = () => {
       <Head>
         <title>404 - Page Not Found</title>
       </Head>
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-G3GH38QDFZ');
+        `}
+      </Script>
       <div className="error-container">
         <h1>404</h1>
         <h2>Page Not Found</h2>

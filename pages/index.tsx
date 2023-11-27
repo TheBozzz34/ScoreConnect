@@ -1,12 +1,10 @@
 import { onAuthStateChanged } from "firebase/auth"
 import { GetServerSidePropsContext } from "next"
 import Head from "next/head"
+import Script from 'next/script'
 import React, { useEffect } from "react"
-import { Button } from "components/Button/Button"
 import Navbar from "components/Navbar/Navbar"
 import { auth } from "../firebase"
-import { LP_GRID_ITEMS } from "../lp-items"
-import Footer from "components/Footer/Footer"
 
 export default function Web() {
   useEffect(() => {
@@ -26,6 +24,17 @@ export default function Web() {
         <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
         <title>ScoreConnect Web</title>
       </Head>
+
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-G3GH38QDFZ');
+        `}
+      </Script>
 
       <Navbar />
 

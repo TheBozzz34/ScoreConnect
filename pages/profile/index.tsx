@@ -5,6 +5,7 @@ import React, { SetStateAction, useEffect, useState } from "react"
 import { AiOutlineInfoCircle } from "react-icons/ai"
 import NavBar from "components/Navbar/Navbar"
 import { auth } from "../../firebase"
+import Script from "next/script"
 
 export default function Profile() {
   const router = useRouter()
@@ -39,6 +40,18 @@ export default function Profile() {
         <meta property="og:image" content="https://sc.necrozma.xyz/banner.png" />
         <title>ScoreConnect Web</title>
       </Head>
+
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-G3GH38QDFZ');
+        `}
+      </Script>
+      
       <NavBar />
       <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
