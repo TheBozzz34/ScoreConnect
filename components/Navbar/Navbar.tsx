@@ -44,13 +44,13 @@ export default function NavBar() {
   }, [])
 
   return (
-    <div className="sticky top-4 z-[100] mx-2 mb-12 rounded-lg bg-blue-400 p-[0.4rem] backdrop-blur-md">
+    <div className="sticky top-4 z-[100] mx-2 mb-12 rounded-lg bg-[#454138] p-[0.4rem] backdrop-blur-md">
       <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
         <Image
-          src="/ScoreConnectLogo-transformed-croppeed.png"
+          src="/yorha-no-2-type-b-1.png"
           width={40}
           height={40}
-          className="rounded-full border-2 border-blue-600"
+          className="rounded-full border-2 border-[#302d29]"
           alt="ScoreConnect Logo"
         />
 
@@ -70,7 +70,7 @@ export default function NavBar() {
             <Link
               key={item.path}
               className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${
-                isActive ? "text-white" : "text-blue-600"
+                isActive ? "text-[#302d29]" : "text-[#dcd8c0]"
               }`}
               href={item.path}
             >
@@ -81,7 +81,7 @@ export default function NavBar() {
 
         {user ? (
           <button
-            className="relative rounded-md px-4 py-2 text-sm font-bold text-blue-600 no-underline duration-300 ease-in lg:text-base"
+            className="relative rounded-md px-4 py-2 text-sm font-bold text-[#dcd8c0] no-underline duration-300 ease-in lg:text-base"
             onClick={() => {
               router.push("/logout")
             }}
@@ -91,7 +91,7 @@ export default function NavBar() {
         ) : (
           <button
             className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${
-              isLoginPath ? "text-white" : "text-blue-600" // Change colors accordingly
+              isLoginPath ? "text-[#302d29]" : "text-[#dcd8c0]" // Change colors accordingly
             }`}
             onClick={() => {
               router.push("/login")
@@ -109,7 +109,7 @@ export default function NavBar() {
               src={userProfilePic}
               width={40}
               height={40}
-              className="rounded-full border-2 border-blue-600"
+              className="rounded-full border-2 border-[#302d29]"
               alt="Profile Picture"
             />
           ) : null}

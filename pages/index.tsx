@@ -6,6 +6,7 @@ import { Button } from "components/Button/Button"
 import Navbar from "components/Navbar/Navbar"
 import { auth } from "../firebase"
 import { LP_GRID_ITEMS } from "../lp-items"
+import Footer from "components/Footer/Footer"
 
 export default function Web() {
   useEffect(() => {
@@ -25,28 +26,32 @@ export default function Web() {
 
       <Navbar />
 
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">
-            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
-              ScoreConnect Web
+            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight text-[#454138] md:text-5xl xl:text-6xl">
+              ScoreConnect
             </h1>
-            <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
+            <p className="mb-6 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-8 lg:text-xl">
               ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event
-              organizers. The software offers wireless connectivity, customization options, and compatibility with
-              various scoreboards, making it an essential tool for efficient score management.
+              organizers.
             </p>
-            <Button href="/contact" className="mr-3 hover:bg-white hover:text-blue-400">
+            {/*
+            <Button href="/contact" className="mr-3 rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border border-[#454138]">
               Get started
             </Button>
-            <Button href="/login" intent="secondary" className="hover:bg-blue-400 hover:text-white">
+            <Button href="/login" intent="secondary" className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border border-[#454138]">
               Login
             </Button>
+            */}
           </div>
         </div>
       </section>
 
-      <section className="bg-white dark:bg-gray-900">
+      <Footer />
+
+      {/*
+      <section>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
           <div className="justify-center space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">
             {LP_GRID_ITEMS.map((singleItem) => (
@@ -61,6 +66,7 @@ export default function Web() {
           </div>
         </div>
       </section>
+      */}
     </>
   )
 }

@@ -41,41 +41,41 @@ export default function Profile() {
         <title>ScoreConnect Web</title>
       </Head>
       <NavBar />
-      <section className="bg-white dark:bg-gray-900">
+      <section>
         <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">
-            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
+            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight text-[#454138] md:text-5xl xl:text-6xl">
               Profile
             </h1>
             {user && user.displayName && (
-              <p className="mb-6 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
+              <p className="mb-6 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-8 lg:text-xl">
                 Hello {user.displayName}!
               </p>
             )}
-            <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
+            <div className="flex flex-col space-y-4 rounded-lg border-2 border-[#454138] p-4">
               {user && user.email && (
-                <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+                <p className="mb-3 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
                   Email:{" "}
-                  <span className="w-fit rounded bg-gray-300 p-1 text-gray-300 transition-all hover:text-gray-500">
+                  <span className="w-fit rounded bg-[#454138] p-1 text-[#454138] transition-all hover:text-[#dcd8c0] hover:bg-[#454138]">
                     {user.email}
                   </span>
                 </p>
               )}
               {user && user.uid && (
-                <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+                <p className="mb-3 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
                   UID:{" "}
-                  <span className="w-fit rounded bg-gray-300 p-1 text-gray-300 transition-all hover:text-gray-500">
+                  <span className="w-fit rounded bg-[#454138] p-1 text-[#454138] transition-all hover:text-[#dcd8c0] hover:bg-[#454138]">
                     {user.uid}
                   </span>
                 </p>
               )}
-              <p className="mt-8 text-sm text-gray-500 dark:text-gray-400">
+              <p className="mt-8 text-sm text-[#454138]">
                 Details have been hidden for privacy reasons, hover over each entry to see the details.
               </p>
 
               <div>
-                <div className="rounded bg-white p-4 shadow">
-                  <button className="rounded bg-blue-500 px-3 py-1 text-white" onClick={toggleDevVisibility}>
+                <div className="rounded p-4 shadow">
+                  <button className="rounded border-2 bg-[#454138] p-1 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border-[#454138] outline-none" onClick={toggleDevVisibility}>
                     Toggle Developer Info
                   </button>
                   {isDevVisible && (

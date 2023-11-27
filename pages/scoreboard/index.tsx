@@ -110,10 +110,10 @@ export default function Scoreboard() {
     const ctx = canvas?.getContext("2d")
 
     if (ctx) {
-      ctx.fillStyle = "#000000"
+      ctx.fillStyle = "#454138"
       ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
-      ctx.fillStyle = "#FFFFFF"
+      ctx.fillStyle = "#dcd8c0"
       ctx.font = "bold 48px Arial"
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
@@ -138,33 +138,33 @@ export default function Scoreboard() {
       <div className="flex">
         {" "}
         {/* This container makes the two "WIP" divs appear on the same line */}
-        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-gray-200">
-          <h1 className="flex items-center justify-center border-b-2 border-gray-200 p-2 text-2xl font-semibold">
+        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
+          <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
             Settings
           </h1>
 
-          <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
-            <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+          <div className="flex flex-col space-y-4 rounded-lg p-4">
+            <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               WS Server:
-              <span className="w-fit rounded bg-gray-300 p-1" style={{ display: "inline-flex", alignItems: "center" }}>
+              <span className="w-fit text-[#dcd8c0] rounded bg-[#454138] p-1" style={{ display: "inline-flex", alignItems: "center" }}>
                 {connectionStatus === "Connected" ? "Connected" : "Disconnected"}
               </span>
             </p>
-            <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+            <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Scoreboard:
-              <span className="w-fit rounded bg-gray-300 p-1" style={{ display: "inline-flex", alignItems: "center" }}>
+              <span className="w-fit text-[#dcd8c0] rounded bg-[#454138] p-1" style={{ display: "inline-flex", alignItems: "center" }}>
                 Disconnected
               </span>
             </p>
-            <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+            <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Audio:
-              <span className="w-fit rounded bg-gray-300 p-1" style={{ display: "inline-flex", alignItems: "center" }}>
+              <span className="w-fit text-[#dcd8c0] rounded bg-[#454138] p-1" style={{ display: "inline-flex", alignItems: "center" }}>
                 Disconnected
               </span>
             </p>
 
             <button
-              className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border border-[#454138]"
               onClick={() =>
                 sendMessage(JSON.stringify({ id: Math.floor(Math.random() * 100000), type: 8, text: "getInitialData" }))
               }
@@ -173,63 +173,63 @@ export default function Scoreboard() {
             </button>
           </div>
         </div>
-        <section className="grow bg-white dark:bg-gray-900">
+        <section className="grow">
           <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
-            <div className="justify-center space-y-8 rounded-lg border-2 border-gray-200 p-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
-              <div className="border-r-2 border-gray-200 pr-4 text-center">
+            <div className="justify-center space-y-8 rounded-lg border-2 border-[#454138] p-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
+              <div className="border-r-2 border-[#454138] pr-4 text-center">
                 <h2
-                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold"
+                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-[#454138]"
                   onClick={() => setShowTeamAPopup(true)}
                 >
                   {teamAName}
-                  <BsPencilSquare className="ml-2 text-blue-400" onClick={() => setShowTeamAPopup(true)} />
+                  <BsPencilSquare className="ml-2 text-[#605b52]" onClick={() => setShowTeamAPopup(true)} />
                 </h2>
-                <p className="text-lg font-bold">{teamAScore}</p>
+                <p className="text-lg font-bold text-[#454138]">{teamAScore}</p>
                 <button
                   onClick={incrementTeamAScore}
-                  className="mr-1 mt-2 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="mr-1 mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
                 >
                   Increment score
                 </button>
                 <button
                   onClick={() => setTeamAScore(teamAScore - 1)}
-                  className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                  className="mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
                 >
                   Decrement score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamAScore(0)}
-                  className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                  className="mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
                 >
                   Reset score
                 </button>
               </div>
               <div className="text-center">
                 <h2
-                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold"
+                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-[#454138]"
                   onClick={() => setShowTeamBPopup(true)}
                 >
                   {teamBName}
-                  <BsPencilSquare className="ml-2 text-blue-400" onClick={() => setShowTeamBPopup(true)} />
+                  <BsPencilSquare className="ml-2 text-[#605b52]" onClick={() => setShowTeamBPopup(true)} />
                 </h2>
-                <p className="text-lg font-bold">{teamBScore}</p>
+                <p className="text-lg font-bold text-[#454138]">{teamBScore}</p>
                 <button
                   onClick={incrementTeamBScore}
-                  className="mr-1 mt-2 rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                  className="mr-1 mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
                 >
                   Increment score
                 </button>
                 <button
                   onClick={() => setTeamBScore(teamBScore - 1)}
-                  className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                  className="mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
                 >
                   Decrement score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamBScore(0)}
-                  className="mt-2 rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                  className="mt-2 rounded px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#454138]"
                 >
                   Reset score
                 </button>
@@ -237,22 +237,22 @@ export default function Scoreboard() {
             </div>
           </div>
         </section>
-        <div className="mr-3 w-1/6 flex-none rounded-lg border-2 border-gray-200">
-          <h1 className="flex items-center justify-center border-b-2 border-gray-200 p-2 text-2xl font-semibold">
+        <div className="mr-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
+          <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
             Misc
           </h1>
-
-          <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
+          {/*
+          <div className="flex flex-col space-y-4 rounded-lg border-2 border-[#454138] p-4">
             <p className='mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl'>
               Alerts:
             </p>
             {subMessages.map((message: MessageType) => (
               <div key={message.id} className="border rounded p-2">
                 <p>{message.data}</p>
-                {/* Display other message properties here */}
               </div>
             ))}
           </div>
+          */}
 
         </div>
 
@@ -279,23 +279,23 @@ export default function Scoreboard() {
       {showTeamAPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
           {/* <NameChangeOverlay onClick={() => setShowTeamAPopup(false)} /> */}
-          <div className="w-64 rounded-lg bg-white p-4 shadow-md">
-            <h2 className="mb-4 text-lg font-semibold">Change Team A Name</h2>
+          <div className="w-64 rounded-lg bg-[#454138] p-4 shadow-md">
+            <h2 className="mb-4 text-lg font-semibold text-[#dcd8c0]">Change Team A Name</h2>
             <input
               type="text"
               value={teamANameTemp}
               onChange={(e) => setTeamANameTemp(e.target.value)}
-              className="mb-4 w-full rounded border border-gray-300 p-2"
+              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 outline-none text-[#454138]"
             />
             <div className="flex justify-between">
               <button
-                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded bg-[#dcd8c0] px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#dcd8c0]"
                 onClick={() => handleTeamANameChange(teamANameTemp)}
               >
                 Save
               </button>
               <button
-                className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                className="rounded bg-[#dcd8c0] px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#dcd8c0]"
                 onClick={() => setShowTeamAPopup(false)}
               >
                 Cancel
@@ -309,23 +309,23 @@ export default function Scoreboard() {
       {showTeamBPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
           {/* <NameChangeOverlay onClick={() => setShowTeamBPopup(false)} /> */}
-          <div className="w-64 rounded-lg bg-white p-4 shadow-md">
-            <h2 className="mb-4 text-lg font-semibold">Change Team B Name</h2>
+          <div className="w-64 rounded-lg bg-[#454138] p-4 shadow-md">
+            <h2 className="mb-4 text-lg font-semibold text-[#dcd8c0]">Change Team B Name</h2>
             <input
               type="text"
               value={teamBNameTemp}
               onChange={(e) => setTeamBNameTemp(e.target.value)}
-              className="mb-4 w-full rounded border border-gray-300 p-2"
+              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 outline-none text-[#454138]"
             />
             <div className="flex justify-between">
               <button
-                className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+                className="rounded bg-[#dcd8c0] px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#dcd8c0]"
                 onClick={() => handleTeamBNameChange(teamBNameTemp)}
               >
                 Save
               </button>
               <button
-                className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+                className="rounded bg-[#dcd8c0] px-4 py-2 text-[#454138] hover:bg-[#454138] hover:text-[#dcd8c0] transition duration-200 ease-in-out border border-[#dcd8c0]"
                 onClick={() => setShowTeamBPopup(false)}
               >
                 Cancel
@@ -336,8 +336,8 @@ export default function Scoreboard() {
       )}
 
       <div className="flex justify-center">
-        <div className="m-3 w-fit flex-none rounded-lg border-2 border-gray-200">
-          <h1 className="flex items-center justify-center border-b-2 border-gray-200 p-2 text-2xl font-semibold">
+        <div className="m-3 w-fit flex-none rounded-lg border-2 border-[#454138]">
+          <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
             Preview
           </h1>
 

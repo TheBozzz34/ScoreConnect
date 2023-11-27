@@ -56,29 +56,29 @@ export default function Profile() {
         <title>ScoreConnect Web</title>
       </Head>
       <NavBar />
-      <section className="bg-white dark:bg-gray-900">
+      <section className="text-[#454138]">
         <div className="mx-auto grid w-1/3 px-4 py-8 text-center lg:py-16">
           <div className="mx-auto place-self-center">
-            <h1 className="mb-4  text-4xl font-extrabold leading-none tracking-tight dark:text-white md:text-5xl xl:text-6xl">
+            <h1 className="mb-4  text-4xl font-extrabold leading-none tracking-tight md:text-5xl xl:text-6xl">
               Dashboard
             </h1>
-            <p className="mb-6 font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-8 lg:text-xl">
+            <p className="mb-6 font-light text-[#454138] md:text-lg lg:mb-8 lg:text-xl">
               Connection Status:
             </p>
-            <div className="flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
-              <p className="mb-3 font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+            <div className="flex flex-col space-y-4 rounded-lg border-2 border-[#454138] p-4">
+              <p className="mb-3 font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
                 WS Server:
                 <span
-                  className="w-fit rounded bg-gray-300 p-1"
+                  className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
                   style={{ display: "inline-flex", alignItems: "center" }}
                 >
                   {connectionStatus === "Connected" ? "Connected" : "Disconnected"}
                 </span>
               </p>
-              <p className="mb-3 font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+              <p className="mb-3 font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
                 Scoreboard:
                 <span
-                  className="w-fit rounded bg-gray-300 p-1"
+                  className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
                   style={{ display: "inline-flex", alignItems: "center" }}
                 >
                   Disconnected
@@ -89,14 +89,14 @@ export default function Profile() {
               </p>
 
               <button
-                className="rounded-lg border-2 border-gray-200 p-4 transition duration-200 ease-in-out hover:bg-gray-200 hover:text-gray-800"
+                className="rounded-lg border-2 border-[#454138] p-4 transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0] hover:border-[#454138]"
                 onClick={() => sendMessage("test")}
               >
                 Test Scoreboard Connection
               </button>
 
               <button
-                className="rounded-lg border-2 border-gray-200 p-4 transition duration-200 ease-in-out hover:bg-gray-200 hover:text-gray-800"
+                className="rounded-lg border-2 border-[#454138] p-4 transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0] hover:border-[#454138]"
                 onClick={() => router.push("/scoreboard")}
               >
                 Open Scoreboard
@@ -105,27 +105,27 @@ export default function Profile() {
 
             <div
               id="websocketTestInput"
-              className="mt-1 flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4"
+              className="mt-1 flex flex-col space-y-4 rounded-lg border-2 border-[#454138] p-4"
             >
-              <p className="mb-3 max-w-2xl font-light text-gray-500 dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+              <p className="mb-3 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
                 WebSocket Test
               </p>
               <input
                 type="number"
                 placeholder="Message type"
-                className="rounded-lg border-2 border-gray-200 p-4"
+                className="rounded border-2 border-[#454138] p-4 bg-[#454138] text-[#dcd8c0] outline-none"
                 onChange={handleChange}
                 value={inputText}
               />
               <button
                 onClick={sendMessageWithToken}
-                className="rounded-lg border-2 border-gray-200 p-4 transition duration-200 ease-in-out hover:bg-gray-200 hover:text-gray-800"
+                className="rounded border-2 bg-[#454138] p-4 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border-[#454138]"
               >
                 Send Message
               </button>
             </div>
 
-            <div className="mt-1 flex flex-col space-y-4 rounded-lg border-2 border-gray-200 p-4">
+            <div className="mt-1 flex flex-col space-y-4 rounded-lg border-2 border-[#454138] p-4">
               <h2>WebSocket Messages</h2>
               <ul>
                 {messages.map((message, index) => (
