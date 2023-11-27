@@ -52,6 +52,7 @@
     "firebase": "^10.5.0",
     "konva": "^9.2.3",
     "lodash": "^4.17.21",
+    "mobile-detect": "^1.4.5",
     "next": "^13.5.5",
     "next-compose-plugins": "^2.2.1",
     "react": "^18.2.0",

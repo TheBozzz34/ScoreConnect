@@ -4,6 +4,7 @@ import "../styles/tailwind.css"
 import { AppProps } from "next/app"
 import Footer from 'components/Footer/Footer';
 import { WebSocketProvider } from "../context/WebSocketContext"
+import { IsSsrMobileContext } from "../utils/useIsMobile";
 
 
 const client = new Ably.Realtime.Promise({ key: '4iztzg.5uLJRA:yrpSpBPszqaZP17ZNIDhIYPoxTmhtXEdbc3kbICMotE', clientId: 'ScoreConnectWeb' });
@@ -11,12 +12,14 @@ const client = new Ably.Realtime.Promise({ key: '4iztzg.5uLJRA:yrpSpBPszqaZP17ZN
 function MyApp({ Component, pageProps }: AppProps) {
 
   return (
-    <AblyProvider client={client}>
-      <WebSocketProvider>
-        <Component {...pageProps} />
-      </WebSocketProvider>
-      <Footer />
-    </AblyProvider>
+    <IsSsrMobileContext.Provider value={pageProps.isSsrMobile}>
+      <AblyProvider client={client}>
+        <WebSocketProvider>
+          <Component {...pageProps} />
+        </WebSocketProvider>
+        <Footer />
+      </AblyProvider>
+    </IsSsrMobileContext.Provider>
   )
 }
 
