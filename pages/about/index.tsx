@@ -44,6 +44,32 @@ const about = () => {
                 </div>
             </div>
             <TechnologyList />
+            <div id="versionInfo" className="mx-auto mt-8 w-[80%] rounded-lg bg-[#454138] p-4 shadow-md">
+                <h2 className="border-b-[#dcd8c0] text-xl font-semibold text-[#dcd8c0]">Version Information</h2>
+                <div className="relative overflow-hidden">
+                    <p className="m-2 rounded-lg bg-[#302d29] px-4 py-2 text-sm font-semibold text-[#dcd8c0]">
+                        ScoreConnect is currently in{" "}
+                        <a href="https://en.wikipedia.org/wiki/Software_release_life_cycle#Alpha" className="underline">
+                            alpha
+                        </a>{" "}
+                        and is not yet ready for production use. Please report any bugs or issues to{" "}
+                        <a href="mailto:support@catgirlsaresexy.org" className="underline">necrozma@catgirlsaresexy.org</a>
+                        .
+                    </p>
+                    <p className="mx-2 mb-2 rounded-lg bg-[#302d29] px-4 py-2 text-sm font-semibold text-[#dcd8c0]">
+                        ScoreConnect Web is currently tracking commit{" "}
+                        <a href="https://github.com/TheBozzz34/ScoreConnect/commit/14735e7359cc16828fd91797f76d3da48aadfbcc" className="underline">14735e7</a> on branch{" "} 
+                        <a href="https://github.com/TheBozzz34/ScoreConnect/tree/main" className="underline">main</a>
+                        .
+                    </p>
+                    <p className="mx-2 mb-2 rounded-lg bg-[#302d29] px-4 py-2 text-sm font-semibold text-[#dcd8c0]">
+                        ScoreConnect Server is currently tracking commit{" "}
+                        <a href="https://github.com/TheBozzz34/ScoreConnectServer/commit/1d6304d6905534e0c873317e28961b10ff845c33" className="underline">1d6304d</a> on branch{" "}
+                        <a href="https://github.com/TheBozzz34/ScoreConnectServer/tree/master" className="underline">master</a>
+                        .
+                    </p>
+                </div>
+            </div>
         </div>
     )
 }

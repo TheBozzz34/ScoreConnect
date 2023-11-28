@@ -34,6 +34,26 @@ export default function NavBar() {
   ])
   const [konamiCode, setKonamiCode] = useState<string[]>([])
 
+  const [enviroment, setEnviroment] = useState("")
+  const [enviromentColor, setEnviromentColor] = useState("")
+
+  useEffect(() => {
+    if(process.env.NODE_ENV === "development") {
+      setEnviroment("Development")
+      setEnviromentColor("bg-[#ff0000]")
+    }
+    else if(process.env.NODE_ENV === "production") {
+      setEnviroment("Production")
+      setEnviromentColor("bg-[#00ff00]")
+    }
+    else {
+      setEnviroment("Unknown enviroment")
+      setEnviromentColor("bg-[#0000ff]")
+    }
+  }, [])
+
+
+
   useEffect(() => {
     const checkKonamiCode = (e: KeyboardEvent) => {
       setKonamiCode((prevState) => {
@@ -72,6 +92,7 @@ export default function NavBar() {
     <div>
       <div className="sticky top-4 z-[100] mx-2 mb-12 mt-4 rounded-lg bg-[#454138] p-[0.4rem] backdrop-blur-md">
         <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
+          <span className={`${enviromentColor} text-[#dcd8c0] text-xs font-bold p-1 rounded h-1/2 mt-2`}>{enviroment}</span>
           {/*
         <div 
         onMouseEnter={() => setHovered(true)}

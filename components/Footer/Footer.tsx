@@ -37,7 +37,7 @@ const Footer = () => {
   } else {
     return (
       <div>
-        <footer className="fixed bottom-0 right-0 z-[100] m-4 w-fit rounded-lg bg-[#454138] text-[#dcd8c0] shadow">
+        <footer className="fixed bottom-0 right-0 z-[100] m-4 w-fit rounded-lg bg-[#454138] text-[#dcd8c0] shadow border-2 border-[#dcd8c0]">
           <div className="mx-auto w-full max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
             <ul className="mt-3 flex flex-wrap items-center text-sm font-medium sm:mt-0">
               <li>
@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
         </footer>
 
-        <footer className="fixed bottom-0 m-4 w-fit rounded-lg bg-[#454138] text-[#dcd8c0] shadow">
+        <footer className="fixed bottom-0 m-4 w-fit rounded-lg bg-[#454138] text-[#dcd8c0] shadow border-2 border-[#dcd8c0]">
           <div className="mx-auto w-full max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
             <ul className="mt-3 flex flex-wrap items-center text-sm font-medium sm:mt-0">
               <li>
