@@ -92,7 +92,7 @@ export default function NavBar() {
     <div>
       <div className="sticky top-4 z-[100] mx-2 mb-12 mt-4 rounded-lg bg-[#454138] p-[0.4rem] backdrop-blur-md">
         <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
-          <span className={`${enviromentColor} text-[#dcd8c0] text-xs font-bold p-1 rounded h-1/2 mt-2`}>{enviroment}</span>
+          <span className={`${enviromentColor} text-[#454138] text-xs font-bold p-1 rounded h-1/2 mt-2`}>{enviroment}</span>
           {/*
         <div 
         onMouseEnter={() => setHovered(true)}
