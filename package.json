@@ -60,6 +60,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-konva": "^18.2.10",
+    "react-router-dom": "^6.20.0",
     "tailwind-merge": "^1.14.0",
     "ws": "^8.14.2",
     "zod": "^3.22.4"

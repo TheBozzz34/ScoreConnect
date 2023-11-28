@@ -1,11 +1,12 @@
+import { signOut } from "firebase/auth"
 import Head from "next/head"
 import React, { useEffect } from "react"
 import "../styles/yorha.module.css"
-import { auth, provider } from "../firebase"
-import { signOut } from "firebase/auth"
+import { auth } from "../firebase"
 
 
 const NotAllowed = () => {
+    const [errorCode, setErrorCode] = React.useState("")
 
     const signOutUser = () => {
         signOut(auth)
@@ -19,6 +20,8 @@ const NotAllowed = () => {
 
     useEffect(() => {
         signOutUser()
+        const params = new URLSearchParams(window.location.search)
+        setErrorCode(params.get("error") || "")
     }, [])
 
     return (
@@ -27,9 +30,17 @@ const NotAllowed = () => {
                 <title>ScoreConnect Error</title>
             </Head>
             <div className="error-container">
-                <h1>Error</h1>
-                <h2>Access denied</h2>
-                <p>Your account does not appear to have access. Are you using your domain email?</p>
+                <h1>{errorCode}</h1>
+                {errorCode === "auth/user-disabled" && (
+                    <h2>
+                        Your account has been disabled. Please contact a ScoreConnect administrator. 
+                    </h2>
+                )}
+                {errorCode === "auth/domain-not-allowed" && (
+                    <h2>
+                        Your email domain is not allowed. Please contact a ScoreConnect administrator. 
+                    </h2>
+                )}
             </div>
         </>
     )

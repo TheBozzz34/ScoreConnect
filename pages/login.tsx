@@ -1,4 +1,4 @@
-import { signInWithPopup, signOut } from "firebase/auth"
+import { signInWithPopup } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
 import { auth, provider } from "../firebase"
@@ -27,7 +27,7 @@ export default function Login() {
         const domain = email.split("@")[1]
 
         if (!allowedDomains.includes(domain)) {
-          router.push("/not-allowed")
+          router.push("/not-allowed?error=auth/domain-not-allowed")
         } else {
           router.push("/profile")
         }
@@ -41,7 +41,7 @@ export default function Login() {
         // // The AuthCredential type that was used.
         // const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
-        router.push("/not-allowed")
+        router.push("/not-allowed?error=" + errorCode + "&message=" + errorMessage + "&email=" + email)
       })
   }
 
