@@ -44,7 +44,7 @@ const about = () => {
                 </div>
             </div>
             <TechnologyList />
-            <div id="versionInfo" className="mx-auto mt-8 w-[80%] rounded-lg bg-[#454138] p-4 shadow-md">
+            <div id="versionInfo" className="mx-auto my-8 w-[80%] rounded-lg bg-[#454138] p-4 shadow-md">
                 <h2 className="border-b-[#dcd8c0] text-xl font-semibold text-[#dcd8c0]">Version Information</h2>
                 <div className="relative overflow-hidden">
                     <p className="m-2 rounded-lg bg-[#302d29] px-4 py-2 text-sm font-semibold text-[#dcd8c0]">

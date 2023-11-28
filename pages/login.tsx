@@ -29,7 +29,11 @@ export default function Login() {
         if (!allowedDomains.includes(domain)) {
           router.push("/not-allowed?error=auth/domain-not-allowed")
         } else {
-          router.push("/onboarding")
+          if(user.metadata.creationTime === user.metadata.lastSignInTime) {
+            router.push("/onboarding")
+          } else {
+            router.push("/profile")
+          }
         }
       })
       .catch((error) => {
