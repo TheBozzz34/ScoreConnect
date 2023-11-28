@@ -57,16 +57,8 @@ const about = () => {
                         .
                     </p>
                     <p className="mx-2 mb-2 rounded-lg bg-[#302d29] px-4 py-2 text-sm font-semibold text-[#dcd8c0]">
-                        ScoreConnect Web is currently tracking commit{" "}
-                        <a href="https://github.com/TheBozzz34/ScoreConnect/commit/14735e7359cc16828fd91797f76d3da48aadfbcc" className="underline">14735e7</a> on branch{" "} 
-                        <a href="https://github.com/TheBozzz34/ScoreConnect/tree/main" className="underline">main</a>
-                        .
-                    </p>
-                    <p className="mx-2 mb-2 rounded-lg bg-[#302d29] px-4 py-2 text-sm font-semibold text-[#dcd8c0]">
-                        ScoreConnect Server is currently tracking commit{" "}
-                        <a href="https://github.com/TheBozzz34/ScoreConnectServer/commit/1d6304d6905534e0c873317e28961b10ff845c33" className="underline">1d6304d</a> on branch{" "}
-                        <a href="https://github.com/TheBozzz34/ScoreConnectServer/tree/master" className="underline">master</a>
-                        .
+                        View the{" "}
+                        <a href="https://github.com/TheBozzz34/ScoreConnect/commit" className="underline">latest commit</a>
                     </p>
                 </div>
             </div>

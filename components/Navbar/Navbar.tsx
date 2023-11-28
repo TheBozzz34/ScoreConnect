@@ -154,11 +154,11 @@ export default function NavBar() {
                 }}
               />
             ) : null}
-            {user && (
+            {/*user && (
               <div className="absolute right-0 top-0 h-3 w-3 rounded-full bg-[#dcd8c0]">
                 <span className="absolute right-0 top-0 h-3 w-3 animate-ping rounded-full bg-red-500"></span>
               </div>
-            )}
+            )*/}
           </div>
         </nav>
       </div>
