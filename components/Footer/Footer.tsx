@@ -26,7 +26,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/404" className="hover:underline">
+              <a href="/contact" className="hover:underline">
                 Contact
               </a>
             </li>
@@ -56,7 +56,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="mailto:necrozma@catgirlsaresexy.org" className="hover:underline">
+                <a href="/contact" className="hover:underline">
                   Contact
                 </a>
               </li>

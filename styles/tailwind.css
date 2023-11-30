@@ -28,3 +28,10 @@ h2 {
     border-width: 0.1rem 0;
     padding: 0.1rem 1rem;
 }
+
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out; /* Adjust the duration as needed */
+  }
+  
