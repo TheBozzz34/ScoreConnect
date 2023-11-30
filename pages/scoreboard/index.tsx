@@ -1,10 +1,11 @@
 import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
-import React, { useEffect, useRef, useState } from "react"
+import React, { use, useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
+import { useIsMobile } from "../../utils/useIsMobile"
 
 export default function Scoreboard() {
   const { messages, sendMessage, connectionStatus } = useWebSocket()
@@ -27,6 +28,13 @@ export default function Scoreboard() {
   const hasInitialized = useRef(false)
 
   const router = useRouter()
+  const isMobile = useIsMobile()
+
+  useEffect(() => {
+    if (isMobile) {
+      router.push("/mobile")
+    }
+  } , [isMobile, router])
 
   useEffect(() => {
     const getInitalData = async () => {

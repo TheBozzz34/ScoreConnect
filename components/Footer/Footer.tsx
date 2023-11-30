@@ -8,7 +8,7 @@ const Footer = () => {
 
   if (isMobile) {
     return (
-      <footer className="sticky bottom-1 z-[100] m-4 rounded-lg bg-[#454138] text-[#dcd8c0] shadow">
+      <footer className="fixed bottom-0 z-[100] m-4 rounded-lg bg-[#454138] text-[#dcd8c0] shadow">
         <div className="mx-auto w-full max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
           <ul className="flex flex-wrap items-center text-sm font-medium sm:mt-0">
             <li>
