@@ -7,6 +7,7 @@ import { useTimer } from "react-timer-hook"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import { useIsMobile } from "../../utils/useIsMobile"
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { set } from "lodash"
 
 export default function Scoreboard() {
@@ -34,6 +35,10 @@ export default function Scoreboard() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const canvasWidth = 640
   const canvasHeight = 360
+
+  let [showTeamAName, showTeamBName, showTeamAFouls, showTeamBFouls, showPeriod, showTimer] = [true, true, true, true, true, true]
+
+  const [possession, setPossession] = useState(0)
 
   const hasInitialized = useRef(false)
 
@@ -144,6 +149,8 @@ export default function Scoreboard() {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
 
+    if (!canvas || !ctx) return;
+
     if (ctx) {
       ctx.fillStyle = "#454138";
       ctx.fillRect(0, 0, canvasWidth, canvasHeight);
@@ -169,14 +176,90 @@ export default function Scoreboard() {
       // Display periods
       ctx.fillText(`Period: ${currentPeriod}`, canvasWidth / 2, canvasHeight - 50);
 
-      // Display timer/clock
-      if (seconds < 10) {
-        ctx.fillText(`${minutes}:0${seconds}`, canvasWidth / 2, canvasHeight - 170);
-      } else {
-        ctx.fillText(`${minutes}:${seconds}`, canvasWidth / 2, canvasHeight - 170);
+      const arrowWidth = 80;
+      const arrowHeight = 40;
+      const arrowMargin = 70; // Adjust the margin as needed
+      const totalArrowWidth = arrowWidth * 2 + arrowMargin;
+      const arrowX = canvasWidth / 2 - totalArrowWidth / 3;
+      const arrowY = canvasHeight - 100;
+
+      ctx.beginPath();
+      ctx.moveTo(arrowX, arrowY);
+      ctx.lineTo(arrowX + arrowHeight, arrowY - arrowHeight / 2);
+      ctx.lineTo(arrowX + arrowHeight, arrowY + arrowHeight / 2);
+      ctx.closePath();
+      ctx.fillStyle = possession === 1 ? 'yellow' : '#dcd8c0'; 
+      ctx.fill();
+
+      // Draw right arrow
+      ctx.beginPath();
+      ctx.moveTo(arrowX + arrowWidth + arrowMargin, arrowY);
+      ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY - arrowHeight / 2);
+      ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY + arrowHeight / 2);
+      ctx.closePath();
+      ctx.fillStyle = possession === 2 ? 'yellow' : '#dcd8c0'; 
+      ctx.fill();
+
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+
+        if (
+          clickX > arrowX &&
+          clickX < arrowX + arrowHeight &&
+          clickY > arrowY - arrowHeight / 2 &&
+          clickY < arrowY + arrowHeight / 2
+        ) {
+          canvas.style.cursor = 'pointer';
+        } else if (
+          clickX > arrowX + arrowWidth + arrowMargin - arrowHeight &&
+          clickX < arrowX + arrowWidth + arrowMargin &&
+          clickY > arrowY - arrowHeight / 2 &&
+          clickY < arrowY + arrowHeight / 2
+        ) {
+          canvas.style.cursor = 'pointer';
+        } else {
+          canvas.style.cursor = 'default';
+        }
+      });
+
+      canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+
+        if (
+          clickX > arrowX &&
+          clickX < arrowX + arrowHeight &&
+          clickY > arrowY - arrowHeight / 2 &&
+          clickY < arrowY + arrowHeight / 2
+        ) {
+          // If already active, deactivate it
+          setPossession(possession === 1 ? 0 : 1);
+        }
+
+        // Check if the click is within the right arrow
+        if (
+          clickX > arrowX + arrowWidth + arrowMargin - arrowHeight &&
+          clickX < arrowX + arrowWidth + arrowMargin &&
+          clickY > arrowY - arrowHeight / 2 &&
+          clickY < arrowY + arrowHeight / 2
+        ) {
+          // If already active, deactivate it
+          setPossession(possession === 2 ? 0 : 2);
+        }
+      });
+
+        // Display timer/clock
+        ctx.fillStyle = "#dcd8c0";
+        if (seconds < 10) {
+          ctx.fillText(`${minutes}:0${seconds}`, canvasWidth / 2, canvasHeight - 170);
+        } else {
+          ctx.fillText(`${minutes}:${seconds}`, canvasWidth / 2, canvasHeight - 170);
+        }
       }
-    }
-  }, [teamAScore, teamBScore, teamAName, teamBName, teamAFouls, teamBFouls, currentPeriod, minutes, seconds]);
+  }, [teamAScore, teamBScore, teamAName, teamBName, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession]);
 
 
   return (
@@ -352,7 +435,7 @@ export default function Scoreboard() {
 
             <button
               className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
-              onClick={() => {setShowPeriodPopup(true)}}
+              onClick={() => { setShowPeriodPopup(true) }}
             >
               Change Period
             </button>
@@ -389,8 +472,8 @@ export default function Scoreboard() {
                     pause();
                   }
                 }}
-                
-                >
+
+              >
                 Custom Timer
               </button>
 
@@ -426,11 +509,70 @@ export default function Scoreboard() {
             <span className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl border-t-2 border-[#454138]"></span>
 
             <button
-                className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
-                onClick={() => resetBoard()}
-              >
-                Reset Board
-              </button>
+              className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              onClick={() => resetBoard()}
+            >
+              Reset Board
+            </button>
+
+            {/*<div id="componentToggles" className="flex flex-col space-y-4 rounded-lg p-4">
+              <label className="flex items-center space-x-3">
+                <Toggle
+                  defaultChecked={showTeamAName}
+                  onChange={() => {
+                    showTeamAName = !showTeamAName
+                  }}
+                />
+                <span className="text-[#454138]">Show Team A Name</span>
+              </label>
+              <label className="flex items-center space-x-3">
+                <Toggle
+                  defaultChecked={showTeamBName}
+                  onChange={() => {
+                    showTeamBName = !showTeamBName
+                  }}
+                />
+                <span className="text-[#454138]">Show Team B Name</span>
+              </label>
+              <label className="flex items-center space-x-3">
+                <Toggle
+                  defaultChecked={showTeamAFouls}
+                  onChange={() => {
+                    showTeamAFouls = !showTeamAFouls
+                  }}
+                />
+                <span className="text-[#454138]">Show Team A Fouls</span>
+              </label>
+              <label className="flex items-center space-x-3">
+                <Toggle
+                  defaultChecked={showTeamBFouls}
+                  onChange={() => {
+                    showTeamBFouls = !showTeamBFouls
+                  }}
+                />
+                <span className="text-[#454138]">Show Team B Fouls</span>
+              </label>
+              <label className="flex items-center space-x-3">
+                <Toggle
+                  defaultChecked={showPeriod}
+                  onChange={() => {
+                    showPeriod = !showPeriod
+                  }}
+                />
+                <span className="text-[#454138]">Show Period</span>
+              </label>
+              <label className="flex items-center space-x-3">
+                <Toggle
+                  defaultChecked={showTimer}
+                  onChange={() => {
+                    showTimer = !showTimer
+                  }}
+                />
+                <span className="text-[#454138]">Show Timer</span>
+              </label>
+
+                
+                </div>*/}
 
           </div>
         </div>
