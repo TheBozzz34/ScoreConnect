@@ -85,13 +85,14 @@ export default function NavBar() {
   }, [])
 
   return (
-    <div>
-      <div className="sticky top-4 z-[100] mx-2 mb-12 mt-4 rounded-lg bg-[#454138] p-[0.4rem] backdrop-blur-md">
-        <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
-          <span className={`${enviromentColor} mt-2 h-1/2 rounded p-1 text-xs font-bold text-[#454138]`}>
-            {enviroment}
-          </span>
-          {/*
+    <>
+      <div>
+        <div className="top-4 z-[100] mx-2 mb-12 mt-4 rounded-lg bg-[#454138] p-[0.4rem] backdrop-blur-md border-2 border-[#302d29]">
+          <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
+            <span className={`${enviromentColor} mt-2 h-1/2 rounded p-1 text-xs font-bold text-[#454138]`}>
+              {enviroment}
+            </span>
+            {/*
         <div 
         onMouseEnter={() => setHovered(true)}
         className="border-2 border-[#302d29] rounded-full transition-opacity duration-300"
@@ -108,88 +109,88 @@ export default function NavBar() {
         </div>
         */}
 
-          {navItems.map((item) => {
-            const isActive = item.path === pathname
+            {navItems.map((item) => {
+              const isActive = item.path === pathname
 
-            return (
-              <Link
-                key={item.path}
-                className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${
-                  isActive ? "text-[#302d29]" : "text-[#dcd8c0]"
-                }`}
-                href={item.path}
-              >
-                <span>{item.name}</span>
-              </Link>
-            )
-          })}
+              return (
+                <Link
+                  key={item.path}
+                  className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${isActive ? "text-[#302d29]" : "text-[#dcd8c0]"
+                    }`}
+                  href={item.path}
+                >
+                  <span>{item.name}</span>
+                </Link>
+              )
+            })}
 
-          {!user && (
-            <button
-              className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${
-                isLoginPath ? "text-[#302d29]" : "text-[#dcd8c0]" // Change colors accordingly
-              }`}
-              onClick={() => {
-                router.push("/login")
-              }}
-            >
-              <span>Login</span>
-            </button>
-          )}
-
-          <div className="ml-auto">
-            {" "}
-            {/* Use ml-auto to move content to the right */}
-            {user ? (
-              <Image
-                src={userProfilePic}
-                width={40}
-                height={40}
-                className="cursor-pointer rounded-full border-2 border-[#302d29] transition-opacity duration-300"
-                alt="Profile Picture"
-                onMouseEnter={() => {
-                  setHovered(true)
+            {!user && (
+              <button
+                className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${isLoginPath ? "text-[#302d29]" : "text-[#dcd8c0]" // Change colors accordingly
+                  }`}
+                onClick={() => {
+                  router.push("/login")
                 }}
-              />
-            ) : null}
-            {/*user && (
+              >
+                <span>Login</span>
+              </button>
+            )}
+
+            <div className="ml-auto">
+              {" "}
+              {/* Use ml-auto to move content to the right */}
+              {user ? (
+                <Image
+                  src={userProfilePic}
+                  width={40}
+                  height={40}
+                  className="cursor-pointer rounded-full border-2 border-[#302d29] transition-opacity duration-300"
+                  alt="Profile Picture"
+                  onMouseEnter={() => {
+                    setHovered(true)
+                  }}
+                />
+              ) : null}
+              {/*user && (
               <div className="absolute right-0 top-0 h-3 w-3 rounded-full bg-[#dcd8c0]">
                 <span className="absolute right-0 top-0 h-3 w-3 animate-ping rounded-full bg-red-500"></span>
               </div>
             )*/}
-          </div>
-        </nav>
-      </div>
-      {hovered && (
-        <div
-          id="dropdown"
-          className="absolute right-2 top-16 z-10 mt-2 w-48 rounded-lg bg-[#454138] py-2 shadow-xl"
-          onMouseLeave={() => setHovered(false)}
-        >
-          <ul className="py-2 text-sm text-[#dcd8c0]" aria-labelledby="dropdownDefaultButton">
-            <li>
-              <a href="/scoreboard" className="block px-4 py-2 hover:bg-[#dcd8c0] hover:text-[#454138]">
-                Scoreboard
-              </a>
-            </li>
-            <li>
-              <a href="/dashboard" className="block px-4 py-2 hover:bg-[#dcd8c0] hover:text-[#454138]">
-                Settings
-              </a>
-            </li>
-            <li>
-              <a href="/profile" className="block px-4 py-2 hover:bg-[#dcd8c0] hover:text-[#454138]">
-                Profile
-              </a>
-            </li>
-            <li>
-              <a href="/logout" className="block px-4 py-2 hover:bg-[#dcd8c0] hover:text-[#454138]">
-                Sign out
-              </a>
-            </li>
-          </ul>
+            </div>
+          </nav>
         </div>
-      )}
-    </div>
+        {hovered && (
+          <div
+            id="dropdown"
+            className="absolute right-2 top-16 z-10 mt-4 w-48 rounded-lg bg-[#454138] py-2 shadow-xl"
+            onMouseLeave={() => setHovered(false)}
+          >
+            <ul className="py-2 text-sm text-[#dcd8c0]" aria-labelledby="dropdownDefaultButton">
+              <li>
+                <a href="/scoreboard" className="block px-4 py-2 hover:bg-[#dcd8c0] hover:text-[#454138]">
+                  Scoreboard
+                </a>
+              </li>
+              <li>
+                <a href="/dashboard" className="block px-4 py-2 hover:bg-[#dcd8c0] hover:text-[#454138]">
+                  Settings
+                </a>
+              </li>
+              <li>
+                <a href="/profile" className="block px-4 py-2 hover:bg-[#dcd8c0] hover:text-[#454138]">
+                  Profile
+                </a>
+              </li>
+              <li>
+                <a href="/logout" className="block px-4 py-2 hover:bg-[#dcd8c0] hover:text-[#454138]">
+                  Sign out
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
+      <span className="absolute right-2 top-16 z-10 mt-4 w-48 rounded-lg bg-[#454138] py-2 shadow-xl"></span>
+    </>
   )
 }
