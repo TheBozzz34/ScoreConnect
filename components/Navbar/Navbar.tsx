@@ -87,7 +87,7 @@ export default function NavBar() {
   return (
     <>
       <div>
-        <div className="top-4 z-[100] mx-2 mb-12 mt-4 rounded-lg bg-[#454138] p-[0.4rem] backdrop-blur-md border-2 border-[#302d29]">
+        <div className="top-4 z-[100] mx-2 mb-12 mt-4 rounded-lg border-2 border-[#302d29] bg-[#454138] p-[0.4rem] backdrop-blur-md">
           <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
             <span className={`${enviromentColor} mt-2 h-1/2 rounded p-1 text-xs font-bold text-[#454138]`}>
               {enviroment}
@@ -115,8 +115,9 @@ export default function NavBar() {
               return (
                 <Link
                   key={item.path}
-                  className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${isActive ? "text-[#302d29]" : "text-[#dcd8c0]"
-                    }`}
+                  className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${
+                    isActive ? "text-[#302d29]" : "text-[#dcd8c0]"
+                  }`}
                   href={item.path}
                 >
                   <span>{item.name}</span>
@@ -126,8 +127,9 @@ export default function NavBar() {
 
             {!user && (
               <button
-                className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${isLoginPath ? "text-[#302d29]" : "text-[#dcd8c0]" // Change colors accordingly
-                  }`}
+                className={`relative rounded-md px-4 py-2 text-sm font-bold no-underline duration-300 ease-in lg:text-base ${
+                  isLoginPath ? "text-[#302d29]" : "text-[#dcd8c0]" // Change colors accordingly
+                }`}
                 onClick={() => {
                   router.push("/login")
                 }}
@@ -190,7 +192,9 @@ export default function NavBar() {
           </div>
         )}
       </div>
-      {userProfilePic && ( <span className="absolute right-2 top-16 z-10 mt-4 w-48 rounded-lg bg-[#454138] py-2 shadow-xl"></span>)}
+      {userProfilePic && (
+        <span className="absolute right-2 top-16 z-10 mt-4 w-48 rounded-lg bg-[#454138] py-2 shadow-xl"></span>
+      )}
     </>
   )
 }

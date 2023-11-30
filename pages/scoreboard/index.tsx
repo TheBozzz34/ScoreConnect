@@ -7,7 +7,7 @@ import { useTimer } from "react-timer-hook"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import { useIsMobile } from "../../utils/useIsMobile"
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa6"
 import { set } from "lodash"
 
 export default function Scoreboard() {
@@ -36,8 +36,15 @@ export default function Scoreboard() {
   const canvasWidth = 640
   const canvasHeight = 360
 
-  let [showTeamAName, showTeamBName, showTeamAFouls, showTeamBFouls, showPeriod, showTimer] = [true, true, true, true, true, true]
-  
+  let [showTeamAName, showTeamBName, showTeamAFouls, showTeamBFouls, showPeriod, showTimer] = [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+  ]
+
   const [updateBoard, setUpdateBoard] = useState(false)
 
   const [possession, setPossession] = useState(0)
@@ -49,18 +56,10 @@ export default function Scoreboard() {
 
   const now = new Date()
 
-  let {
-    totalSeconds,
-    seconds,
-    minutes,
-    hours,
-    days,
-    isRunning,
-    start,
-    pause,
-    resume,
-    restart,
-  } = useTimer({ expiryTimestamp: new Date(now.getTime() + 1000 * 60 * 30), onExpire: () => console.warn('onExpire called') });
+  let { totalSeconds, seconds, minutes, hours, days, isRunning, start, pause, resume, restart } = useTimer({
+    expiryTimestamp: new Date(now.getTime() + 1000 * 60 * 30),
+    onExpire: () => console.warn("onExpire called"),
+  })
 
   useEffect(() => {
     if (isMobile) {
@@ -74,13 +73,11 @@ export default function Scoreboard() {
     setTeamBScore(0)
     setTeamAFouls(0)
     setTeamBFouls(0)
-    const time = new Date();
-    time.setSeconds(time.getSeconds() + 300);
+    const time = new Date()
+    time.setSeconds(time.getSeconds() + 300)
     restart(time)
     pause()
   }
-
-
 
   useEffect(() => {
     function reportData() {
@@ -94,7 +91,7 @@ export default function Scoreboard() {
         currentPeriod: currentPeriod,
         minutes: minutes,
         seconds: seconds,
-        possession: possession
+        possession: possession,
       }
       const dataJson = JSON.stringify(data)
       const messageJson = {
@@ -105,11 +102,23 @@ export default function Scoreboard() {
       sendMessage(JSON.stringify(messageJson))
     }
 
-    if(updateBoard) {
+    if (updateBoard) {
       reportData()
     }
-  }, [teamAName, teamBName, teamAScore, teamBScore, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession, sendMessage, updateBoard])
-
+  }, [
+    teamAName,
+    teamBName,
+    teamAScore,
+    teamBScore,
+    teamAFouls,
+    teamBFouls,
+    currentPeriod,
+    minutes,
+    seconds,
+    possession,
+    sendMessage,
+    updateBoard,
+  ])
 
   useEffect(() => {
     const getInitalData = async () => {
@@ -176,66 +185,65 @@ export default function Scoreboard() {
     pause()
   }, [])
 
-
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
+    const canvas = canvasRef.current
+    const ctx = canvas?.getContext("2d")
 
-    if (!canvas || !ctx) return;
+    if (!canvas || !ctx) return
 
     if (ctx) {
-      ctx.fillStyle = "#454138";
-      ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+      ctx.fillStyle = "#454138"
+      ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
       // Display team names
-      ctx.fillStyle = "#dcd8c0";
-      ctx.font = "bold 48px Arial";
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(teamAName, canvasWidth / 4, canvasHeight / 3);
-      ctx.fillText(teamBName, (canvasWidth / 4) * 3, canvasHeight / 3);
+      ctx.fillStyle = "#dcd8c0"
+      ctx.font = "bold 48px Arial"
+      ctx.textAlign = "center"
+      ctx.textBaseline = "middle"
+      ctx.fillText(teamAName, canvasWidth / 4, canvasHeight / 3)
+      ctx.fillText(teamBName, (canvasWidth / 4) * 3, canvasHeight / 3)
 
       // Display scores
-      ctx.font = "bold 72px Arial";
-      ctx.fillText(teamAScore.toString(), canvasWidth / 4, (canvasHeight / 4) * 2);
-      ctx.fillText(teamBScore.toString(), (canvasWidth / 4) * 3, (canvasHeight / 6) * 3);
+      ctx.font = "bold 72px Arial"
+      ctx.fillText(teamAScore.toString(), canvasWidth / 4, (canvasHeight / 4) * 2)
+      ctx.fillText(teamBScore.toString(), (canvasWidth / 4) * 3, (canvasHeight / 6) * 3)
 
       // Display fouls
-      ctx.font = "bold 24px Arial";
-      ctx.fillText(`Fouls: ${teamAFouls}`, canvasWidth / 4, (canvasHeight / 6) * 3 + 50);
-      ctx.fillText(`Fouls: ${teamBFouls}`, (canvasWidth / 4) * 3, (canvasHeight / 6) * 3 + 50);
+      ctx.font = "bold 24px Arial"
+      ctx.fillText(`Fouls: ${teamAFouls}`, canvasWidth / 4, (canvasHeight / 6) * 3 + 50)
+      ctx.fillText(`Fouls: ${teamBFouls}`, (canvasWidth / 4) * 3, (canvasHeight / 6) * 3 + 50)
 
       // Display periods
-      ctx.fillText(`Period: ${currentPeriod}`, canvasWidth / 2, canvasHeight - 50);
+      ctx.fillText(`Period: ${currentPeriod}`, canvasWidth / 2, canvasHeight - 50)
 
-      const arrowWidth = 80;
-      const arrowHeight = 40;
-      const arrowMargin = 70; // Adjust the margin as needed
-      const totalArrowWidth = arrowWidth * 2 + arrowMargin;
-      const arrowX = canvasWidth / 2 - totalArrowWidth / 3;
-      const arrowY = canvasHeight - 100;
+      const arrowWidth = 80
+      const arrowHeight = 40
+      const arrowMargin = 70 // Adjust the margin as needed
+      const totalArrowWidth = arrowWidth * 2 + arrowMargin
+      const arrowX = canvasWidth / 2 - totalArrowWidth / 3
+      const arrowY = canvasHeight - 100
 
-      ctx.beginPath();
-      ctx.moveTo(arrowX, arrowY);
-      ctx.lineTo(arrowX + arrowHeight, arrowY - arrowHeight / 2);
-      ctx.lineTo(arrowX + arrowHeight, arrowY + arrowHeight / 2);
-      ctx.closePath();
-      ctx.fillStyle = possession === 1 ? 'yellow' : '#dcd8c0'; 
-      ctx.fill();
+      ctx.beginPath()
+      ctx.moveTo(arrowX, arrowY)
+      ctx.lineTo(arrowX + arrowHeight, arrowY - arrowHeight / 2)
+      ctx.lineTo(arrowX + arrowHeight, arrowY + arrowHeight / 2)
+      ctx.closePath()
+      ctx.fillStyle = possession === 1 ? "yellow" : "#dcd8c0"
+      ctx.fill()
 
       // Draw right arrow
-      ctx.beginPath();
-      ctx.moveTo(arrowX + arrowWidth + arrowMargin, arrowY);
-      ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY - arrowHeight / 2);
-      ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY + arrowHeight / 2);
-      ctx.closePath();
-      ctx.fillStyle = possession === 2 ? 'yellow' : '#dcd8c0'; 
-      ctx.fill();
+      ctx.beginPath()
+      ctx.moveTo(arrowX + arrowWidth + arrowMargin, arrowY)
+      ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY - arrowHeight / 2)
+      ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY + arrowHeight / 2)
+      ctx.closePath()
+      ctx.fillStyle = possession === 2 ? "yellow" : "#dcd8c0"
+      ctx.fill()
 
-      canvas.addEventListener('mousemove', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
+      canvas.addEventListener("mousemove", (e) => {
+        const rect = canvas.getBoundingClientRect()
+        const clickX = e.clientX - rect.left
+        const clickY = e.clientY - rect.top
 
         if (
           clickX > arrowX &&
@@ -243,23 +251,23 @@ export default function Scoreboard() {
           clickY > arrowY - arrowHeight / 2 &&
           clickY < arrowY + arrowHeight / 2
         ) {
-          canvas.style.cursor = 'pointer';
+          canvas.style.cursor = "pointer"
         } else if (
           clickX > arrowX + arrowWidth + arrowMargin - arrowHeight &&
           clickX < arrowX + arrowWidth + arrowMargin &&
           clickY > arrowY - arrowHeight / 2 &&
           clickY < arrowY + arrowHeight / 2
         ) {
-          canvas.style.cursor = 'pointer';
+          canvas.style.cursor = "pointer"
         } else {
-          canvas.style.cursor = 'default';
+          canvas.style.cursor = "default"
         }
-      });
+      })
 
-      canvas.addEventListener('click', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const clickX = e.clientX - rect.left;
-        const clickY = e.clientY - rect.top;
+      canvas.addEventListener("click", (e) => {
+        const rect = canvas.getBoundingClientRect()
+        const clickX = e.clientX - rect.left
+        const clickY = e.clientY - rect.top
 
         if (
           clickX > arrowX &&
@@ -268,7 +276,7 @@ export default function Scoreboard() {
           clickY < arrowY + arrowHeight / 2
         ) {
           // If already active, deactivate it
-          setPossession(possession === 1 ? 0 : 1);
+          setPossession(possession === 1 ? 0 : 1)
         }
 
         // Check if the click is within the right arrow
@@ -279,20 +287,30 @@ export default function Scoreboard() {
           clickY < arrowY + arrowHeight / 2
         ) {
           // If already active, deactivate it
-          setPossession(possession === 2 ? 0 : 2);
+          setPossession(possession === 2 ? 0 : 2)
         }
-      });
+      })
 
-        // Display timer/clock
-        ctx.fillStyle = "#dcd8c0";
-        if (seconds < 10) {
-          ctx.fillText(`${minutes}:0${seconds}`, canvasWidth / 2, canvasHeight - 170);
-        } else {
-          ctx.fillText(`${minutes}:${seconds}`, canvasWidth / 2, canvasHeight - 170);
-        }
+      // Display timer/clock
+      ctx.fillStyle = "#dcd8c0"
+      if (seconds < 10) {
+        ctx.fillText(`${minutes}:0${seconds}`, canvasWidth / 2, canvasHeight - 170)
+      } else {
+        ctx.fillText(`${minutes}:${seconds}`, canvasWidth / 2, canvasHeight - 170)
       }
-  }, [teamAScore, teamBScore, teamAName, teamBName, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession]);
-
+    }
+  }, [
+    teamAScore,
+    teamBScore,
+    teamAName,
+    teamBName,
+    teamAFouls,
+    teamBFouls,
+    currentPeriod,
+    minutes,
+    seconds,
+    possession,
+  ])
 
   return (
     <>
@@ -345,15 +363,14 @@ export default function Scoreboard() {
               Refresh
             </button>
 
-            <button 
-            className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
-            onClick={() => {
-              setUpdateBoard(!updateBoard)
-            }}
+            <button
+              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              onClick={() => {
+                setUpdateBoard(!updateBoard)
+              }}
             >
               {updateBoard ? "Stop" : "Start"} Board Updates
             </button>
-
           </div>
         </div>
         <section className="grow">
@@ -383,14 +400,14 @@ export default function Scoreboard() {
                 <br />
                 <button
                   onClick={() => setTeamAScore(0)}
-                  className="mt-2 mr-1 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Reset score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamAFouls(teamAFouls + 1)}
-                  className="mt-2 mr-1 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Increment fouls
                 </button>
@@ -408,7 +425,7 @@ export default function Scoreboard() {
                   Reset fouls
                 </button>
               </div>
-              <div className="text-center border-l-2 border-[#454138] pl-4">
+              <div className="border-l-2 border-[#454138] pl-4 text-center">
                 <h2
                   className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-[#454138]"
                   onClick={() => setShowTeamBPopup(true)}
@@ -439,7 +456,7 @@ export default function Scoreboard() {
                 <br />
                 <button
                   onClick={() => setTeamBFouls(teamBFouls + 1)}
-                  className="mt-2 mr-1 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
                 >
                   Increment fouls
                 </button>
@@ -477,12 +494,14 @@ export default function Scoreboard() {
 
             <button
               className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
-              onClick={() => { setShowPeriodPopup(true) }}
+              onClick={() => {
+                setShowPeriodPopup(true)
+              }}
             >
               Change Period
             </button>
 
-            <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl border-t-2 border-[#454138] pt-4">
+            <p className="mb-3 max-w-2xl border-t-2 border-[#454138] pt-4 font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Timer:
               <span
                 className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
@@ -490,9 +509,8 @@ export default function Scoreboard() {
               >
                 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
               </span>
-
               <span
-                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0] ml-2"
+                className="ml-2 w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
                 style={{ display: "inline-flex", alignItems: "center" }}
               >
                 {isRunning ? "Running" : "Paused"}
@@ -500,37 +518,32 @@ export default function Scoreboard() {
             </p>
 
             <div className="flex justify-between">
-
               <button
-                className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138] w-2/3 mr-1"
+                className="mr-1 w-2/3 rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
                 onClick={() => {
-                  const inputTime = prompt("Enter time in format MM:SS");
+                  const inputTime = prompt("Enter time in format MM:SS")
                   if (inputTime) {
-                    const timeSplit = inputTime.split(":");
-                    const currentTime = new Date();
-                    currentTime.setMinutes(currentTime.getMinutes() + parseInt(timeSplit[0]));
-                    currentTime.setSeconds(currentTime.getSeconds() + parseInt(timeSplit[1]));
-                    restart(currentTime);
-                    pause();
+                    const timeSplit = inputTime.split(":")
+                    const currentTime = new Date()
+                    currentTime.setMinutes(currentTime.getMinutes() + parseInt(timeSplit[0]))
+                    currentTime.setSeconds(currentTime.getSeconds() + parseInt(timeSplit[1]))
+                    restart(currentTime)
+                    pause()
                   }
                 }}
-
               >
                 Custom Timer
               </button>
 
               <button
-                className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138] w-1/3"
+                className="w-1/3 rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
                 onClick={() => {
                   setShowPresetsPopup(true)
                 }}
               >
                 Presets
               </button>
-
             </div>
-
-
 
             <button
               className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
@@ -541,14 +554,12 @@ export default function Scoreboard() {
                 } else {
                   resume()
                 }
-              }
-              }
+              }}
             >
-
               {isRunning ? "Pause Timer" : "Resume Timer"}
             </button>
 
-            <span className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl border-t-2 border-[#454138]"></span>
+            <span className="mb-3 max-w-2xl border-t-2 border-[#454138] font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl"></span>
 
             <button
               className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
@@ -615,7 +626,6 @@ export default function Scoreboard() {
 
                 
                 </div>*/}
-
           </div>
         </div>
       </div>
@@ -686,12 +696,11 @@ export default function Scoreboard() {
           <div className="w-64 rounded-lg bg-[#454138] p-4 shadow-md">
             <h2 className="mb-4 text-lg font-semibold text-[#dcd8c0]">Presets</h2>
             <div className="flex flex-col space-y-4 rounded-lg p-4">
-
               <button
                 className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
                 onClick={() => {
-                  const time = new Date();
-                  time.setSeconds(time.getSeconds() + 60);
+                  const time = new Date()
+                  time.setSeconds(time.getSeconds() + 60)
                   restart(time)
                   pause()
                 }}
@@ -702,8 +711,8 @@ export default function Scoreboard() {
               <button
                 className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
                 onClick={() => {
-                  const time = new Date();
-                  time.setSeconds(time.getSeconds() + 300);
+                  const time = new Date()
+                  time.setSeconds(time.getSeconds() + 300)
                   restart(time)
                   pause()
                 }}
@@ -713,8 +722,8 @@ export default function Scoreboard() {
               <button
                 className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
                 onClick={() => {
-                  const time = new Date();
-                  time.setSeconds(time.getSeconds() + 600);
+                  const time = new Date()
+                  time.setSeconds(time.getSeconds() + 600)
                   restart(time)
                   pause()
                 }}
@@ -724,12 +733,11 @@ export default function Scoreboard() {
               <button
                 className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
                 onClick={() => {
-                  const time = new Date();
-                  time.setSeconds(time.getSeconds() + 900);
+                  const time = new Date()
+                  time.setSeconds(time.getSeconds() + 900)
                   restart(time)
                   pause()
-                }
-                }
+                }}
               >
                 15 Minute Period
               </button>
@@ -774,7 +782,6 @@ export default function Scoreboard() {
               >
                 Save
               </button>
-
             </div>
           </div>
         </div>
