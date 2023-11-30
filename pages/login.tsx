@@ -29,7 +29,7 @@ export default function Login() {
         if (!allowedDomains.includes(domain)) {
           router.push("/not-allowed?error=auth/domain-not-allowed")
         } else {
-          if(user.metadata.creationTime === user.metadata.lastSignInTime) {
+          if (user.metadata.creationTime === user.metadata.lastSignInTime) {
             router.push("/onboarding")
           } else {
             router.push("/profile")
@@ -38,10 +38,10 @@ export default function Login() {
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        const errorCode = error.code
+        const errorMessage = error.message
         // // The email of the user's account used.
-        const email = error.email;
+        const email = error.email
         // // The AuthCredential type that was used.
         // const credential = GoogleAuthProvider.credentialFromError(error);
         // ...

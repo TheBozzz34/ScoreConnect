@@ -2,6 +2,7 @@ import { onAuthStateChanged } from "firebase/auth"
 import { GetServerSidePropsContext } from "next"
 import Head from "next/head"
 import React, { useEffect } from "react"
+import ImageCarousel from "components/Carousel/Carousel"
 import EmailSignup from "components/Email/EmailSignup"
 import { auth } from "../firebase"
 import { getIsSsrMobile } from "../utils/getIsSsrMobile"
@@ -29,17 +30,9 @@ export default function Web() {
               ScoreConnect
             </h1>
             <p className="mb-6 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-8 lg:text-xl">
-              ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues and event
-              organizers.
+              ScoreConnect is a user-friendly digital scoreboard control software, designed for sports venues, event
+              organizers, and schools.
             </p>
-            {/*
-            <Button href="/contact" className="mr-3 rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border border-[#454138]">
-              Get started
-            </Button>
-            <Button href="/login" intent="secondary" className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] hover:bg-[#dcd8c0] hover:text-[#454138] transition duration-200 ease-in-out border border-[#454138]">
-              Login
-            </Button>
-            */}
           </div>
         </div>
       </section>
@@ -61,23 +54,7 @@ export default function Web() {
         </section>
       )}
 
-      {/*
-      <section>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
-          <div className="justify-center space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-3">
-            {LP_GRID_ITEMS.map((singleItem) => (
-              <div key={singleItem.title} className="flex flex-col items-center justify-center text-center">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-full bg-primary-100 p-1.5 text-blue-700 dark:bg-primary-900 lg:h-12 lg:w-12">
-                  {singleItem.icon}
-                </div>
-                <h3 className="mb-2 text-xl font-bold dark:text-white">{singleItem.title}</h3>
-                <p className="text-gray-500 dark:text-gray-400">{singleItem.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      */}
+      <section>{/*<ImageCarousel />*/}</section>
     </>
   )
 }

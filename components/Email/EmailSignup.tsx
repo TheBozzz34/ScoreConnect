@@ -16,23 +16,23 @@ const EmailSignup: React.FC = () => {
           className="mb-2 w-64 rounded-md bg-[#dcd8c0] p-2 text-[#454138] placeholder-[#454138] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[#bab5a1]"
           autoComplete="email"
         />
-        <div className="w-full flex flex-row justify-center">
-        <input
-          type="text"
-          name="firstName"
-          placeholder="Jon"
-          className="mb-2 w-1/6 mr-4 rounded-md bg-[#dcd8c0] p-2 text-[#454138] placeholder-[#454138] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[#bab5a1]"
-          required
-          autoComplete="given-name"
-        />
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Snow"
-          className="mb-2 w-1/6 rounded-md bg-[#dcd8c0] p-2 text-[#454138] placeholder-[#454138] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[#bab5a1]"
-          required
+        <div className="flex w-full flex-row justify-center">
+          <input
+            type="text"
+            name="firstName"
+            placeholder="Jon"
+            className="mb-2 mr-4 w-1/6 rounded-md bg-[#dcd8c0] p-2 text-[#454138] placeholder-[#454138] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[#bab5a1]"
+            required
+            autoComplete="given-name"
+          />
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Snow"
+            className="mb-2 w-1/6 rounded-md bg-[#dcd8c0] p-2 text-[#454138] placeholder-[#454138] focus:border-transparent focus:outline-none focus:ring-2 focus:ring-[#bab5a1]"
+            required
             autoComplete="family-name"
-        />
+          />
         </div>
         <input type="hidden" name="userGroup" value="Website signups" />
         <button

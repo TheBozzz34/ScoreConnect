@@ -34,7 +34,7 @@ export default function Scoreboard() {
     if (isMobile) {
       router.push("/mobile")
     }
-  } , [isMobile, router])
+  }, [isMobile, router])
 
   useEffect(() => {
     const getInitalData = async () => {
