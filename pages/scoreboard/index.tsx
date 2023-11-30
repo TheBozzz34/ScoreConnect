@@ -37,6 +37,8 @@ export default function Scoreboard() {
   const canvasHeight = 360
 
   let [showTeamAName, showTeamBName, showTeamAFouls, showTeamBFouls, showPeriod, showTimer] = [true, true, true, true, true, true]
+  
+  const [updateBoard, setUpdateBoard] = useState(false)
 
   const [possession, setPossession] = useState(0)
 
@@ -77,6 +79,36 @@ export default function Scoreboard() {
     restart(time)
     pause()
   }
+
+
+
+  useEffect(() => {
+    function reportData() {
+      const data = {
+        teamAName: teamAName,
+        teamBName: teamBName,
+        teamAScore: teamAScore,
+        teamBScore: teamBScore,
+        teamAFouls: teamAFouls,
+        teamBFouls: teamBFouls,
+        currentPeriod: currentPeriod,
+        minutes: minutes,
+        seconds: seconds,
+        possession: possession
+      }
+      const dataJson = JSON.stringify(data)
+      const messageJson = {
+        id: Math.floor(Math.random() * 100000),
+        type: 18,
+        text: dataJson,
+      }
+      sendMessage(JSON.stringify(messageJson))
+    }
+
+    if(updateBoard) {
+      reportData()
+    }
+  }, [teamAName, teamBName, teamAScore, teamBScore, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession, sendMessage, updateBoard])
 
 
   useEffect(() => {
@@ -312,6 +344,16 @@ export default function Scoreboard() {
             >
               Refresh
             </button>
+
+            <button 
+            className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+            onClick={() => {
+              setUpdateBoard(!updateBoard)
+            }}
+            >
+              {updateBoard ? "Stop" : "Start"} Board Updates
+            </button>
+
           </div>
         </div>
         <section className="grow">
