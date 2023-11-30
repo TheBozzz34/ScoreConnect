@@ -1,15 +1,15 @@
 import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
-import React, { useEffect, useState, SetStateAction, use } from "react"
+import { useRouter } from "next/navigation"
+import React, { SetStateAction, useEffect, useState } from "react"
 import Me from "components/Me/me"
 import TechnologyList from "components/ScrollingList/TechnologyList"
 import { useIsMobile } from "utils/useIsMobile"
 import { auth } from "../../firebase"
-import { useRouter } from "next/navigation"
 
 const About = () => {
     const isMobile = useIsMobile()
-    const [clientVersion, setClientVersion] = React.useState("")
+    const [clientVersion, setClientVersion] = useState("")
     const [user, setUser] = useState<SetStateAction<any>>(null)
     const router = useRouter()
 
@@ -30,7 +30,7 @@ const About = () => {
 
 
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (user !== null) {
             setClientVersion(user.auth.clientVersion)
         } else {
