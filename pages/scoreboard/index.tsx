@@ -317,14 +317,12 @@ export default function Scoreboard() {
       <Head>
         <title>ScoreConnect ScoreBoard</title>
       </Head>
+      {" "}
       <div className="flex">
-        {" "}
-        {/* This container makes the two "WIP" divs appear on the same line */}
         <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
           <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
             Settings
           </h1>
-
           <div className="flex flex-col space-y-4 rounded-lg p-4">
             <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               WS Server:
@@ -373,6 +371,7 @@ export default function Scoreboard() {
             </button>
           </div>
         </div>
+
         <section className="grow">
           <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
             <div className="justify-center space-y-8 rounded-lg border-2 border-[#454138] p-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
@@ -787,15 +786,39 @@ export default function Scoreboard() {
         </div>
       )}
 
-      <div className="flex justify-center">
-        <div className="m-3 w-fit flex-none rounded-lg border-2 border-[#454138]">
+      <div className="flex mt-1 justify-start items-start">
+        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
           <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
-            Preview
+            Audio
           </h1>
-
-          <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="m-3 rounded-lg" />
+          <div className="flex flex-col space-y-4 rounded-lg p-4">
+            {/* Audio buttons */}
+            <button
+              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              onClick={() => { console.log("Airhorn") }}
+            >
+              Airhorn
+            </button>
+            {/* Add more buttons for other sounds */}
+          </div>
+        </div>
+        <div className="m-3 w-4/6 flex-none flex justify-center items-center">
+          <div className="w-fit rounded-lg border-2 border-[#454138]">
+            <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
+              Preview
+            </h1>
+            <div className="flex justify-center">
+              <div className="flex items-center justify-center">
+                <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="m-3 rounded-lg" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+
+
+
     </>
   )
 }
