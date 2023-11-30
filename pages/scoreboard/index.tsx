@@ -136,6 +136,11 @@ export default function Scoreboard() {
   }
 
   useEffect(() => {
+    pause()
+  }, [])
+
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
 

@@ -190,7 +190,7 @@ export default function NavBar() {
           </div>
         )}
       </div>
-      <span className="absolute right-2 top-16 z-10 mt-4 w-48 rounded-lg bg-[#454138] py-2 shadow-xl"></span>
+      {userProfilePic && ( <span className="absolute right-2 top-16 z-10 mt-4 w-48 rounded-lg bg-[#454138] py-2 shadow-xl"></span>)}
     </>
   )
 }
