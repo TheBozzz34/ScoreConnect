@@ -4,19 +4,12 @@
 
 ScoreConnect is a powerful and user-friendly digital scoreboard control software, meticulously crafted for sports venues and event organizers. This README will guide you through the key features, setup instructions, and the array of modern development tools utilized in ScoreConnect.
 
-Used in conjuction with [ScoreConnect Server](https://github.com/TheBozzz34/ScoreConnectServer), you can access and control your digital scoreboard from anywhere, safely and securely.
+Used in conjuction with [ScoreConnect Server](https://github.com/TheBozzz34/ScoreConnectServer) and [ScoreConnect Mobile](https://github.com/TheBozzz34/ScoreConnectMobile), you can access and control your digital scoreboard from anywhere, safely and securely.
 
-![1](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/ti7f707o.png)
-![2](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/y4lzpi1t.png)
-![3](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/yu0a3gql.png)
+[![1](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/9vji7p9y.png)](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/9vji7p9y.png)
+[![2](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/0xvq4ev1.png)](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/0xvq4ev1.png)
+[![3](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/0hpn81hz.png)](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/0hpn81hz.png)
 
-## Table of Contents
-
-  - Features
-  - Getting Started
-  - Development Tools
-  - Contributing
-  - License
 
 ## Features
 
@@ -35,76 +28,6 @@ ScoreConnect offers a range of cutting-edge features to meet the needs of sports
 ## Score Connect Software
 
 ScoreConnect is a powerful and user-friendly digital scoreboard control software, meticulously crafted for sports venues and event organizers. This README will guide you through the key features, setup instructions, and the array of modern development tools utilized in ScoreConnect.
-Table of Contents
-
-    Features
-    Getting Started
-    Development Tools
-    Contributing
-    License
-
-## Features
-
-ScoreConnect offers a range of cutting-edge features to meet the needs of sports venues and event organizers:
-
-  - Digital Scoreboard Control: Easily manage and update digital scoreboards in real-time, enhancing the event experience.
-
-  - Websockets Integration: Seamless communication with a control server using Websockets for instant updates.
-
-  - Performance Optimization: Built with Next.js, ScoreConnect is fast by default and optimized for performance.
-
-  - Modern UI Development: Utilizes Tailwind CSS for rapid and responsive UI development.
-
-  - Code Quality Assurance: Maintains code quality with ESLint and Prettier for clean, consistent, and error-free code.
-
-  - Type Safety: Implements strict TypeScript with the ts-reset library for ultimate type safety.
-
-  - Bundle Size Monitoring: Keep an eye on your bundle size using the Bundle Analyzer plugin.
-
-  - Testing: Ensure code reliability with Jest and React Testing Library for unit and integration tests.
-
-  - End-to-End Testing: Write end-to-end tests like a pro with Playwright.
-
-  - Component Showcase: Utilize Storybook to create, test, and showcase your components.
-
-  - Testing Confidence: Conduct Smoke Testing and Acceptance Tests for confidence in your deployments.
-
-  - Git Commit Standards: Enforce a neat and tidy commit history with Conventional Commits git hook.
-
-  - Observability: Seamlessly monitor your application with Open Telemetry integration for observability.
-
-  - Clean Imports: Use absolute imports for cleaner and more manageable import paths.
-
-  - Robust Deployments: Implement Kubernetes-compatible health checks for robust deployments.
-
-  - Headless UI Components: Customize to your heart's content with Radix UI's headless UI components.
-
-  - Design System: Create a consistent, reusable, and atomic design system with CVA.
-
-  - Dependency Management: Renovate BOT keeps your dependencies up-to-date, so you can focus on coding.
-
-  - Dependency Patching: Fix external dependencies without losing your mind using Patch-package.
-
-  - Component Management: The Components coupling and cohesion graph helps manage component relationships.
-
-  - GitHub Actions: Pre-configured GitHub Actions for smooth workflows, including bundle size and performance stats.
-
-  - AI-Powered Code Reviews: Stay on the cutting edge with AI-powered code reviews from ChatGPT.
-
-  - Performance Optimization: Achieve a perfect Lighthouse score because performance matters.
-
-  - Changelog Automation: Leverage Semantic Release for automatic changelog generation.
-
-  - Environment Variable Management: T3 Env simplifies environment variable management.
-
-## Getting Started
-
-Follow these steps to get started with ScoreConnect:
-
-    1. Clone this repository.
-    2. Install the required dependencies using npm install.
-    3. Configure your environment variables using T3 Env.
-    4. Run the application using npm run dev.
 
 ## Development Tools
 
@@ -114,21 +37,12 @@ ScoreConnect is powered by an array of modern development tools, including:
     Tailwind CSS
     ESLint and Prettier
     TypeScript
-    Jest and React Testing Library
-    Playwright
-    Storybook
-    Smoke Testing and Acceptance Tests
-    Conventional Commits git hook
-    Open Telemetry
     Absolute Imports
-    Kubernetes-Compatible Health Checks
     Radix UI
     CVA
-    Renovate BOT
     Patch-package
     Component Coupling and Cohesion Graph
     GitHub Actions
-    ChatGPT Code Reviews
     Lighthouse Score Optimization
     Semantic Release
     T3 Env
