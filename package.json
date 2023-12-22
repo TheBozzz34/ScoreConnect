@@ -24,6 +24,10 @@
   },
   "dependencies": {
     "@hotjar/browser": "^1.0.9",
+    "@mui/x-charts": "^6.18.3",
+    "@mui/x-data-grid": "^6.18.5",
+    "@mui/x-date-pickers": "^6.18.5",
+    "@mui/x-tree-view": "^6.17.0",
     "@next/bundle-analyzer": "^13.5.5",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -40,6 +44,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "@radix-ui/themes": "^2.0.3",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^11.0.0",
     "@semantic-release/git": "^10.0.1",

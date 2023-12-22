@@ -7,6 +7,7 @@ import Footer from "components/Footer/Footer"
 import NavBar from "components/Navbar/Navbar"
 import { WebSocketProvider } from "../context/WebSocketContext"
 import { IsSsrMobileContext } from "../utils/useIsMobile"
+import { Theme } from '@radix-ui/themes';
 
 function MyApp({ Component, pageProps }: AppProps) {
   Hotjar.init(2349532, 6)

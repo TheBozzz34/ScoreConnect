@@ -383,7 +383,6 @@ export default function Scoreboard() {
                   {teamAName}
                   <BsPencilSquare className="ml-2 text-[#605b52]" onClick={() => setShowTeamAPopup(true)} />
                 </h2>
-                <p className="text-lg font-bold text-[#454138]">{teamAScore}</p>
                 <button
                   onClick={incrementTeamAScore}
                   className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
@@ -403,6 +402,10 @@ export default function Scoreboard() {
                 >
                   Reset score
                 </button>
+                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamAScore(teamAScore + 2)}> +2</span>
+                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamAScore(teamAScore + 3)}> +3</span>
+                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamAScore(teamAScore + 4)}> +4</span>
+
                 <br />
                 <button
                   onClick={() => setTeamAFouls(teamAFouls + 1)}
@@ -432,7 +435,6 @@ export default function Scoreboard() {
                   {teamBName}
                   <BsPencilSquare className="ml-2 text-[#605b52]" onClick={() => setShowTeamBPopup(true)} />
                 </h2>
-                <p className="text-lg font-bold text-[#454138]">{teamBScore}</p>
                 <button
                   onClick={incrementTeamBScore}
                   className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
@@ -452,6 +454,9 @@ export default function Scoreboard() {
                 >
                   Reset score
                 </button>
+                <span className="mx-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamBScore(teamBScore + 2)}> +2</span>
+                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamBScore(teamBScore + 3)}> +3</span>
+                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamBScore(teamBScore + 4)}> +4</span>
                 <br />
                 <button
                   onClick={() => setTeamBFouls(teamBFouls + 1)}
