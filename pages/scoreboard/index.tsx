@@ -7,8 +7,6 @@ import { useTimer } from "react-timer-hook"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import { useIsMobile } from "../../utils/useIsMobile"
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa6"
-import { set } from "lodash"
 
 export default function Scoreboard() {
   const { messages, sendMessage, connectionStatus } = useWebSocket()
@@ -119,8 +117,11 @@ export default function Scoreboard() {
     sendMessage,
     updateBoard,
   ])
-
+  
+  
   useEffect(() => {
+    let ignore = false;
+
     const getInitalData = async () => {
       console.log("Getting initial data")
       try {
@@ -133,16 +134,21 @@ export default function Scoreboard() {
         }
 
         sendMessage(JSON.stringify(testMessageJson))
+        ignore = true;
       } catch (error) {
         // Handle any errors that may occur while fetching the token
         console.error("Error fetching token:", error)
       }
     }
-
-    if (!hasInitialized.current) {
+    
+    if (connectionStatus === "Connected" && !ignore) {
       getInitalData()
-      hasInitialized.current = true
     }
+    return () => { ignore = true; }
+  },[connectionStatus]);
+
+  useEffect(() => {
+
 
     messages.forEach((message) => {
       const messageJson = JSON.parse(message) as { type: number; text: string }
