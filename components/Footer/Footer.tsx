@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
         </footer>
 
-        <footer className="fixed bottom-0 m-4 w-fit rounded-lg border-2 border-[#dcd8c0] bg-[#454138] text-[#dcd8c0] shadow">
+        <footer className="fixed bottom-0 m-4 ml-12 w-fit rounded-lg border-2 border-[#dcd8c0] bg-[#454138] text-[#dcd8c0] shadow">
           <div className="mx-auto w-full max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
             <ul className="mt-3 flex flex-wrap items-center text-sm font-medium sm:mt-0">
               <li>
