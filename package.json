@@ -50,7 +50,7 @@
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^9.2.1",
     "@semantic-release/npm": "^11.0.0",
-    "@semantic-release/release-notes-generator": "^12.0.0",
+    "@semantic-release/release-notes-generator": "^12.1.0",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@vercel/otel": "^0.3.0",
     "ably": "^1.2.47",
