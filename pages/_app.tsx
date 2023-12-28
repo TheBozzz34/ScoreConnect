@@ -1,5 +1,6 @@
 import "../styles/tailwind.css"
 import Hotjar from "@hotjar/browser"
+import { Theme } from "@radix-ui/themes"
 import { AppProps } from "next/app"
 import Head from "next/head"
 import Script from "next/script"
@@ -7,7 +8,6 @@ import Footer from "components/Footer/Footer"
 import NavBar from "components/Navbar/Navbar"
 import { WebSocketProvider } from "../context/WebSocketContext"
 import { IsSsrMobileContext } from "../utils/useIsMobile"
-import { Theme } from "@radix-ui/themes"
 
 function MyApp({ Component, pageProps }: AppProps) {
   Hotjar.init(2349532, 6)
