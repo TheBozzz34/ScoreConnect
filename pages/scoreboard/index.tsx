@@ -117,10 +117,9 @@ export default function Scoreboard() {
     sendMessage,
     updateBoard,
   ])
-  
-  
+
   useEffect(() => {
-    let ignore = false;
+    let ignore = false
 
     const getInitalData = async () => {
       console.log("Getting initial data")
@@ -134,22 +133,22 @@ export default function Scoreboard() {
         }
 
         sendMessage(JSON.stringify(testMessageJson))
-        ignore = true;
+        ignore = true
       } catch (error) {
         // Handle any errors that may occur while fetching the token
         console.error("Error fetching token:", error)
       }
     }
-    
+
     if (connectionStatus === "Connected" && !ignore) {
       getInitalData()
     }
-    return () => { ignore = true; }
-  },[connectionStatus]);
+    return () => {
+      ignore = true
+    }
+  }, [connectionStatus])
 
   useEffect(() => {
-
-
     messages.forEach((message) => {
       const messageJson = JSON.parse(message) as { type: number; text: string }
       if (messageJson.type === 18) {
@@ -322,8 +321,7 @@ export default function Scoreboard() {
     <>
       <Head>
         <title>ScoreConnect ScoreBoard</title>
-      </Head>
-      {" "}
+      </Head>{" "}
       <div className="flex">
         <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
           <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
@@ -408,9 +406,27 @@ export default function Scoreboard() {
                 >
                   Reset score
                 </button>
-                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamAScore(teamAScore + 2)}> +2</span>
-                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamAScore(teamAScore + 3)}> +3</span>
-                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamAScore(teamAScore + 4)}> +4</span>
+                <span
+                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  onClick={() => setTeamAScore(teamAScore + 2)}
+                >
+                  {" "}
+                  +2
+                </span>
+                <span
+                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  onClick={() => setTeamAScore(teamAScore + 3)}
+                >
+                  {" "}
+                  +3
+                </span>
+                <span
+                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  onClick={() => setTeamAScore(teamAScore + 4)}
+                >
+                  {" "}
+                  +4
+                </span>
 
                 <br />
                 <button
@@ -460,9 +476,27 @@ export default function Scoreboard() {
                 >
                   Reset score
                 </button>
-                <span className="mx-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamBScore(teamBScore + 2)}> +2</span>
-                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamBScore(teamBScore + 3)}> +3</span>
-                <span className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] hover:cursor-pointer transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]" onClick={() => setTeamBScore(teamBScore + 4)}> +4</span>
+                <span
+                  className="mx-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  onClick={() => setTeamBScore(teamBScore + 2)}
+                >
+                  {" "}
+                  +2
+                </span>
+                <span
+                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  onClick={() => setTeamBScore(teamBScore + 3)}
+                >
+                  {" "}
+                  +3
+                </span>
+                <span
+                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  onClick={() => setTeamBScore(teamBScore + 4)}
+                >
+                  {" "}
+                  +4
+                </span>
                 <br />
                 <button
                   onClick={() => setTeamBFouls(teamBFouls + 1)}
@@ -639,7 +673,6 @@ export default function Scoreboard() {
           </div>
         </div>
       </div>
-
       {showTeamAPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
           {/* <NameChangeOverlay onClick={() => setShowTeamAPopup(false)} /> */}
@@ -668,7 +701,6 @@ export default function Scoreboard() {
           </div>
         </div>
       )}
-
       {/* Team B Name Change Popup */}
       {showTeamBPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
@@ -698,7 +730,6 @@ export default function Scoreboard() {
           </div>
         </div>
       )}
-
       {/* Presets Popup */}
       {showPresetsPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
@@ -763,7 +794,6 @@ export default function Scoreboard() {
           </div>
         </div>
       )}
-
       {/* Period Popup */}
       {showPeriodPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
@@ -796,8 +826,7 @@ export default function Scoreboard() {
           </div>
         </div>
       )}
-
-      <div className="flex mt-1 justify-start items-start">
+      <div className="mt-1 flex items-start justify-start">
         <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
           <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
             Audio
@@ -806,14 +835,16 @@ export default function Scoreboard() {
             {/* Audio buttons */}
             <button
               className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
-              onClick={() => { console.log("Airhorn") }}
+              onClick={() => {
+                console.log("Airhorn")
+              }}
             >
               Airhorn
             </button>
             {/* Add more buttons for other sounds */}
           </div>
         </div>
-        <div className="m-3 w-4/6 flex-none flex justify-center items-center">
+        <div className="m-3 flex w-4/6 flex-none items-center justify-center">
           <div className="w-fit rounded-lg border-2 border-[#454138]">
             <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
               Preview
@@ -826,10 +857,6 @@ export default function Scoreboard() {
           </div>
         </div>
       </div>
-
-
-
-
     </>
   )
 }
