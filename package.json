@@ -55,7 +55,7 @@
     "@vercel/otel": "^0.3.0",
     "ably": "^1.2.47",
     "class-variance-authority": "^0.7.0",
-    "firebase": "^10.5.0",
+    "firebase": "^10.7.1",
     "konva": "^9.2.3",
     "lodash": "^4.17.21",
     "mobile-detect": "^1.4.5",
