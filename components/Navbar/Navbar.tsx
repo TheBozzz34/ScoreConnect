@@ -87,7 +87,7 @@ export default function NavBar() {
   return (
     <>
       <div>
-        <div className="top-4 z-[100] mx-2 mb-12 mt-4 rounded-lg border-2 border-[#302d29] bg-[#454138] p-[0.4rem] backdrop-blur-md">
+        <div className="top-4 z-[100] mx-2 mb-12 mt-4 rounded-lg border-2 border-[#302d29] bg-gradient-to-r from-[#994ECC] to-[#3E187A] p-[0.4rem] backdrop-blur-md">
           <nav className="relative z-[100] flex w-full justify-start gap-2 rounded-lg">
             <span className={`${enviromentColor} mt-2 h-1/2 rounded p-1 text-xs font-bold text-[#454138]`}>
               {enviroment}

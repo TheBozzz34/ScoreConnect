@@ -4,8 +4,6 @@ import { Theme } from "@radix-ui/themes"
 import { AppProps } from "next/app"
 import Head from "next/head"
 import Script from "next/script"
-import Footer from "components/Footer/Footer"
-import NavBar from "components/Navbar/Navbar"
 import { WebSocketProvider } from "../context/WebSocketContext"
 import { IsSsrMobileContext } from "../utils/useIsMobile"
 
@@ -40,10 +38,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           gtag('config', 'G-G3GH38QDFZ');
         `}
         </Script>
-        <NavBar />
         <Component {...pageProps} />
       </WebSocketProvider>
-      <Footer />
       <Script async src="https://arc.io/widget.min.js#5WRuQUdc"></Script>
     </IsSsrMobileContext.Provider>
   )

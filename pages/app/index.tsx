@@ -7,6 +7,7 @@ import { useTimer } from "react-timer-hook"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import { useIsMobile } from "../../utils/useIsMobile"
+import { Navbar } from "components/Navbar/nav-bar.component"
 
 export default function Scoreboard() {
   const { messages, sendMessage, connectionStatus } = useWebSocket()
@@ -197,11 +198,14 @@ export default function Scoreboard() {
     if (!canvas || !ctx) return
 
     if (ctx) {
-      ctx.fillStyle = "#454138"
+
+      ctx.fillStyle = "green"
+
+      ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       ctx.fillRect(0, 0, canvasWidth, canvasHeight)
 
       // Display team names
-      ctx.fillStyle = "#dcd8c0"
+      ctx.fillStyle = "white"
       ctx.font = "bold 48px Arial"
       ctx.textAlign = "center"
       ctx.textBaseline = "middle"
@@ -233,7 +237,7 @@ export default function Scoreboard() {
       ctx.lineTo(arrowX + arrowHeight, arrowY - arrowHeight / 2)
       ctx.lineTo(arrowX + arrowHeight, arrowY + arrowHeight / 2)
       ctx.closePath()
-      ctx.fillStyle = possession === 1 ? "yellow" : "#dcd8c0"
+      ctx.fillStyle = possession === 1 ? "yellow" : "black"
       ctx.fill()
 
       // Draw right arrow
@@ -242,7 +246,7 @@ export default function Scoreboard() {
       ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY - arrowHeight / 2)
       ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY + arrowHeight / 2)
       ctx.closePath()
-      ctx.fillStyle = possession === 2 ? "yellow" : "#dcd8c0"
+      ctx.fillStyle = possession === 2 ? "yellow" : "black"
       ctx.fill()
 
       canvas.addEventListener("mousemove", (e) => {
@@ -269,7 +273,9 @@ export default function Scoreboard() {
         }
       })
 
-      canvas.addEventListener("click", (e) => {
+      canvas.addEventListener(
+        "click",
+        debounce((e) => {
         const rect = canvas.getBoundingClientRect()
         const clickX = e.clientX - rect.left
         const clickY = e.clientY - rect.top
@@ -294,10 +300,11 @@ export default function Scoreboard() {
           // If already active, deactivate it
           setPossession(possession === 2 ? 0 : 2)
         }
-      })
+      }, 500)
+    );
 
       // Display timer/clock
-      ctx.fillStyle = "#dcd8c0"
+      ctx.fillStyle = "white"
       if (seconds < 10) {
         ctx.fillText(`${minutes}:0${seconds}`, canvasWidth / 2, canvasHeight - 170)
       } else {
@@ -317,39 +324,50 @@ export default function Scoreboard() {
     possession,
   ])
 
+  function debounce<T extends (...args: any[]) => void>(func: T, delay: number) {
+    let timer: number;
+    return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+      clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  }
+
   return (
     <>
       <Head>
         <title>ScoreConnect ScoreBoard</title>
       </Head>{" "}
-      <div className="flex">
-        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
-          <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
+      <Navbar />
+      <div className="flex mt-10">
+        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-white">
+          <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
             Settings
           </h1>
           <div className="flex flex-col space-y-4 rounded-lg p-4">
-            <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+            <p className="mb-3 max-w-2xl font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               WS Server:
               <span
-                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                className="w-fit rounded p-1 text-white border border-white"
                 style={{ display: "inline-flex", alignItems: "center" }}
               >
                 {connectionStatus === "Connected" ? "Connected" : "Disconnected"}
               </span>
             </p>
-            <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+            <p className="mb-3 max-w-2xl font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Scoreboard:
               <span
-                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                className="w-fit rounded border border-white p-1 text-white"
                 style={{ display: "inline-flex", alignItems: "center" }}
               >
                 Disconnected
               </span>
             </p>
-            <p className="mb-3 max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+            <p className="mb-3 max-w-2xl font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Audio:
               <span
-                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                className="w-fit rounded border border-white p-1 text-white"
                 style={{ display: "inline-flex", alignItems: "center" }}
               >
                 Disconnected
@@ -357,7 +375,7 @@ export default function Scoreboard() {
             </p>
 
             <button
-              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              className="rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
               onClick={() =>
                 sendMessage(JSON.stringify({ id: Math.floor(Math.random() * 100000), type: 8, text: "getInitialData" }))
               }
@@ -366,7 +384,7 @@ export default function Scoreboard() {
             </button>
 
             <button
-              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              className="rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
               onClick={() => {
                 setUpdateBoard(!updateBoard)
               }}
@@ -378,50 +396,50 @@ export default function Scoreboard() {
 
         <section className="grow">
           <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
-            <div className="justify-center space-y-8 rounded-lg border-2 border-[#454138] p-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
-              <div className="border-r-2 border-[#454138] pr-4 text-center">
+            <div className="justify-center space-y-8 rounded-lg border-2 border-white p-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
+              <div className="border-r-2 border-white pr-4 text-center">
                 <h2
-                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-[#454138]"
+                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-white"
                   onClick={() => setShowTeamAPopup(true)}
                 >
                   {teamAName}
-                  <BsPencilSquare className="ml-2 text-[#605b52]" onClick={() => setShowTeamAPopup(true)} />
+                  <BsPencilSquare className="ml-2 text-white" onClick={() => setShowTeamAPopup(true)} />
                 </h2>
                 <button
                   onClick={incrementTeamAScore}
-                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Increment score
                 </button>
                 <button
                   onClick={() => setTeamAScore(teamAScore - 1)}
-                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Decrement score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamAScore(0)}
-                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Reset score
                 </button>
                 <span
-                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-3 py-2 text-white transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
                   onClick={() => setTeamAScore(teamAScore + 2)}
                 >
                   {" "}
                   +2
                 </span>
                 <span
-                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-3 py-2 text-white transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
                   onClick={() => setTeamAScore(teamAScore + 3)}
                 >
                   {" "}
                   +3
                 </span>
                 <span
-                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-3 py-2 text-white transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
                   onClick={() => setTeamAScore(teamAScore + 4)}
                 >
                   {" "}
@@ -431,67 +449,67 @@ export default function Scoreboard() {
                 <br />
                 <button
                   onClick={() => setTeamAFouls(teamAFouls + 1)}
-                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Increment fouls
                 </button>
                 <button
                   onClick={() => setTeamAFouls(teamAFouls - 1)}
-                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Decrement fouls
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamAFouls(0)}
-                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Reset fouls
                 </button>
               </div>
-              <div className="border-l-2 border-[#454138] pl-4 text-center">
+              <div className="border-l-2 border-white pl-4 text-center">
                 <h2
-                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-[#454138]"
+                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-white"
                   onClick={() => setShowTeamBPopup(true)}
                 >
                   {teamBName}
-                  <BsPencilSquare className="ml-2 text-[#605b52]" onClick={() => setShowTeamBPopup(true)} />
+                  <BsPencilSquare className="ml-2 text-white" onClick={() => setShowTeamBPopup(true)} />
                 </h2>
                 <button
                   onClick={incrementTeamBScore}
-                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Increment score
                 </button>
                 <button
                   onClick={() => setTeamBScore(teamBScore - 1)}
-                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Decrement score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamBScore(0)}
-                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Reset score
                 </button>
                 <span
-                  className="mx-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mx-1 mt-2 rounded border border-white px-3 py-2 text-white transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
                   onClick={() => setTeamBScore(teamBScore + 2)}
                 >
                   {" "}
                   +2
                 </span>
                 <span
-                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-3 py-2 text-white transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
                   onClick={() => setTeamBScore(teamBScore + 3)}
                 >
                   {" "}
                   +3
                 </span>
                 <span
-                  className="mr-1 mt-2 rounded border border-[#454138] px-3 py-2 text-[#454138] transition duration-200 ease-in-out hover:cursor-pointer hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-3 py-2 text-white transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
                   onClick={() => setTeamBScore(teamBScore + 4)}
                 >
                   {" "}
@@ -500,20 +518,20 @@ export default function Scoreboard() {
                 <br />
                 <button
                   onClick={() => setTeamBFouls(teamBFouls + 1)}
-                  className="mr-1 mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mr-1 mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Increment fouls
                 </button>
                 <button
                   onClick={() => setTeamBFouls(teamBFouls - 1)}
-                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Decrement fouls
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamBFouls(0)}
-                  className="mt-2 rounded border border-[#454138] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                  className="mt-2 rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 >
                   Reset fouls
                 </button>
@@ -521,15 +539,15 @@ export default function Scoreboard() {
             </div>
           </div>
         </section>
-        <div className="mr-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
-          <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
+        <div className="mr-3 w-1/6 flex-none rounded-lg border-2 border-white">
+          <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
             Misc
           </h1>
           <div className="flex flex-col space-y-4 rounded-lg p-4">
-            <p className="max-w-2xl font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+            <p className="max-w-2xl font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Period:
               <span
-                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                className="w-fit rounded bg-white p-1 text-black"
                 style={{ display: "inline-flex", alignItems: "center" }}
               >
                 {currentPeriod}
@@ -537,7 +555,7 @@ export default function Scoreboard() {
             </p>
 
             <button
-              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              className="rounded border border-white text-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
               onClick={() => {
                 setShowPeriodPopup(true)
               }}
@@ -545,16 +563,16 @@ export default function Scoreboard() {
               Change Period
             </button>
 
-            <p className="mb-3 max-w-2xl border-t-2 border-[#454138] pt-4 font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+            <p className="mb-3 max-w-2xl border-t-2 border-white pt-4 font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
               Timer:
               <span
-                className="w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                className="w-fit rounded bg-white p-1 text-black"
                 style={{ display: "inline-flex", alignItems: "center" }}
               >
                 {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
               </span>
               <span
-                className="ml-2 w-fit rounded bg-[#454138] p-1 text-[#dcd8c0]"
+                className="ml-2 w-fit rounded bg-white p-1 text-black"
                 style={{ display: "inline-flex", alignItems: "center" }}
               >
                 {isRunning ? "Running" : "Paused"}
@@ -563,7 +581,7 @@ export default function Scoreboard() {
 
             <div className="flex justify-between">
               <button
-                className="mr-1 w-2/3 rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+                className="mr-1 w-2/3 rounded border border-white text-white  px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 onClick={() => {
                   const inputTime = prompt("Enter time in format MM:SS")
                   if (inputTime) {
@@ -580,7 +598,7 @@ export default function Scoreboard() {
               </button>
 
               <button
-                className="w-1/3 rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+                className="w-1/3 rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
                 onClick={() => {
                   setShowPresetsPopup(true)
                 }}
@@ -590,7 +608,7 @@ export default function Scoreboard() {
             </div>
 
             <button
-              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
               onClick={() => {
                 const timerRunning = isRunning
                 if (timerRunning) {
@@ -603,10 +621,10 @@ export default function Scoreboard() {
               {isRunning ? "Pause Timer" : "Resume Timer"}
             </button>
 
-            <span className="mb-3 max-w-2xl border-t-2 border-[#454138] font-light text-[#454138] dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl"></span>
+            <span className="mb-3 max-w-2xl border-t-2 border-white font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl"></span>
 
             <button
-              className="rounded bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              className="rounded bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
               onClick={() => resetBoard()}
             >
               Reset Board
@@ -620,7 +638,7 @@ export default function Scoreboard() {
                     showTeamAName = !showTeamAName
                   }}
                 />
-                <span className="text-[#454138]">Show Team A Name</span>
+                <span className="text-white">Show Team A Name</span>
               </label>
               <label className="flex items-center space-x-3">
                 <Toggle
@@ -629,7 +647,7 @@ export default function Scoreboard() {
                     showTeamBName = !showTeamBName
                   }}
                 />
-                <span className="text-[#454138]">Show Team B Name</span>
+                <span className="text-white">Show Team B Name</span>
               </label>
               <label className="flex items-center space-x-3">
                 <Toggle
@@ -638,7 +656,7 @@ export default function Scoreboard() {
                     showTeamAFouls = !showTeamAFouls
                   }}
                 />
-                <span className="text-[#454138]">Show Team A Fouls</span>
+                <span className="text-white">Show Team A Fouls</span>
               </label>
               <label className="flex items-center space-x-3">
                 <Toggle
@@ -647,7 +665,7 @@ export default function Scoreboard() {
                     showTeamBFouls = !showTeamBFouls
                   }}
                 />
-                <span className="text-[#454138]">Show Team B Fouls</span>
+                <span className="text-white">Show Team B Fouls</span>
               </label>
               <label className="flex items-center space-x-3">
                 <Toggle
@@ -656,7 +674,7 @@ export default function Scoreboard() {
                     showPeriod = !showPeriod
                   }}
                 />
-                <span className="text-[#454138]">Show Period</span>
+                <span className="text-white">Show Period</span>
               </label>
               <label className="flex items-center space-x-3">
                 <Toggle
@@ -665,7 +683,7 @@ export default function Scoreboard() {
                     showTimer = !showTimer
                   }}
                 />
-                <span className="text-[#454138]">Show Timer</span>
+                <span className="text-white">Show Timer</span>
               </label>
 
                 
@@ -676,23 +694,23 @@ export default function Scoreboard() {
       {showTeamAPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
           {/* <NameChangeOverlay onClick={() => setShowTeamAPopup(false)} /> */}
-          <div className="w-64 rounded-lg bg-[#454138] p-4 shadow-md">
-            <h2 className="mb-4 text-lg font-semibold text-[#dcd8c0]">Change Team A Name</h2>
+          <div className="w-64 rounded-lg bg-white p-4 shadow-md">
+            <h2 className="mb-4 text-lg font-semibold text-black">Change Team A Name</h2>
             <input
               type="text"
               value={teamANameTemp}
               onChange={(e) => setTeamANameTemp(e.target.value)}
-              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 text-[#454138] outline-none"
+              className="mb-4 w-full rounded bg-black p-2 text-white outline-none"
             />
             <div className="flex justify-between">
               <button
-                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                className="rounded border border-black bg-black px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 onClick={() => handleTeamANameChange(teamANameTemp)}
               >
                 Save
               </button>
               <button
-                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                className="rounded border border-black bg-black px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 onClick={() => setShowTeamAPopup(false)}
               >
                 Cancel
@@ -705,23 +723,23 @@ export default function Scoreboard() {
       {showTeamBPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
           {/* <NameChangeOverlay onClick={() => setShowTeamBPopup(false)} /> */}
-          <div className="w-64 rounded-lg bg-[#454138] p-4 shadow-md">
-            <h2 className="mb-4 text-lg font-semibold text-[#dcd8c0]">Change Team B Name</h2>
+          <div className="w-64 rounded-lg bg-white p-4 shadow-md">
+            <h2 className="mb-4 text-lg font-semibold text-black">Change Team B Name</h2>
             <input
               type="text"
               value={teamBNameTemp}
               onChange={(e) => setTeamBNameTemp(e.target.value)}
-              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 text-[#454138] outline-none"
+              className="mb-4 w-full rounded bg-black p-2 text-white outline-none"
             />
             <div className="flex justify-between">
               <button
-                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                className="rounded border border-black bg-black px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 onClick={() => handleTeamBNameChange(teamBNameTemp)}
               >
                 Save
               </button>
               <button
-                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                className="rounded border border-black bg-black px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 onClick={() => setShowTeamBPopup(false)}
               >
                 Cancel
@@ -734,11 +752,11 @@ export default function Scoreboard() {
       {showPresetsPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
           {/* <NameChangeOverlay onClick={() => setShowTeamBPopup(false)} /> */}
-          <div className="w-64 rounded-lg bg-[#454138] p-4 shadow-md">
-            <h2 className="mb-4 text-lg font-semibold text-[#dcd8c0]">Presets</h2>
+          <div className="w-64 rounded-lg bg-white p-4 shadow-md">
+            <h2 className="mb-4 text-lg font-semibold text-black">Presets</h2>
             <div className="flex flex-col space-y-4 rounded-lg p-4">
               <button
-                className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
                 onClick={() => {
                   const time = new Date()
                   time.setSeconds(time.getSeconds() + 60)
@@ -750,7 +768,7 @@ export default function Scoreboard() {
               </button>
 
               <button
-                className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
                 onClick={() => {
                   const time = new Date()
                   time.setSeconds(time.getSeconds() + 300)
@@ -761,7 +779,7 @@ export default function Scoreboard() {
                 5 Minute Period
               </button>
               <button
-                className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
                 onClick={() => {
                   const time = new Date()
                   time.setSeconds(time.getSeconds() + 600)
@@ -772,7 +790,7 @@ export default function Scoreboard() {
                 10 Minute Period
               </button>
               <button
-                className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
                 onClick={() => {
                   const time = new Date()
                   time.setSeconds(time.getSeconds() + 900)
@@ -785,7 +803,7 @@ export default function Scoreboard() {
             </div>
             <div className="flex justify-between">
               <button
-                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                className="rounded border border-black bg-black px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 onClick={() => setShowPresetsPopup(false)}
               >
                 Close
@@ -797,24 +815,24 @@ export default function Scoreboard() {
       {/* Period Popup */}
       {showPeriodPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
-          <div className="w-64 rounded-lg bg-[#454138] p-4 shadow-md">
-            <h2 className="mb-4 text-lg font-semibold text-[#dcd8c0]">Change Period</h2>
+          <div className="w-64 rounded-lg bg-white p-4 shadow-md">
+            <h2 className="mb-4 text-lg font-semibold text-black">Change Period</h2>
             <input
               type="number"
               value={periodTemp}
               onChange={(e) => setPeriodTemp(parseInt(e.target.value))}
-              className="mb-4 w-full rounded bg-[#dcd8c0] p-2 text-[#454138] outline-none"
+              className="mb-4 w-full rounded bg-black p-2 text-white outline-none"
             />
             <div className="flex justify-between">
               <button
-                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                className="rounded border border-black bg-black px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 onClick={() => setShowPeriodPopup(false)}
               >
                 Cancel
               </button>
 
               <button
-                className="rounded border border-[#dcd8c0] bg-[#dcd8c0] px-4 py-2 text-[#454138] transition duration-200 ease-in-out hover:bg-[#454138] hover:text-[#dcd8c0]"
+                className="rounded border border-black bg-black px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
                 onClick={() => {
                   setCurrentPeriod(periodTemp)
                   setShowPeriodPopup(false)
@@ -827,14 +845,14 @@ export default function Scoreboard() {
         </div>
       )}
       <div className="mt-1 flex items-start justify-start">
-        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-[#454138]">
-          <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
+        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-white">
+          <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
             Audio
           </h1>
           <div className="flex flex-col space-y-4 rounded-lg p-4">
             {/* Audio buttons */}
             <button
-              className="rounded border border-[#454138] bg-[#454138] px-4 py-2 text-[#dcd8c0] transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+              className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
               onClick={() => {
                 console.log("Airhorn")
               }}
@@ -845,8 +863,8 @@ export default function Scoreboard() {
           </div>
         </div>
         <div className="m-3 flex w-4/6 flex-none items-center justify-center">
-          <div className="w-fit rounded-lg border-2 border-[#454138]">
-            <h1 className="flex items-center justify-center border-b-2 border-[#454138] p-2 text-2xl font-semibold text-[#454138]">
+          <div className="w-fit rounded-lg border-2 border-white">
+            <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
               Preview
             </h1>
             <div className="flex justify-center">

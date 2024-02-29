@@ -1,6 +1,5 @@
 import Head from "next/head"
 import React from "react"
-import "../styles/yorha.module.css"
 
 const Custom404 = () => {
   return (
