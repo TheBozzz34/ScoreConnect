@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </Script>
         <Component {...pageProps} />
       </WebSocketProvider>
-      <Script async src="https://arc.io/widget.min.js#5WRuQUdc"></Script>
+      {/*<Script async src="https://arc.io/widget.min.js#5WRuQUdc"></Script>  */}
     </IsSsrMobileContext.Provider>
   )
 }

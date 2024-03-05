@@ -30,6 +30,8 @@ export default function Scoreboard() {
   const [showPeriodPopup, setShowPeriodPopup] = useState(false)
   const [showTimerPopup, setShowTimerPopup] = useState(false)
 
+  const [showControls, setShowControls] = useState(false)
+
   const [periodTemp, setPeriodTemp] = useState(1)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const canvasWidth = 640
@@ -199,7 +201,7 @@ export default function Scoreboard() {
 
     if (ctx) {
 
-      ctx.fillStyle = "green"
+      ctx.fillStyle = "transparent"
 
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
       ctx.fillRect(0, 0, canvasWidth, canvasHeight)
@@ -237,7 +239,7 @@ export default function Scoreboard() {
       ctx.lineTo(arrowX + arrowHeight, arrowY - arrowHeight / 2)
       ctx.lineTo(arrowX + arrowHeight, arrowY + arrowHeight / 2)
       ctx.closePath()
-      ctx.fillStyle = possession === 1 ? "yellow" : "black"
+      ctx.fillStyle = possession === 1 ? "yellow" : "white"
       ctx.fill()
 
       // Draw right arrow
@@ -246,7 +248,7 @@ export default function Scoreboard() {
       ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY - arrowHeight / 2)
       ctx.lineTo(arrowX + arrowWidth + arrowMargin - arrowHeight, arrowY + arrowHeight / 2)
       ctx.closePath()
-      ctx.fillStyle = possession === 2 ? "yellow" : "black"
+      ctx.fillStyle = possession === 2 ? "yellow" : "white"
       ctx.fill()
 
       canvas.addEventListener("mousemove", (e) => {
@@ -276,32 +278,32 @@ export default function Scoreboard() {
       canvas.addEventListener(
         "click",
         debounce((e) => {
-        const rect = canvas.getBoundingClientRect()
-        const clickX = e.clientX - rect.left
-        const clickY = e.clientY - rect.top
+          const rect = canvas.getBoundingClientRect()
+          const clickX = e.clientX - rect.left
+          const clickY = e.clientY - rect.top
 
-        if (
-          clickX > arrowX &&
-          clickX < arrowX + arrowHeight &&
-          clickY > arrowY - arrowHeight / 2 &&
-          clickY < arrowY + arrowHeight / 2
-        ) {
-          // If already active, deactivate it
-          setPossession(possession === 1 ? 0 : 1)
-        }
+          if (
+            clickX > arrowX &&
+            clickX < arrowX + arrowHeight &&
+            clickY > arrowY - arrowHeight / 2 &&
+            clickY < arrowY + arrowHeight / 2
+          ) {
+            // If already active, deactivate it
+            setPossession(possession === 1 ? 0 : 1)
+          }
 
-        // Check if the click is within the right arrow
-        if (
-          clickX > arrowX + arrowWidth + arrowMargin - arrowHeight &&
-          clickX < arrowX + arrowWidth + arrowMargin &&
-          clickY > arrowY - arrowHeight / 2 &&
-          clickY < arrowY + arrowHeight / 2
-        ) {
-          // If already active, deactivate it
-          setPossession(possession === 2 ? 0 : 2)
-        }
-      }, 500)
-    );
+          // Check if the click is within the right arrow
+          if (
+            clickX > arrowX + arrowWidth + arrowMargin - arrowHeight &&
+            clickX < arrowX + arrowWidth + arrowMargin &&
+            clickY > arrowY - arrowHeight / 2 &&
+            clickY < arrowY + arrowHeight / 2
+          ) {
+            // If already active, deactivate it
+            setPossession(possession === 2 ? 0 : 2)
+          }
+        }, 500)
+      );
 
       // Display timer/clock
       ctx.fillStyle = "white"
@@ -340,64 +342,108 @@ export default function Scoreboard() {
         <title>ScoreConnect ScoreBoard</title>
       </Head>{" "}
       <Navbar />
-      <div className="flex mt-10">
-        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-white">
-          <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
-            Settings
-          </h1>
-          <div className="flex flex-col space-y-4 rounded-lg p-4">
-            <p className="mb-3 max-w-2xl font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-              WS Server:
-              <span
-                className="w-fit rounded p-1 text-white border border-white"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
-                {connectionStatus === "Connected" ? "Connected" : "Disconnected"}
-              </span>
-            </p>
-            <p className="mb-3 max-w-2xl font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-              Scoreboard:
-              <span
-                className="w-fit rounded border border-white p-1 text-white"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
-                Disconnected
-              </span>
-            </p>
-            <p className="mb-3 max-w-2xl font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-              Audio:
-              <span
-                className="w-fit rounded border border-white p-1 text-white"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
-                Disconnected
-              </span>
-            </p>
+      <div className="flex flex-col items-center justify-center">
 
-            <button
-              className="rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
-              onClick={() =>
-                sendMessage(JSON.stringify({ id: Math.floor(Math.random() * 100000), type: 8, text: "getInitialData" }))
-              }
-            >
-              Refresh
-            </button>
+        {showControls ?
+          <section className="grow w-2/3 mt-4">
+            <div className='mr-3 rounded-lg border-2 border-white'>
+              <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
+                Controls
+              </h1>
 
-            <button
-              className="rounded border border-white px-4 py-2 text-white transition duration-200 ease-in-out hover:bg-white hover:text-black"
-              onClick={() => {
-                setUpdateBoard(!updateBoard)
-              }}
-            >
-              {updateBoard ? "Stop" : "Start"} Board Updates
-            </button>
-          </div>
-        </div>
+              <button
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
+                onClick={() => setShowControls(false)}
+              >
+                Hide Controls &#40;temp button&#41;
+              </button>
 
-        <section className="grow">
-          <div className="mx-auto max-w-screen-xl px-4 py-8 sm:py-16 lg:px-6">
-            <div className="justify-center space-y-8 rounded-lg border-2 border-white p-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
-              <div className="border-r-2 border-white pr-4 text-center">
+              <div className="flex flex-col space-y-4 rounded-lg p-4">
+
+                <button
+                  className="rounded border border-white text-white py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  onClick={() => {
+                    setShowPeriodPopup(true)
+                  }}
+                >
+                  Change Period
+                </button>
+
+                <p className="mb-3 border-t-2 border-white pt-4 font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
+                  Timer:
+                  <span
+                    className="w-fit rounded bg-white p-2 text-black"
+                    style={{ display: "inline-flex", alignItems: "center" }}
+                  >
+                    {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
+                  </span>
+                  <span
+                    className="ml-2 w-fit rounded bg-white p-2 text-black"
+                    style={{ display: "inline-flex", alignItems: "center" }}
+                  >
+                    {isRunning ? "Running" : "Paused"}
+                  </span>
+                  <button
+                    className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-transparent hover:text-white ml-2"
+                    onClick={() => {
+                      if (isRunning) {
+                        pause()
+                      } else {
+                        resume()
+                      }
+                    }}
+                  >
+                    {isRunning ? "super cool icon 1" : "super cool icon 2"}
+                  </button>
+
+                  <button
+                    className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white ml-2"
+                    onClick={() => {
+                      setShowPresetsPopup(true)
+                    }}
+                  >
+                    Presets
+                  </button>
+
+                  <button
+                    className="mr-1 rounded border border-white text-white  px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black ml-2"
+                    onClick={() => {
+                      const inputTime = prompt("Enter time in format MM:SS")
+                      if (inputTime) {
+                        const timeSplit = inputTime.split(":")
+                        const currentTime = new Date()
+                        currentTime.setMinutes(currentTime.getMinutes() + parseInt(timeSplit[0]))
+                        currentTime.setSeconds(currentTime.getSeconds() + parseInt(timeSplit[1]))
+                        restart(currentTime)
+                        pause()
+                      }
+                    }}
+                  >
+                    Custom Timer
+                  </button>
+                </p>
+                <span className="mb-3 border-t-2 border-white font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl"></span>
+
+                <button
+                  className="rounded bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-transparent hover:text-white border border-white"
+                  onClick={() => resetBoard()}
+                >
+                  Reset Board
+                </button>
+              </div>
+            </div>
+          </section> : <button
+            className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
+            onClick={() => setShowControls(true)}
+          >
+            Show Controls &#40;temp button&#41;
+          </button>}
+
+
+        <section className="grow w-2/3">
+          <div className="mt-4">
+            <div className="justify-center rounded-lg border-2 border-white py-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
+              <div className="border-r-2 border-white text-center">
                 <h2
                   className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-white"
                   onClick={() => setShowTeamAPopup(true)}
@@ -467,7 +513,7 @@ export default function Scoreboard() {
                   Reset fouls
                 </button>
               </div>
-              <div className="border-l-2 border-white pl-4 text-center">
+              <div className="border-l-2 border-white text-center">
                 <h2
                   className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-white"
                   onClick={() => setShowTeamBPopup(true)}
@@ -539,157 +585,6 @@ export default function Scoreboard() {
             </div>
           </div>
         </section>
-        <div className="mr-3 w-1/6 flex-none rounded-lg border-2 border-white">
-          <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
-            Misc
-          </h1>
-          <div className="flex flex-col space-y-4 rounded-lg p-4">
-            <p className="max-w-2xl font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-              Period:
-              <span
-                className="w-fit rounded bg-white p-1 text-black"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
-                {currentPeriod}
-              </span>
-            </p>
-
-            <button
-              className="rounded border border-white text-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
-              onClick={() => {
-                setShowPeriodPopup(true)
-              }}
-            >
-              Change Period
-            </button>
-
-            <p className="mb-3 max-w-2xl border-t-2 border-white pt-4 font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl">
-              Timer:
-              <span
-                className="w-fit rounded bg-white p-1 text-black"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
-                {minutes} : {seconds < 10 ? `0${seconds}` : seconds}
-              </span>
-              <span
-                className="ml-2 w-fit rounded bg-white p-1 text-black"
-                style={{ display: "inline-flex", alignItems: "center" }}
-              >
-                {isRunning ? "Running" : "Paused"}
-              </span>
-            </p>
-
-            <div className="flex justify-between">
-              <button
-                className="mr-1 w-2/3 rounded border border-white text-white  px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
-                onClick={() => {
-                  const inputTime = prompt("Enter time in format MM:SS")
-                  if (inputTime) {
-                    const timeSplit = inputTime.split(":")
-                    const currentTime = new Date()
-                    currentTime.setMinutes(currentTime.getMinutes() + parseInt(timeSplit[0]))
-                    currentTime.setSeconds(currentTime.getSeconds() + parseInt(timeSplit[1]))
-                    restart(currentTime)
-                    pause()
-                  }
-                }}
-              >
-                Custom Timer
-              </button>
-
-              <button
-                className="w-1/3 rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
-                onClick={() => {
-                  setShowPresetsPopup(true)
-                }}
-              >
-                Presets
-              </button>
-            </div>
-
-            <button
-              className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
-              onClick={() => {
-                const timerRunning = isRunning
-                if (timerRunning) {
-                  pause()
-                } else {
-                  resume()
-                }
-              }}
-            >
-              {isRunning ? "Pause Timer" : "Resume Timer"}
-            </button>
-
-            <span className="mb-3 max-w-2xl border-t-2 border-white font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl"></span>
-
-            <button
-              className="rounded bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
-              onClick={() => resetBoard()}
-            >
-              Reset Board
-            </button>
-
-            {/*<div id="componentToggles" className="flex flex-col space-y-4 rounded-lg p-4">
-              <label className="flex items-center space-x-3">
-                <Toggle
-                  defaultChecked={showTeamAName}
-                  onChange={() => {
-                    showTeamAName = !showTeamAName
-                  }}
-                />
-                <span className="text-white">Show Team A Name</span>
-              </label>
-              <label className="flex items-center space-x-3">
-                <Toggle
-                  defaultChecked={showTeamBName}
-                  onChange={() => {
-                    showTeamBName = !showTeamBName
-                  }}
-                />
-                <span className="text-white">Show Team B Name</span>
-              </label>
-              <label className="flex items-center space-x-3">
-                <Toggle
-                  defaultChecked={showTeamAFouls}
-                  onChange={() => {
-                    showTeamAFouls = !showTeamAFouls
-                  }}
-                />
-                <span className="text-white">Show Team A Fouls</span>
-              </label>
-              <label className="flex items-center space-x-3">
-                <Toggle
-                  defaultChecked={showTeamBFouls}
-                  onChange={() => {
-                    showTeamBFouls = !showTeamBFouls
-                  }}
-                />
-                <span className="text-white">Show Team B Fouls</span>
-              </label>
-              <label className="flex items-center space-x-3">
-                <Toggle
-                  defaultChecked={showPeriod}
-                  onChange={() => {
-                    showPeriod = !showPeriod
-                  }}
-                />
-                <span className="text-white">Show Period</span>
-              </label>
-              <label className="flex items-center space-x-3">
-                <Toggle
-                  defaultChecked={showTimer}
-                  onChange={() => {
-                    showTimer = !showTimer
-                  }}
-                />
-                <span className="text-white">Show Timer</span>
-              </label>
-
-                
-                </div>*/}
-          </div>
-        </div>
       </div>
       {showTeamAPopup && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-400/50">
@@ -844,32 +739,33 @@ export default function Scoreboard() {
           </div>
         </div>
       )}
-      <div className="mt-1 flex items-start justify-start">
-        <div className="ml-3 w-1/6 flex-none rounded-lg border-2 border-white">
-          <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
-            Audio
-          </h1>
-          <div className="flex flex-col space-y-4 rounded-lg p-4">
-            {/* Audio buttons */}
-            <button
-              className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
-              onClick={() => {
-                console.log("Airhorn")
-              }}
-            >
-              Airhorn
-            </button>
-            {/* Add more buttons for other sounds */}
+
+      <div className="flex flex-col items-center justify-center">
+        <div className="mt-1 flex items-start justify-start w-2/3">
+          <div className="mt-3 flex flex-none items-center justify-center">
+            <div className="w-fit rounded-lg border-2 border-white">
+              <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
+                Preview
+              </h1>
+              <div className="flex justify-center">
+                <div className="flex items-center justify-center">
+                  <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="m-3 rounded-lg" />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="m-3 flex w-4/6 flex-none items-center justify-center">
-          <div className="w-fit rounded-lg border-2 border-white">
-            <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
-              Preview
-            </h1>
-            <div className="flex justify-center">
-              <div className="flex items-center justify-center">
-                <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="m-3 rounded-lg" />
+
+          <div className="mt-3 ml-3 flex flex-none items-center justify-left w-2/5">
+            <div className="w-max rounded-lg border-2 border-white">
+              <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
+                Audio Stuff
+              </h1>
+              <div className="flex justify-center">
+                <div className="flex items-center justify-center">
+                  <div className="flex flex-col items-center justify-center">
+                    <p className="text-white">{connectionStatus}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
