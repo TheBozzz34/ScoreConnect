@@ -1,7 +1,6 @@
 import { signOut } from "firebase/auth"
 import Head from "next/head"
 import React, { useEffect } from "react"
-import "../styles/yorha.module.css"
 import { auth } from "../firebase"
 
 const NotAllowed = () => {

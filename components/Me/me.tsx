@@ -1,6 +1,5 @@
 import Image from "next/image"
 import React from "react"
-import "../../styles/yorha.module.css"
 import { useIsMobile } from "utils/useIsMobile"
 
 export default function Me() {
