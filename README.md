@@ -4,7 +4,7 @@
 
 [testing](https://next.necrozma.xyz)
 
-[status](http://10.0.0.177:8080/endpoints/_scoreconnect) proxy coming soon™
+[status](status.necrozma.xyz)
 
 ScoreConnect is a powerful and user-friendly digital scoreboard control software, meticulously crafted for sports venues and event organizers. This README will guide you through the key features, setup instructions, and the array of modern development tools utilized in ScoreConnect.
 
