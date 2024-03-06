@@ -7,7 +7,7 @@ const Custom404 = () => {
       <Head>
         <title>ScoreConnect Error</title>
       </Head>
-      <div className="error-container">
+      <div>
         <h1>404</h1>
         <h2>Page Not Found</h2>
         <p>Looks like the information you seek is lost in the depths of the system.</p>

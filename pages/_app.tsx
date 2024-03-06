@@ -1,6 +1,5 @@
 import "../styles/tailwind.css"
 import Hotjar from "@hotjar/browser"
-import { Theme } from "@radix-ui/themes"
 import { AppProps } from "next/app"
 import Head from "next/head"
 import Script from "next/script"

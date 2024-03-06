@@ -27,7 +27,7 @@ const NotAllowed = () => {
       <Head>
         <title>ScoreConnect Error</title>
       </Head>
-      <div className="error-container">
+      <div>
         <h1>{errorCode}</h1>
         {errorCode === "auth/user-disabled" && (
           <h2>Your account has been disabled. Please contact a ScoreConnect administrator.</h2>

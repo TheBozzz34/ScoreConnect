@@ -1,46 +1,42 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import {
   Button,
-  Kbd,
   Link,
-  Input,
-  Navbar as NextUINavbar,
-  NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
   NavbarBrand,
+  NavbarContent,
   NavbarItem,
+  NavbarMenu,
   NavbarMenuItem,
-  Divider,
-  Spacer
+  NavbarMenuToggle,
+  Navbar as NextUINavbar,
 } from "@nextui-org/react";
 
 import { link as linkStyles } from "@nextui-org/theme";
 
-import { siteConfig } from "../../config/site";
-import NextLink from "next/link";
 import clsx from "clsx";
+import { onAuthStateChanged } from "firebase/auth";
+import { User } from "firebase/auth/cordova";
+import NextLink from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { FaExternalLinkAlt } from "react-icons/fa";
+import { siteConfig } from "../../config/site";
 
+import { auth } from "../../firebase";
 import {
-  TwitterIcon,
-  GithubIcon,
   DiscordIcon,
-  HeartFilledIcon,
+  GithubIcon,
+  TwitterIcon,
   UserIcon,
 } from "../icons";
 
 import { Logo } from "../icons";
 
-import { useEffect, useState } from "react";
-import { User } from "firebase/auth/cordova";
 
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebase";
 
-import { FaExternalLinkAlt } from "react-icons/fa";
 
-import { useRouter, usePathname } from "next/navigation";
 
 export const Navbar = () => {
   const router = useRouter();
@@ -81,7 +77,7 @@ export const Navbar = () => {
                 <NextLink
                   className={clsx(
                     linkStyles({ color: "foreground" }),
-                    "data-[active=true]:text-primary data-[active=true]:font-medium"
+                    "data-[active=true]:text-white data-[active=true]:font-medium"
                   )}
                   color="foreground"
                   href={item.href}
@@ -114,9 +110,9 @@ export const Navbar = () => {
             <div>
               <Button
                 as={Link}
-                className="text-sm font-normal text-default-600 bg-default-100"
+                className="text-sm font-normal text-black bg-white"
                 href="/account"
-                startContent={<UserIcon className="text-danger" />}
+                startContent={<UserIcon className="text-red-600" />}
                 variant="flat"
               >
                 View Account
@@ -127,9 +123,9 @@ export const Navbar = () => {
               ) : (
                 <Button
                   as={Link}
-                  className="ml-1 text-sm font-normal text-default-600 bg-green-600"
+                  className="ml-1 text-sm font-normal text-white bg-green-600"
                   href="/app"
-                  startContent={<UserIcon className="text-danger" />}
+                  startContent={<UserIcon className="text-red-600" />}
                   variant="flat"
                 >
                   Open App
@@ -140,9 +136,9 @@ export const Navbar = () => {
           ) : (
             <Button
               as={Link}
-              className="text-sm font-normal text-default-600 bg-default-100"
+              className="text-sm font-normal text-black bg-white"
               href="/login"
-              startContent={<UserIcon className="text-danger" />}
+              startContent={<UserIcon className="text-red-600" />}
               variant="flat"
             >
               Login
@@ -153,7 +149,7 @@ export const Navbar = () => {
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <Link isExternal href={siteConfig.links.github}>
-          <GithubIcon className="text-default-500" />
+          <GithubIcon className="text-white" />
         </Link>
 
         <NavbarMenuToggle />

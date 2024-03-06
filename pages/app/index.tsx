@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import { useTimer } from "react-timer-hook"
+import { Navbar } from "components/Navbar/nav-bar.component"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import { useIsMobile } from "../../utils/useIsMobile"
-import { Navbar } from "components/Navbar/nav-bar.component"
 
 export default function Scoreboard() {
   const { messages, sendMessage, connectionStatus } = useWebSocket()
@@ -28,7 +28,6 @@ export default function Scoreboard() {
 
   const [showPresetsPopup, setShowPresetsPopup] = useState(false)
   const [showPeriodPopup, setShowPeriodPopup] = useState(false)
-  const [showTimerPopup, setShowTimerPopup] = useState(false)
 
   const [showControls, setShowControls] = useState(false)
 
@@ -37,27 +36,15 @@ export default function Scoreboard() {
   const canvasWidth = 640
   const canvasHeight = 360
 
-  let [showTeamAName, showTeamBName, showTeamAFouls, showTeamBFouls, showPeriod, showTimer] = [
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-  ]
-
-  const [updateBoard, setUpdateBoard] = useState(false)
-
   const [possession, setPossession] = useState(0)
 
-  const hasInitialized = useRef(false)
 
   const router = useRouter()
   const isMobile = useIsMobile()
 
   const now = new Date()
 
-  let { totalSeconds, seconds, minutes, hours, days, isRunning, start, pause, resume, restart } = useTimer({
+  let { seconds, minutes, isRunning, pause, resume, restart } = useTimer({
     expiryTimestamp: new Date(now.getTime() + 1000 * 60 * 30),
     onExpire: () => console.warn("onExpire called"),
   })
@@ -103,23 +90,8 @@ export default function Scoreboard() {
       sendMessage(JSON.stringify(messageJson))
     }
 
-    if (updateBoard) {
-      reportData()
-    }
-  }, [
-    teamAName,
-    teamBName,
-    teamAScore,
-    teamBScore,
-    teamAFouls,
-    teamBFouls,
-    currentPeriod,
-    minutes,
-    seconds,
-    possession,
-    sendMessage,
-    updateBoard,
-  ])
+    reportData()
+  }, [teamAName, teamBName, teamAScore, teamBScore, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession, sendMessage])
 
   useEffect(() => {
     let ignore = false
@@ -149,6 +121,7 @@ export default function Scoreboard() {
     return () => {
       ignore = true
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectionStatus])
 
   useEffect(() => {
@@ -191,6 +164,7 @@ export default function Scoreboard() {
 
   useEffect(() => {
     pause()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -361,7 +335,7 @@ export default function Scoreboard() {
               <div className="flex flex-col space-y-4 rounded-lg p-4">
 
                 <button
-                  className="rounded border border-white text-white py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="rounded border border-white py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
                   onClick={() => {
                     setShowPeriodPopup(true)
                   }}
@@ -406,7 +380,7 @@ export default function Scoreboard() {
                   </button>
 
                   <button
-                    className="mr-1 rounded border border-white text-white  px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black ml-2"
+                    className="mr-1 rounded border border-white  px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black ml-2"
                     onClick={() => {
                       const inputTime = prompt("Enter time in format MM:SS")
                       if (inputTime) {
@@ -755,7 +729,7 @@ export default function Scoreboard() {
             </div>
           </div>
 
-          <div className="mt-3 ml-3 flex flex-none items-center justify-left w-2/5">
+          <div className="mt-3 ml-3 flex flex-none items-center w-2/5">
             <div className="w-max rounded-lg border-2 border-white">
               <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
                 Audio Stuff

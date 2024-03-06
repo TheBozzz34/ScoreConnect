@@ -7,6 +7,7 @@ type IconSvgProps = SVGProps<SVGSVGElement> & {
 
 export const Logo: React.FC<IconSvgProps> = ({
 	size = 36,
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	width,
 	height,
 	...props
