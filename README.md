@@ -1,14 +1,15 @@
-# Score Connect Software
+# Score Connect 
 
-[Scoreboard Demo](https://sc.necrozma.xyz)
+[Prod](https://sc.necrozma.xyz)
+
+[testing](https://next.necrozma.xyz)
 
 ScoreConnect is a powerful and user-friendly digital scoreboard control software, meticulously crafted for sports venues and event organizers. This README will guide you through the key features, setup instructions, and the array of modern development tools utilized in ScoreConnect.
 
 Used in conjuction with [ScoreConnect Server](https://github.com/TheBozzz34/ScoreConnectServer) and [ScoreConnect Mobile](https://github.com/TheBozzz34/ScoreConnectMobile), you can access and control your digital scoreboard from anywhere, safely and securely.
 
-[![1](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/9vji7p9y.png)](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/9vji7p9y.png)
-[![2](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/0xvq4ev1.png)](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/0xvq4ev1.png)
-[![3](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/0hpn81hz.png)](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/0hpn81hz.png)
+![1](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/qtvbshzg.png)
+![2](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/s9sxcwl9.png)
 
 
 ## Features
@@ -28,6 +29,19 @@ ScoreConnect offers a range of cutting-edge features to meet the needs of sports
 ## Score Connect Software
 
 ScoreConnect is a powerful and user-friendly digital scoreboard control software, meticulously crafted for sports venues and event organizers. This README will guide you through the key features, setup instructions, and the array of modern development tools utilized in ScoreConnect.
+
+## DEV start
+
+- `$ git clone git@github.com:TheBozzz34/ScoreConnect.git` (ssh cloning is rad)
+- `$ yarn install --frozen-lockfile` (yarn is REQUIRED, npm WILL NOT WORK)
+- `$ yarn dev`
+### Build for prod
+- `$ yarn build`
+- `$ yarn start`
+
+### Linting
+
+- `$ yarn lint` or `$ yarn lint:fix`
 
 ## Development Tools
 
@@ -56,11 +70,3 @@ ScoreConnect is open-source software released under the AGPL-3.0 license. Feel f
 
 Thank you for choosing ScoreConnect for your digital scoreboard control needs. We hope you find it valuable for your sports venue or event management requirements.
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
