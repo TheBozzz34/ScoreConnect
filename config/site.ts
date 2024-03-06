@@ -63,7 +63,7 @@ export const siteConfig = {
 		},
 	],
 	links: {
-		github: "https://github.com/TheBozzz34/ScoreConnect-Web",
+		github: "https://github.com/TheBozzz34/ScoreConnect",
 		twitter: "https://twitter.com/sadan9921",
 		docs: "#",
 		discord: "https://dsc.gg/t0ast",
