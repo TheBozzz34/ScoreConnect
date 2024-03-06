@@ -1,7 +1,7 @@
 # ScoreConnect 
 
 
-![uptime](https://status.necrozma.xyz/api/v1/endpoints/_scoreconnect/uptimes/24h/badge.svg) [![Code Style](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml) [![Next.js Bundle Analysis](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/nextjs_bundle_analysis.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/nextjs_bundle_analysis.yml) [![CodeQL](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/github-code-scanning/codeql) [![Code Review](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/cr.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/cr.yml)
+![uptime](https://status.necrozma.xyz/api/v1/endpoints/_scoreconnect/uptimes/24h/badge.svg) [![Code Style](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml) [![Next.js Bundle Analysis](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/nextjs_bundle_analysis.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/nextjs_bundle_analysis.yml) [![CodeQL](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/github-code-scanning/codeql)
 
 [Production site](https://sc.necrozma.xyz)
 [Testing site](https://next.necrozma.xyz)
