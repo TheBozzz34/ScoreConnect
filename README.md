@@ -72,3 +72,6 @@ ScoreConnect is open-source software released under the AGPL-3.0 license. Feel f
 
 Thank you for choosing ScoreConnect for your digital scoreboard control needs. We hope you find it valuable for your sports venue or event management requirements.
 
+# this site is currently deployed to a Raspberry Pi 5!
+![1](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/225dd4oz.png)
+
