@@ -13,6 +13,12 @@ Used in conjuction with [ScoreConnect Server](https://github.com/TheBozzz34/Scor
 ![1](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/qtvbshzg.png)
 ![2](https://r2.e-z.host/66429241-79bf-4da7-b4b6-33cb201c59b4/s9sxcwl9.png)
 
+---
+
+### Cool graph
+
+![1](https://catgirlsaresexy.org/static/assets/graph.svg)
+
 
 ## Features
 
