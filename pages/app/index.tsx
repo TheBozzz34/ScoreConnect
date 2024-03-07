@@ -1,4 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth"
+import { User, onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
@@ -10,6 +10,32 @@ import { useIsMobile } from "../../utils/useIsMobile"
 import { Navbar } from "components/Navbar/nav-bar.component"
 
 export default function Scoreboard() {
+  const [userAccount, setUserAccount] = useState<User | null>(null);
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUserAccount(user);
+            } else {
+                setUserAccount(null);
+            }
+        });
+    }, []);
+
+    let ignore = false;
+
+    useEffect(() => {
+      
+      if (ignore) return;
+
+      const message = {
+        action: 'get',
+        boardId: userAccount?.uid
+      }
+      sendMessage(JSON.stringify(message))
+      ignore = true;
+    }, [userAccount])
+
   const { messages, sendMessage, connectionStatus } = useWebSocket()
   const [teamAScore, setTeamAScore] = useState(0)
   const [teamBScore, setTeamBScore] = useState(0)
@@ -80,32 +106,32 @@ export default function Scoreboard() {
     pause()
   }
 
-  useEffect(() => {
-    function reportData() {
-      const data = {
-        teamAName: teamAName,
-        teamBName: teamBName,
-        teamAScore: teamAScore,
-        teamBScore: teamBScore,
-        teamAFouls: teamAFouls,
-        teamBFouls: teamBFouls,
-        currentPeriod: currentPeriod,
-        minutes: minutes,
-        seconds: seconds,
-        possession: possession,
-      }
-      const dataJson = JSON.stringify(data)
-      const messageJson = {
-        id: Math.floor(Math.random() * 100000),
-        type: 18,
-        text: dataJson,
-      }
-      sendMessage(JSON.stringify(messageJson))
+  function reportData() {
+    // console.log("Reporting data")
+    const data = {
+      teamAName: teamAName,
+      teamBName: teamBName,
+      teamAScore: teamAScore,
+      teamBScore: teamBScore,
+      teamAFouls: teamAFouls,
+      teamBFouls: teamBFouls,
+      currentPeriod: currentPeriod,
+      minutes: minutes,
+      seconds: seconds,
+      possession: possession,
     }
+    const dataJson = JSON.stringify(data)
+    const messageJson = {
+      action: "set",
+      boardId: userAccount?.uid,
+      boardData: dataJson,
+    }
+    sendMessage(JSON.stringify(messageJson))
+  }
 
-    if (updateBoard) {
-      reportData()
-    }
+  useEffect(() => {
+    console.log("Updating board")
+    
   }, [
     teamAName,
     teamBName,
@@ -117,45 +143,14 @@ export default function Scoreboard() {
     minutes,
     seconds,
     possession,
-    sendMessage,
     updateBoard,
   ])
 
   useEffect(() => {
-    let ignore = false
-
-    const getInitalData = async () => {
-      console.log("Getting initial data")
-      try {
-        const token = await auth.currentUser?.getIdToken() // Fetch the token asynchronously
-        const testMessageJson = {
-          id: Math.floor(Math.random() * 100000),
-          type: 8,
-          text: "getInitialData",
-          token: token,
-        }
-
-        sendMessage(JSON.stringify(testMessageJson))
-        ignore = true
-      } catch (error) {
-        // Handle any errors that may occur while fetching the token
-        console.error("Error fetching token:", error)
-      }
-    }
-
-    if (connectionStatus === "Connected" && !ignore) {
-      getInitalData()
-    }
-    return () => {
-      ignore = true
-    }
-  }, [connectionStatus])
-
-  useEffect(() => {
     messages.forEach((message) => {
-      const messageJson = JSON.parse(message) as { type: number; text: string }
-      if (messageJson.type === 18) {
-        const data = JSON.parse(messageJson.text)
+      const messageJson = JSON.parse(message) as { boardId: string, boardData: string }
+      if (messageJson.boardId === userAccount?.uid) {
+        const data = JSON.parse(messageJson.boardData)
         setTeamAName((data as { teamAName: string }).teamAName)
         setTeamBName((data as { teamBName: string }).teamBName)
         setTeamAScore(parseInt((data as { teamAScore: string }).teamAScore))
@@ -170,13 +165,18 @@ export default function Scoreboard() {
     })
   }, [router, sendMessage, messages])
 
+  useEffect(() => {
+    reportData()
+  }, [teamAName, teamBName, teamAScore, teamBScore, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession])
+
+
   const incrementTeamAScore = () => {
-    setTeamAScore(teamAScore + 1) // You can change this value to the appropriate increment
+    setTeamAScore(teamAScore + 1) 
   }
 
   // Function to increment the score for Team B
   const incrementTeamBScore = () => {
-    setTeamBScore(teamBScore + 1) // You can change this value to the appropriate increment
+    setTeamBScore(teamBScore + 1) 
   }
 
   const handleTeamANameChange = (newName: React.SetStateAction<string>) => {
