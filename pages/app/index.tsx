@@ -1,7 +1,7 @@
 import { onAuthStateChanged, User } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
-import React, { useEffect, useRef, useState } from "react"
+import React, { use, useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import { useTimer } from "react-timer-hook"
 import { Navbar } from "components/Navbar/nav-bar.component"
@@ -13,7 +13,7 @@ export default function Scoreboard() {
   const [userAccount, setUserAccount] = useState<User | null>(null)
   const { messages, sendMessage, connectionStatus } = useWebSocket()
 
-  const ignore = useRef<boolean>(true)
+  const ignore = useRef<boolean>(false)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -26,18 +26,18 @@ export default function Scoreboard() {
   }, [])
 
   useEffect(() => {
-    if (ignore.current) return
 
+    if (ignore.current) {
+      ignore.current = false
+      return
+    }
     const message = {
       action: "get",
       boardId: userAccount?.uid,
     }
     sendMessage(JSON.stringify(message))
-
-    return () => {
-      ignore.current = false
-    }
-  }, [sendMessage, userAccount])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userAccount])
 
   const [teamAScore, setTeamAScore] = useState(0)
   const [teamBScore, setTeamBScore] = useState(0)
@@ -76,12 +76,6 @@ export default function Scoreboard() {
     onExpire: () => console.warn("onExpire called"),
   })
 
-  useEffect(() => {
-    if (isMobile) {
-      router.push("/mobile")
-    }
-  }, [isMobile, router])
-
   let resetBoard = () => {
     setCurrentPeriod(1)
     setTeamAScore(0)
@@ -118,19 +112,13 @@ export default function Scoreboard() {
   }
 
   useEffect(() => {
-    console.log("Updating board")
-  }, [
-    teamAName,
-    teamBName,
-    teamAScore,
-    teamBScore,
-    teamAFouls,
-    teamBFouls,
-    currentPeriod,
-    minutes,
-    seconds,
-    possession,
-  ])
+    if (ignore.current) {
+      ignore.current = false
+      return
+    }
+    reportData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [teamAScore, teamBScore, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession])
 
   useEffect(() => {
     messages.forEach((message) => {
@@ -141,31 +129,14 @@ export default function Scoreboard() {
         setTeamBName((data as { teamBName: string }).teamBName)
         setTeamAScore(parseInt((data as { teamAScore: string }).teamAScore))
         setTeamBScore(parseInt((data as { teamBScore: string }).teamBScore))
+        setTeamAFouls(parseInt((data as { teamAFouls: string }).teamAFouls))
+        setTeamBFouls(parseInt((data as { teamBFouls: string }).teamBFouls))
+        setCurrentPeriod(parseInt((data as { currentPeriod: string }).currentPeriod))
+        setPossession(parseInt((data as { possession: string }).possession))
       }
     })
+  }, [router, messages, userAccount?.uid])
 
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push("/login")
-      }
-    })
-  }, [router, sendMessage, messages, userAccount?.uid])
-
-  useEffect(() => {
-    reportData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    teamAName,
-    teamBName,
-    teamAScore,
-    teamBScore,
-    teamAFouls,
-    teamBFouls,
-    currentPeriod,
-    minutes,
-    seconds,
-    possession,
-  ])
 
   const incrementTeamAScore = () => {
     setTeamAScore(teamAScore + 1)
@@ -739,7 +710,19 @@ export default function Scoreboard() {
           <div className="mt-3 flex flex-none items-center justify-center">
             <div className="w-fit rounded-lg border-2 border-white">
               <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
-                Preview
+                Preview 
+                <button
+                  className="ml-2 rounded border border-white bg-white px-4 text-black transition duration-200 ease-in-out hover:bg-transparent hover:text-white"
+                  onClick={() => {
+                    const message = {
+                      action: "get",
+                      boardId: userAccount?.uid,
+                    }
+                    sendMessage(JSON.stringify(message))
+                  }}
+                >
+                  Update Board Manually
+                </button>
               </h1>
               <div className="flex justify-center">
                 <div className="flex items-center justify-center">
