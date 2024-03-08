@@ -3,8 +3,10 @@
 
 ![uptime](https://status.necrozma.xyz/api/v1/endpoints/_scoreconnect/uptimes/24h/badge.svg) [![Code Style](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml) [![Next.js Bundle Analysis](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/nextjs_bundle_analysis.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/nextjs_bundle_analysis.yml) [![CodeQL](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/github-code-scanning/codeql)
 
-[Production site](https://sc.necrozma.xyz)
-[Testing site](https://next.necrozma.xyz)
+- [Production site](https://sc.necrozma.xyz)
+- [Testing site](https://next.necrozma.xyz)
+- [Access](https://access.necrozma.xyz/)
+
 
 ScoreConnect is a powerful and user-friendly digital scoreboard control software, meticulously crafted for sports venues and event organizers. This README will guide you through the key features, setup instructions, and the array of modern development tools utilized in ScoreConnect.
 
