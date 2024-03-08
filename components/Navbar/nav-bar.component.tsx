@@ -51,10 +51,14 @@ export const Navbar = () => {
   }, [setUserAccount])
 
   return (
+    <>
+    <div className="mx-4 text-transparent select-none">
+      <span>Spacer fix, do not remove</span>
+    </div>
     <div className="mx-4">
-      <NextUINavbar maxWidth="xl" className="rounded-b-2xl bg-gradient-to-r from-[#994ECC] to-[#3E187A]">
-        <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-          <NavbarBrand className="max-w-fit gap-3">
+      <NextUINavbar className="glass">
+        <NavbarContent className="flex basis-1/5">
+          <NavbarBrand className="flex items-center justify-start">
             <NextLink className="flex items-center justify-start gap-1" href="/">
               <Logo />
               <p className="font-bold text-inherit">ScoreConnect Web</p>
@@ -62,7 +66,7 @@ export const Navbar = () => {
           </NavbarBrand>
 
           {!loggedIn && (
-            <div className="ml-2 hidden justify-start gap-4 lg:flex">
+            <div className="ml-2 hidden justify-start gap-4">
               {siteConfig.navItems.map((item) => (
                 <NavbarItem key={item.href}>
                   <NextLink
@@ -162,5 +166,7 @@ export const Navbar = () => {
         </NavbarMenu>
       </NextUINavbar>
     </div>
+    </>
+    
   )
 }
