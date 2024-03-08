@@ -13,7 +13,7 @@ export default function Scoreboard() {
   const [userAccount, setUserAccount] = useState<User | null>(null)
   const { messages, sendMessage, connectionStatus } = useWebSocket()
 
-  const ignore = useRef<boolean>(false)
+  const ignore = useRef<boolean>(true)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -35,7 +35,7 @@ export default function Scoreboard() {
     sendMessage(JSON.stringify(message))
 
     return () => {
-      ignore.current = true
+      ignore.current = false
     }
   }, [sendMessage, userAccount])
 
