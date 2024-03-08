@@ -4,10 +4,10 @@ import { useRouter } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import { useTimer } from "react-timer-hook"
+import { Navbar } from "components/Navbar/nav-bar.component"
 import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import { useIsMobile } from "../../utils/useIsMobile"
-import { Navbar } from "components/Navbar/nav-bar.component"
 
 export default function Scoreboard() {
   const [userAccount, setUserAccount] = useState<User | null>(null);
@@ -54,7 +54,6 @@ export default function Scoreboard() {
 
   const [showPresetsPopup, setShowPresetsPopup] = useState(false)
   const [showPeriodPopup, setShowPeriodPopup] = useState(false)
-  const [showTimerPopup, setShowTimerPopup] = useState(false)
 
   const [showControls, setShowControls] = useState(false)
 
@@ -63,27 +62,14 @@ export default function Scoreboard() {
   const canvasWidth = 640
   const canvasHeight = 360
 
-  let [showTeamAName, showTeamBName, showTeamAFouls, showTeamBFouls, showPeriod, showTimer] = [
-    true,
-    true,
-    true,
-    true,
-    true,
-    true,
-  ]
-
-  const [updateBoard, setUpdateBoard] = useState(false)
-
   const [possession, setPossession] = useState(0)
-
-  const hasInitialized = useRef(false)
 
   const router = useRouter()
   const isMobile = useIsMobile()
 
   const now = new Date()
 
-  let { totalSeconds, seconds, minutes, hours, days, isRunning, start, pause, resume, restart } = useTimer({
+  let { seconds, minutes, isRunning, pause, resume, restart } = useTimer({
     expiryTimestamp: new Date(now.getTime() + 1000 * 60 * 30),
     onExpire: () => console.warn("onExpire called"),
   })
@@ -191,6 +177,7 @@ export default function Scoreboard() {
 
   useEffect(() => {
     pause()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
@@ -200,7 +187,6 @@ export default function Scoreboard() {
     if (!canvas || !ctx) return
 
     if (ctx) {
-
       ctx.fillStyle = "transparent"
 
       ctx.clearRect(0, 0, canvasWidth, canvasHeight)
@@ -303,7 +289,7 @@ export default function Scoreboard() {
             setPossession(possession === 2 ? 0 : 2)
           }
         }, 500)
-      );
+      )
 
       // Display timer/clock
       ctx.fillStyle = "white"
@@ -327,13 +313,13 @@ export default function Scoreboard() {
   ])
 
   function debounce<T extends (...args: any[]) => void>(func: T, delay: number) {
-    let timer: number;
+    let timer: number
     return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
-      clearTimeout(timer);
+      clearTimeout(timer)
       timer = window.setTimeout(() => {
-        func.apply(this, args);
-      }, delay);
-    };
+        func.apply(this, args)
+      }, delay)
+    }
   }
 
   return (
@@ -343,10 +329,9 @@ export default function Scoreboard() {
       </Head>{" "}
       <Navbar />
       <div className="flex flex-col items-center justify-center">
-
-        {showControls ?
-          <section className="grow w-2/3 mt-4">
-            <div className='mr-3 rounded-lg border-2 border-white'>
+        {showControls ? (
+          <section className="mt-4 w-2/3 grow">
+            <div className="mr-3 rounded-lg border-2 border-white">
               <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
                 Controls
               </h1>
@@ -359,9 +344,8 @@ export default function Scoreboard() {
               </button>
 
               <div className="flex flex-col space-y-4 rounded-lg p-4">
-
                 <button
-                  className="rounded border border-white text-white py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="rounded border border-white py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
                   onClick={() => {
                     setShowPeriodPopup(true)
                   }}
@@ -384,7 +368,7 @@ export default function Scoreboard() {
                     {isRunning ? "Running" : "Paused"}
                   </span>
                   <button
-                    className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-transparent hover:text-white ml-2"
+                    className="ml-2 rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-transparent hover:text-white"
                     onClick={() => {
                       if (isRunning) {
                         pause()
@@ -395,18 +379,16 @@ export default function Scoreboard() {
                   >
                     {isRunning ? "super cool icon 1" : "super cool icon 2"}
                   </button>
-
                   <button
-                    className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white ml-2"
+                    className="ml-2 rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
                     onClick={() => {
                       setShowPresetsPopup(true)
                     }}
                   >
                     Presets
                   </button>
-
                   <button
-                    className="mr-1 rounded border border-white text-white  px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black ml-2"
+                    className="ml-2 mr-1 rounded border  border-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-white hover:text-black"
                     onClick={() => {
                       const inputTime = prompt("Enter time in format MM:SS")
                       if (inputTime) {
@@ -425,22 +407,24 @@ export default function Scoreboard() {
                 <span className="mb-3 border-t-2 border-white font-light text-white dark:text-gray-400 md:text-lg lg:mb-4 lg:text-xl"></span>
 
                 <button
-                  className="rounded bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-transparent hover:text-white border border-white"
+                  className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-transparent hover:text-white"
                   onClick={() => resetBoard()}
                 >
                   Reset Board
                 </button>
               </div>
             </div>
-          </section> : <button
+          </section>
+        ) : (
+          <button
             className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:text-white"
             onClick={() => setShowControls(true)}
           >
             Show Controls &#40;temp button&#41;
-          </button>}
+          </button>
+        )}
 
-
-        <section className="grow w-2/3">
+        <section className="w-2/3 grow">
           <div className="mt-4">
             <div className="justify-center rounded-lg border-2 border-white py-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
               <div className="border-r-2 border-white text-center">
@@ -739,9 +723,8 @@ export default function Scoreboard() {
           </div>
         </div>
       )}
-
       <div className="flex flex-col items-center justify-center">
-        <div className="mt-1 flex items-start justify-start w-2/3">
+        <div className="mt-1 flex w-2/3 items-start justify-start">
           <div className="mt-3 flex flex-none items-center justify-center">
             <div className="w-fit rounded-lg border-2 border-white">
               <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
@@ -755,7 +738,7 @@ export default function Scoreboard() {
             </div>
           </div>
 
-          <div className="mt-3 ml-3 flex flex-none items-center justify-left w-2/5">
+          <div className="ml-3 mt-3 flex w-2/5 flex-none items-center">
             <div className="w-max rounded-lg border-2 border-white">
               <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold text-white">
                 Audio Stuff

@@ -6,6 +6,7 @@ interface TimerProps {
 }
 
 export default function Timer({ expiryTimestamp }: TimerProps) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { totalSeconds, seconds, minutes, hours, days, isRunning, start, pause, resume, restart } = useTimer({
     expiryTimestamp,
     onExpire: () => console.warn("onExpire called"),
