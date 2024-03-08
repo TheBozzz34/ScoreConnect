@@ -70,7 +70,7 @@ export default function Page() {
         </div>
       </section>
 
-      <hr className="border-t border-white" />
+      <hr className="border-t border-white w-2/3 mx-auto" />
 
       <section id="feature-cards" className="flex flex-col items-center justify-start gap-4 py-8 md:py-10">
         <div className="inline-block max-w-lg justify-start text-right">
@@ -168,11 +168,11 @@ export default function Page() {
         </div>
       </section>
 
-      <Divider />
+      <hr className="border-t border-white w-2/3 mx-auto" />
 
       <Spacer y={20} />
 
-      <footer className="mx-4 rounded-t-lg bg-gradient-to-r from-[#3E187A] to-[#994ECC] shadow">
+      <footer className="mx-4 rounded-lg bg-transparent border-2 border-white shadow">
         <div className="mx-auto w-full max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
           <span className="text-sm">
             © 2024{" "}
@@ -205,6 +205,8 @@ export default function Page() {
           </ul>
         </div>
       </footer>
+
+      <Spacer y={4} />
     </div>
   )
 }
