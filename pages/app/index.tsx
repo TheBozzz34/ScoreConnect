@@ -128,8 +128,7 @@ export default function Scoreboard() {
     currentPeriod,
     minutes,
     seconds,
-    possession,
-    updateBoard,
+    possession
   ])
 
   useEffect(() => {
