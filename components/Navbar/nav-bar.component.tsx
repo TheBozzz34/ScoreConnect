@@ -56,7 +56,7 @@ export const Navbar = () => {
       <span>Spacer fix, do not remove</span>
     </div>
     <div className="mx-4">
-      <NextUINavbar className="glass">
+      <NextUINavbar className="rounded-lg bg-transparent border-white border-2 text-white">
         <NavbarContent className="flex basis-1/5">
           <NavbarBrand className="flex items-center justify-start">
             <NextLink className="flex items-center justify-start gap-1" href="/">

@@ -406,12 +406,12 @@ export default function Scoreboard() {
           </button>
         )}
 
-        <section className="w-2/3 grow glass">
+        <section className="glass !w-2/3 grow">
           <div className="mt-4">
             <div className="justify-center rounded-lg pb-4 md:grid md:grid-cols-2 md:gap-12 md:space-y-0 lg:grid-cols-2">
-              <div className="border-r-2 border-white text-center">
+              <div className="border-r-2 border-[#ffffff33] text-center">
                 <h2
-                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold"
+                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-[#ffffff93]"
                   onClick={() => setShowTeamAPopup(true)}
                 >
                   {teamAName}
@@ -419,39 +419,39 @@ export default function Scoreboard() {
                 </h2>
                 <button
                   onClick={incrementTeamAScore}
-                  className="mr-1 mt-2 rounded border border-white px-4 py-2 transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Increment score
                 </button>
                 <button
                   onClick={() => setTeamAScore(teamAScore - 1)}
-                  className="mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Decrement score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamAScore(0)}
-                  className="mr-1 mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Reset score
                 </button>
                 <span
-                  className="mr-1 mt-2 rounded border border-white px-3 py-2  transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
+                  className="glass-button"
                   onClick={() => setTeamAScore(teamAScore + 2)}
                 >
                   {" "}
                   +2
                 </span>
                 <span
-                  className="mr-1 mt-2 rounded border border-white px-3 py-2  transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
+                  className="glass-button"
                   onClick={() => setTeamAScore(teamAScore + 3)}
                 >
                   {" "}
                   +3
                 </span>
                 <span
-                  className="mr-1 mt-2 rounded border border-white px-3 py-2  transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
+                  className="glass-button"
                   onClick={() => setTeamAScore(teamAScore + 4)}
                 >
                   {" "}
@@ -461,27 +461,27 @@ export default function Scoreboard() {
                 <br />
                 <button
                   onClick={() => setTeamAFouls(teamAFouls + 1)}
-                  className="mr-1 mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Increment fouls
                 </button>
                 <button
                   onClick={() => setTeamAFouls(teamAFouls - 1)}
-                  className="mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Decrement fouls
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamAFouls(0)}
-                  className="mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Reset fouls
                 </button>
               </div>
-              <div className="border-l-2 border-white text-center">
+              <div className="border-l-2 border-[#ffffff33] text-center">
                 <h2
-                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold "
+                  className="flex cursor-pointer items-center justify-center text-2xl font-semibold text-[#ffffff93]"
                   onClick={() => setShowTeamBPopup(true)}
                 >
                   {teamBName}
@@ -489,39 +489,39 @@ export default function Scoreboard() {
                 </h2>
                 <button
                   onClick={incrementTeamBScore}
-                  className="mr-1 mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Increment score
                 </button>
                 <button
                   onClick={() => setTeamBScore(teamBScore - 1)}
-                  className="mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Decrement score
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamBScore(0)}
-                  className="mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Reset score
                 </button>
                 <span
-                  className="mx-1 mt-2 rounded border border-white px-3 py-2  transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
+                  className="glass-button"
                   onClick={() => setTeamBScore(teamBScore + 2)}
                 >
                   {" "}
                   +2
                 </span>
                 <span
-                  className="mr-1 mt-2 rounded border border-white px-3 py-2  transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
+                  className="glass-button"
                   onClick={() => setTeamBScore(teamBScore + 3)}
                 >
                   {" "}
                   +3
                 </span>
                 <span
-                  className="mr-1 mt-2 rounded border border-white px-3 py-2  transition duration-200 ease-in-out hover:cursor-pointer hover:bg-white hover:text-black"
+                  className="glass-button"
                   onClick={() => setTeamBScore(teamBScore + 4)}
                 >
                   {" "}
@@ -530,20 +530,20 @@ export default function Scoreboard() {
                 <br />
                 <button
                   onClick={() => setTeamBFouls(teamBFouls + 1)}
-                  className="mr-1 mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Increment fouls
                 </button>
                 <button
                   onClick={() => setTeamBFouls(teamBFouls - 1)}
-                  className="mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Decrement fouls
                 </button>
                 <br />
                 <button
                   onClick={() => setTeamBFouls(0)}
-                  className="mt-2 rounded border border-white px-4 py-2  transition duration-200 ease-in-out hover:bg-white hover:text-black"
+                  className="glass-button"
                 >
                   Reset fouls
                 </button>
@@ -617,7 +617,7 @@ export default function Scoreboard() {
             <h2 className="mb-4 text-lg font-semibold text-black">Presets</h2>
             <div className="flex flex-col space-y-4 rounded-lg p-4">
               <button
-                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:"
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black"
                 onClick={() => {
                   const time = new Date()
                   time.setSeconds(time.getSeconds() + 60)
@@ -629,7 +629,7 @@ export default function Scoreboard() {
               </button>
 
               <button
-                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:"
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black"
                 onClick={() => {
                   const time = new Date()
                   time.setSeconds(time.getSeconds() + 300)
@@ -640,7 +640,7 @@ export default function Scoreboard() {
                 5 Minute Period
               </button>
               <button
-                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:"
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black"
                 onClick={() => {
                   const time = new Date()
                   time.setSeconds(time.getSeconds() + 600)
@@ -651,7 +651,7 @@ export default function Scoreboard() {
                 10 Minute Period
               </button>
               <button
-                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black hover:"
+                className="rounded border border-white bg-white px-4 py-2 text-black transition duration-200 ease-in-out hover:bg-black"
                 onClick={() => {
                   const time = new Date()
                   time.setSeconds(time.getSeconds() + 900)
@@ -706,13 +706,13 @@ export default function Scoreboard() {
         </div>
       )}
       <div className="flex flex-col items-center justify-center">
-        <div className="mt-1 flex w-2/3 items-start justify-start">
-          <div className="mt-3 flex flex-none items-center justify-center glass">
+        <div className="flex !w-2/3 items-start justify-start">
+          <div className="flex flex-none items-center justify-center glass">
             <div className="w-fit rounded-lg">
               <h1 className="flex items-center justify-center p-2 text-2xl font-semibold ">
                 Preview 
                 <button
-                  className="ml-2 rounded border border-white bg-white px-4 text-black transition duration-200 ease-in-out hover:bg-transparent hover:"
+                  className="ml-2 rounded border border-white bg-white px-4 text-black transition duration-200 ease-in-out hover:bg-transparent"
                   onClick={() => {
                     const message = {
                       action: "get",
@@ -727,21 +727,6 @@ export default function Scoreboard() {
               <div className="flex justify-center">
                 <div className="flex items-center justify-center">
                   <canvas ref={canvasRef} width={canvasWidth} height={canvasHeight} className="m-3 rounded-lg" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="ml-3 mt-3 flex w-2/5 flex-none items-center">
-            <div className="w-max rounded-lg border-2 border-white">
-              <h1 className="flex items-center justify-center border-b-2 border-white p-2 text-2xl font-semibold ">
-                Audio Stuff
-              </h1>
-              <div className="flex justify-center">
-                <div className="flex items-center justify-center">
-                  <div className="flex flex-col items-center justify-center">
-                    <p className="">{connectionStatus}</p>
-                  </div>
                 </div>
               </div>
             </div>
