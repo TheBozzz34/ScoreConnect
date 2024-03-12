@@ -41,7 +41,7 @@ ScoreConnect is a powerful and user-friendly digital scoreboard control software
 
 ## DEV start
 
-ScoreConnect relies on NodeJS and [Yarn](https://yarnpkg.com/getting-started)
+ScoreConnect relies on [NodeJS](https://nodejs.org/en) and [Yarn](https://yarnpkg.com/getting-started)
 
 - `$ git clone git@github.com:TheBozzz34/ScoreConnect.git` (ssh cloning is rad)
 - `$ yarn install --frozen-lockfile` (yarn is REQUIRED, npm WILL NOT WORK)
