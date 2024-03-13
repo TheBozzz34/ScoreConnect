@@ -1,21 +1,20 @@
+import { User } from "firebase/auth";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useWebSocket } from "context/WebSocketContext";
+import useWebSocket, { ReadyState } from 'react-use-websocket';
 import { auth } from "../../firebase";
-import { User } from "firebase/auth";
 
 interface Data {
-   teamAScore: number;
-   teamBScore: number;
-   teamAFouls: number;
-   teamBFouls: number;
-   currentPeriod: number;
-   teamAName: string;
-   teamBName: string;
+  teamAScore: number;
+  teamBScore: number;
+  teamAFouls: number;
+  teamBFouls: number;
+  currentPeriod: number;
+  teamAName: string;
+  teamBName: string;
 }
 const Public = () => {
-  const { messages, sendMessage, connectionStatus } = useWebSocket();
   const router = useRouter();
 
   const [teamAScore, setTeamAScore] = useState(0);
@@ -30,7 +29,22 @@ const Public = () => {
 
   const [ignore, setIgnore] = useState(false);
 
-  const [countFix, setCountFix] = useState(0);
+  const [messageHistory, setMessageHistory] = useState<MessageEvent<any>[]>([]);
+  // const { messages, sendMessage, connectionStatus } = useWebSocket()
+
+  const { sendMessage, lastMessage, readyState } = useWebSocket(
+    "wss://wss.catgirlsaresexy.org",
+    {
+      share: true,
+      shouldReconnect: () => true,
+    },
+  )
+
+  useEffect(() => {
+    if (lastMessage !== null) {
+      setMessageHistory((prev) => prev.concat(lastMessage));
+    }
+  }, [lastMessage]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -49,7 +63,7 @@ const Public = () => {
 
     if (ignore) return;
 
-    if (connectionStatus !== "Connected") return;
+    if (readyState !== ReadyState.OPEN) return;
 
     if (!userAccount) return;
 
@@ -61,17 +75,17 @@ const Public = () => {
     }
     sendMessage(JSON.stringify(message))
     setIgnore(true)
-  }, [ignore, connectionStatus, userAccount, sendMessage]);
-  
+  }, [ignore, userAccount, sendMessage, readyState]);
+
 
   useEffect(() => {
-    messages.forEach((message) => {
-      const messageJson = JSON.parse(message) as {
-      boardId?: string;
-      boardData?: string;
-    };
+    messageHistory.forEach((message) => {
+      const messageJson = JSON.parse(message.data) as {
+        boardId?: string
+        boardData?: string
+      }
 
-    console.log(messageJson)
+      console.log(messageJson)
 
       if (messageJson.boardId && messageJson.boardData) {
         const data = JSON.parse(messageJson.boardData) as Data;
@@ -95,7 +109,7 @@ const Public = () => {
     return () => {
       unsubscribe();
     };
-  }, [router, messages]);
+  }, [router, messageHistory]);
 
   return (
     <>

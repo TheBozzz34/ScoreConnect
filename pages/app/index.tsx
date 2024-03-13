@@ -1,17 +1,32 @@
 import { onAuthStateChanged, User } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/navigation"
-import React, { use, useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import { useTimer } from "react-timer-hook"
+import useWebSocket, { ReadyState } from "react-use-websocket"
 import { Navbar } from "components/Navbar/nav-bar.component"
-import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
 import { useIsMobile } from "../../utils/useIsMobile"
 
 export default function Scoreboard() {
   const [userAccount, setUserAccount] = useState<User | null>(null)
-  const { messages, sendMessage, connectionStatus } = useWebSocket()
+  const [messageHistory, setMessageHistory] = useState<MessageEvent<any>[]>([]);
+  // const { messages, sendMessage, connectionStatus } = useWebSocket()
+
+  const { sendMessage, lastMessage, readyState } = useWebSocket(
+    "wss://wss.catgirlsaresexy.org",
+    {
+      share: true,
+      shouldReconnect: () => true,
+    },
+  )
+
+  useEffect(() => {
+    if (lastMessage !== null) {
+      setMessageHistory((prev) => prev.concat(lastMessage));
+    }
+  }, [lastMessage]);
 
   const ignore = useRef<boolean>(false)
 
@@ -29,7 +44,7 @@ export default function Scoreboard() {
 
     if (ignore.current) return;
 
-    if (connectionStatus !== "Connected") return;
+    if (readyState !== ReadyState.OPEN) return;
 
     if (!userAccount) return;
 
@@ -41,7 +56,7 @@ export default function Scoreboard() {
 
     ignore.current = true;
 
-  }, [connectionStatus, sendMessage, userAccount])
+  }, [readyState, sendMessage, userAccount])
 
   const [teamAScore, setTeamAScore] = useState(0)
   const [teamBScore, setTeamBScore] = useState(0)
@@ -112,6 +127,9 @@ export default function Scoreboard() {
       boardId: userAccount?.uid,
       boardData: dataJson,
     }
+
+    if(areAllZero) return
+
     sendMessage(JSON.stringify(messageJson))
   }
 
@@ -125,21 +143,38 @@ export default function Scoreboard() {
   }, [teamAScore, teamBScore, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession])
 
   useEffect(() => {
-    messages.forEach((message) => {
-      const messageJson = JSON.parse(message) as { boardId: string; boardData: string }
-      if (messageJson.boardId === userAccount?.uid) {
-        const data = JSON.parse(messageJson.boardData)
-        setTeamAName((data as { teamAName: string }).teamAName)
-        setTeamBName((data as { teamBName: string }).teamBName)
-        setTeamAScore(parseInt((data as { teamAScore: string }).teamAScore))
-        setTeamBScore(parseInt((data as { teamBScore: string }).teamBScore))
-        setTeamAFouls(parseInt((data as { teamAFouls: string }).teamAFouls))
-        setTeamBFouls(parseInt((data as { teamBFouls: string }).teamBFouls))
-        setCurrentPeriod(parseInt((data as { currentPeriod: string }).currentPeriod))
-        setPossession(parseInt((data as { possession: string }).possession))
+    messageHistory.forEach((message) => {
+      const messageJson = JSON.parse(message.data) as {
+        boardId?: string
+        boardData?: string
       }
-    })
-  }, [router, messages, userAccount?.uid])
+
+      if (messageJson.boardId && messageJson.boardData) {
+        const data = JSON.parse(messageJson.boardData) as {
+          teamAName: string
+          teamBName: string
+          teamAScore: number
+          teamBScore: number
+          teamAFouls: number
+          teamBFouls: number
+          currentPeriod: number
+          minutes: number
+          seconds: number
+          possession: number
+        }
+
+        setTeamAName(data.teamAName)
+        setTeamBName(data.teamBName)
+        setTeamAScore(data.teamAScore)
+        setTeamBScore(data.teamBScore)
+        setTeamAFouls(data.teamAFouls)
+        setTeamBFouls(data.teamBFouls)
+        setCurrentPeriod(data.currentPeriod)
+        setPossession(data.possession)
+      }
+    }
+    )
+  } , [messageHistory])
 
 
   const incrementTeamAScore = () => {
@@ -189,6 +224,8 @@ export default function Scoreboard() {
     pause()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const areAllZero = teamAScore === 0 && teamBScore === 0 && teamAFouls === 0 && teamBFouls === 0 && currentPeriod === 1 && minutes === 30 && seconds === 0 && possession === 0 && teamAName === "Team A" && teamBName === "Team B" 
 
   useEffect(() => {
     const canvas = canvasRef.current
