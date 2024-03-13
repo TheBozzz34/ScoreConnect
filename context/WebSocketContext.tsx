@@ -25,14 +25,17 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
   const [socket, setSocket] = useState<WebSocket | null>(null)
   const [messages, setMessages] = useState<string[]>([])
   const [connectionStatus, setConnectionStatus] = useState<string>("Disconnected")
+  const [reconnectionAttempts, setReconnectionAttempts] = useState<number>(0)
+  const maxReconnectionAttempts = 5; // Adjust this value as needed
 
-  useEffect(() => {
-      const newSocket = new WebSocket("wss://wss.catgirlsaresexy.org")
-//    const newSocket = new WebSocket("ws://127.0.0.1:8080")
+  const connectWebSocket = () => {
+    const newSocket = new WebSocket("wss://wss.catgirlsaresexy.org")
+    // const newSocket = new WebSocket("ws://127.0.0.1:8080")
 
     newSocket.onopen = () => {
       console.log("WebSocket connected")
       setConnectionStatus("Connected")
+      setReconnectionAttempts(0); // Reset reconnection attempts on successful connection
     }
 
     newSocket.onmessage = (event) => {
@@ -41,16 +44,34 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
     }
 
     newSocket.onclose = () => {
-      console.log("WebSocket connection closed")
+      console.log("WebSocket connection closed, trying to reconnect")
       setConnectionStatus("Disconnected")
+      setTimeout(() => {
+        connectWebSocket(); // Attempt to reconnect
+        setReconnectionAttempts(reconnectionAttempts + 1);
+      }, 2000); // Adjust this timeout as needed
+      /*
+      if (reconnectionAttempts < maxReconnectionAttempts) {
+        setTimeout(() => {
+          connectWebSocket(); // Attempt to reconnect
+          setReconnectionAttempts(reconnectionAttempts + 1);
+        }, 2000); // Adjust this timeout as needed
+      }
+      */
     }
 
     setSocket(newSocket)
+  }
+
+  useEffect(() => {
+    connectWebSocket();
 
     return () => {
-      newSocket.close()
+      if (socket) {
+        socket.close();
+      }
     }
-  }, [])
+  }, []);
 
   const sendMessage = (message: string) => {
     if (socket && socket.readyState === WebSocket.OPEN) {

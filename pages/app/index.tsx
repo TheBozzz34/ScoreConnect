@@ -27,17 +27,21 @@ export default function Scoreboard() {
 
   useEffect(() => {
 
-    if (ignore.current) {
-      ignore.current = false
-      return
-    }
+    if (ignore.current) return;
+
+    if (connectionStatus !== "Connected") return;
+
+    if (!userAccount) return;
+
     const message = {
       action: "get",
       boardId: userAccount?.uid,
     }
     sendMessage(JSON.stringify(message))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAccount])
+
+    ignore.current = true;
+
+  }, [connectionStatus, sendMessage, userAccount])
 
   const [teamAScore, setTeamAScore] = useState(0)
   const [teamBScore, setTeamBScore] = useState(0)
@@ -142,9 +146,33 @@ export default function Scoreboard() {
     setTeamAScore(teamAScore + 1)
   }
 
+  const decrementTeamAScore = () => {
+    if (teamAScore > 0) {
+      setTeamAScore(teamAScore - 1)
+    }
+  }
+
   // Function to increment the score for Team B
   const incrementTeamBScore = () => {
     setTeamBScore(teamBScore + 1)
+  }
+
+  const decrementTeamBScore = () => {
+    if (teamBScore > 0) {
+      setTeamBScore(teamBScore - 1)
+    }
+  }
+
+  const decrementTeamAFouls = () => {
+    if (teamAFouls > 0) {
+      setTeamAFouls(teamAFouls - 1)
+    }
+  }
+
+  const decrementTeamBFouls = () => {
+    if (teamBFouls > 0) {
+      setTeamBFouls(teamBFouls - 1)
+    }
   }
 
   const handleTeamANameChange = (newName: React.SetStateAction<string>) => {
@@ -424,7 +452,7 @@ export default function Scoreboard() {
                   Increment score
                 </button>
                 <button
-                  onClick={() => setTeamAScore(teamAScore - 1)}
+                  onClick={decrementTeamAScore}
                   className="glass-button"
                 >
                   Decrement score
@@ -466,7 +494,7 @@ export default function Scoreboard() {
                   Increment fouls
                 </button>
                 <button
-                  onClick={() => setTeamAFouls(teamAFouls - 1)}
+                  onClick={decrementTeamAFouls}
                   className="glass-button"
                 >
                   Decrement fouls
@@ -494,7 +522,7 @@ export default function Scoreboard() {
                   Increment score
                 </button>
                 <button
-                  onClick={() => setTeamBScore(teamBScore - 1)}
+                  onClick={decrementTeamBScore}
                   className="glass-button"
                 >
                   Decrement score
@@ -535,7 +563,7 @@ export default function Scoreboard() {
                   Increment fouls
                 </button>
                 <button
-                  onClick={() => setTeamBFouls(teamBFouls - 1)}
+                  onClick={decrementTeamBFouls}
                   className="glass-button"
                 >
                   Decrement fouls
