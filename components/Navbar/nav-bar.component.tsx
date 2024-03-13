@@ -103,7 +103,7 @@ export const Navbar = () => {
                   <Button
                     as={Link}
                     className="bg-white text-sm font-normal text-black"
-                    href="/account"
+                    href="/profile"
                     startContent={<UserIcon className="text-red-600" />}
                     variant="flat"
                   >
