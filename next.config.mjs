@@ -1,24 +1,30 @@
-import withBundleAnalyzer from "@next/bundle-analyzer"
-import withPlugins from "next-compose-plugins"
-import { env } from "./env.mjs"
+import withBundleAnalyzer from "@next/bundle-analyzer";
+import withPlugins from "next-compose-plugins";
+import { withNextVideo } from "next-video/process";
+import { env } from "./env.mjs";
 
 /**
  * @type {import('next').NextConfig}
  */
-const config = withPlugins([[withBundleAnalyzer({ enabled: env.ANALYZE })]], {
+const nextConfig = {
   reactStrictMode: true,
   experimental: { instrumentationHook: true },
-  rewrites() {
-    return [
-      { source: "/healthz", destination: "/api/health" },
-      { source: "/api/healthz", destination: "/api/health" },
-      { source: "/health", destination: "/api/health" },
-      { source: "/ping", destination: "/api/health" },
-    ]
-  },
   images: {
     domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com"],
   },
-})
+};
 
-export default config
+const config = withPlugins([
+  [withBundleAnalyzer({ enabled: env.ANALYZE })],
+  [withNextVideo(nextConfig, {
+    provider: 'amazon-s3',
+    providerConfig: {
+      'amazon-s3': { 
+        endpoint: 'https://s3.us-east-2.amazonaws.com', 
+      },
+      bucket: 'next-videos-j8ndjk0vixy',
+    }
+  })]
+]);
+
+export default config;
