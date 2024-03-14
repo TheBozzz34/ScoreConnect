@@ -9,8 +9,8 @@ import { IsSsrMobileContext } from "../utils/useIsMobile"
 function MyApp({ Component, pageProps }: AppProps) {
   Hotjar.init(2349532, 6)
   return (
+    <WebSocketProvider>
     <IsSsrMobileContext.Provider value={pageProps.isSsrMobile}>
-      <WebSocketProvider>
         <Head>
           <link rel="shortcut icon" href="/favicons/favicon.ico" />
           <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png" />
@@ -38,9 +38,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         `}
         </Script>
         <Component {...pageProps} />
-      </WebSocketProvider>
       {/*<Script async src="https://arc.io/widget.min.js#5WRuQUdc"></Script>  */}
     </IsSsrMobileContext.Provider>
+    </WebSocketProvider>
   )
 }
 
