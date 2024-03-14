@@ -1,8 +1,10 @@
 import { onAuthStateChanged } from "firebase/auth"
 import Head from "next/head"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import React, { SetStateAction, useEffect, useState } from "react"
 import { auth } from "../../firebase"
+import { Navbar } from "components/Navbar/nav-bar.component"
 
 export default function Profile() {
   const router = useRouter()
@@ -33,42 +35,59 @@ export default function Profile() {
       <Head>
         <title>ScoreConnect Profile</title>
       </Head>
+
+      <Navbar />
+
       <section>
-        <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-center lg:py-16">
-          <div className="mx-auto place-self-center">
-            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight text-[#454138] md:text-5xl xl:text-6xl">
-              Profile
+        <div className="mx-auto grid max-w-screen-xl px-4 py-8 text-left lg:py-16">
+
+          <div className="mx-auto place-self-center glass">
+            <h1 className="mb-4 max-w-2xl text-4xl font-extrabold leading-none tracking-tight text-white md:text-5xl xl:text-6xl">
+
+              <div className="flex flex-col items-start justify-start space-y-4 border-l-2 border-white pl-4">
+                <div className="flex flex-row items-center justify-center space-x-4">
+                  <Image
+                    src={user?.photoURL || "/google.png"}
+                    alt="Google"
+                    width={100}
+                    height={100}
+                    className="rounded-full"
+                  />
+                  {user && user.displayName && (
+                  <p className="text-white">
+                    {user.displayName}
+                  </p>
+                )}
+                </div>
+                <span className="text-white text-4xl font-light">
+                  Organization: <span className="text-violet-400">{user?.email && user.email.split("@")[1]}</span>
+                  </span>
+              </div>
             </h1>
-            {user && user.displayName && (
-              <p className="mb-6 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-8 lg:text-xl">
-                Hello {user.displayName}!
-              </p>
-            )}
-            <div className="flex flex-col space-y-4 rounded-lg border-2 border-[#454138] p-4">
+
+            <hr className="mx-auto w-full border-t-2 border-white pb-4" />
+
+            <div className="flex flex-col space-y-4 p-4 border-l-2 border-white">
               {user && user.email && (
-                <p className="mb-3 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
+                <p className="mb-3 font-light text-white md:text-lg lg:mb-4 lg:text-xl">
                   Email:{" "}
-                  <span className="w-fit rounded bg-[#454138] p-1 text-[#454138] transition-all hover:bg-[#454138] hover:text-[#dcd8c0]">
+                  <span className="w-fit rounded text-white border-2 border-white p-1">
                     {user.email}
                   </span>
                 </p>
               )}
               {user && user.uid && (
-                <p className="mb-3 max-w-2xl font-light text-[#454138] md:text-lg lg:mb-4 lg:text-xl">
+                <p className="mb-3 font-light text-white md:text-lg lg:mb-4 lg:text-xl">
                   UID:{" "}
-                  <span className="w-fit rounded bg-[#454138] p-1 text-[#454138] transition-all hover:bg-[#454138] hover:text-[#dcd8c0]">
+                  <span className="w-fit rounded text-white border-2 border-white p-1">
                     {user.uid}
                   </span>
                 </p>
               )}
-              <p className="mt-8 text-sm text-[#454138]">
-                Details have been hidden for privacy reasons, hover over each entry to see the details.
-              </p>
-
               <div>
-                <div className="rounded p-4 shadow">
+                <div className="rounded p-4">
                   <button
-                    className="rounded border-2 border-[#454138] bg-[#454138] p-1 text-[#dcd8c0] outline-none transition duration-200 ease-in-out hover:bg-[#dcd8c0] hover:text-[#454138]"
+                    className="rounded border-2 border-white bg-white p-1 text-black outline-none transition duration-200 ease-in-out hover:bg-transparent hover:text-white"
                     onClick={toggleDevVisibility}
                   >
                     Toggle Developer Info

@@ -1,13 +1,20 @@
-import { onAuthStateChanged, User } from "firebase/auth"
+import { User } from "firebase/auth"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import React, { useEffect, useState } from "react"
-import { useWebSocket } from "context/WebSocketContext"
+import { useEffect, useState } from "react"
+import useWebSocket, { ReadyState } from "react-use-websocket"
 import { auth } from "../../firebase"
 
+interface Data {
+  teamAScore: number
+  teamBScore: number
+  teamAFouls: number
+  teamBFouls: number
+  currentPeriod: number
+  teamAName: string
+  teamBName: string
+}
 const Public = () => {
-  const { messages, sendMessage } = useWebSocket()
-  const [userAccount, setUserAccount] = useState<User | null>(null)
   const router = useRouter()
 
   const [teamAScore, setTeamAScore] = useState(0)
@@ -15,38 +22,69 @@ const Public = () => {
   const [teamAFouls, setTeamAFouls] = useState(0)
   const [teamBFouls, setTeamBFouls] = useState(0)
   const [currentPeriod, setCurrentPeriod] = useState(1)
-
   const [teamAName, setTeamAName] = useState("Team A")
   const [teamBName, setTeamBName] = useState("Team B")
 
+  const [userAccount, setUserAccount] = useState<User | null>(null)
+
+  const [ignore, setIgnore] = useState(false)
+
+  const [messageHistory, setMessageHistory] = useState<MessageEvent<any>[]>([])
+  // const { messages, sendMessage, connectionStatus } = useWebSocket()
+
+  const { sendMessage, lastMessage, readyState } = useWebSocket("wss://wss.catgirlsaresexy.org", {
+    share: true,
+    shouldReconnect: () => true,
+  })
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    if (lastMessage !== null) {
+      setMessageHistory((prev) => prev.concat(lastMessage))
+    }
+  }, [lastMessage])
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUserAccount(user)
-      } else {
-        setUserAccount(null)
       }
     })
+
+    return () => {
+      unsubscribe()
+    }
   }, [])
 
+  // Get initial data
   useEffect(() => {
-    messages.forEach((message) => {
-      const messageJson = JSON.parse(message) as { boardId: string; boardData: string }
+    if (ignore) return
+
+    if (readyState !== ReadyState.OPEN) return
+
+    if (!userAccount) return
+
+    console.log("Sending get message")
+
+    const message = {
+      action: "get",
+      boardId: userAccount?.uid,
+    }
+    sendMessage(JSON.stringify(message))
+    setIgnore(true)
+  }, [ignore, userAccount, sendMessage, readyState])
+
+  useEffect(() => {
+    messageHistory.forEach((message) => {
+      const messageJson = JSON.parse(message.data) as {
+        boardId?: string
+        boardData?: string
+      }
 
       console.log(messageJson)
 
-      if (messageJson.boardId === userAccount?.uid) {
-        const data = JSON.parse(messageJson.boardData) as {
-          teamAScore: number
-          teamBScore: number
-          teamAFouls: number
-          teamBFouls: number
-          currentPeriod: number
-          teamAName: string
-          teamBName: string
-        }
-        
+      if (messageJson.boardId && messageJson.boardData) {
+        const data = JSON.parse(messageJson.boardData) as Data
+
         setTeamAScore(data.teamAScore)
         setTeamBScore(data.teamBScore)
         setTeamAFouls(data.teamAFouls)
@@ -54,53 +92,63 @@ const Public = () => {
         setCurrentPeriod(data.currentPeriod)
         setTeamAName(data.teamAName)
         setTeamBName(data.teamBName)
-        
       }
     })
-    
 
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (!user) {
         router.push("/login")
       }
     })
-  }, [router, sendMessage, messages, userAccount?.uid])
+
+    return () => {
+      unsubscribe()
+    }
+  }, [router, messageHistory])
 
   return (
     <>
       <Head>
         <title>ScoreConnect Public Page</title>
       </Head>
-
-      <body
-        className="flex flex-col items-center justify-center h-screen bg-gray-100"
-      >
-
-        <h1 className="text-4xl font-bold">ScoreConnect</h1>
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex flex-row items-center justify-center">
-            <h2 className="text-2xl font-bold">{teamAName}</h2>
-
-            <hr className="w-1/4 mx-4" />
-
-            <h2 className="text-2xl font-bold">{teamAScore}</h2>
-            <hr className="w-1/4 mx-4" />
-            
-            <h2 className="text-2xl font-bold">{teamAFouls}</h2>
-          </div>
-          <div className="flex flex-row items-center justify-center">
-            <h2 className="text-2xl font-bold">{teamBName}</h2>
-
-            <hr className="w-1/4 mx-4" />
-            <h2 className="text-2xl font-bold">{teamBScore}</h2>
-            <hr className="w-1/4 mx-4" />
-            <h2 className="text-2xl font-bold">{teamBFouls}</h2>
-          </div>
-          <div className="flex flex-row items-center justify-center">
-            <h2 className="text-2xl font-bold">{currentPeriod}</h2>
+      <div className="z-10 flex h-screen flex-col items-center justify-center bg-gray-100">
+        <div className="container mx-auto">
+          <div className="grid grid-cols-3 gap-4">
+            <div className="col-span-1">
+              <div className="rounded-lg bg-gray-900 p-4 text-white">
+                <div className="mb-4 text-center">
+                  <h2 className="text-lg font-semibold">{teamAName}</h2>
+                  <p className="text-xs">Score</p>
+                  <p className="text-3xl font-bold">{teamAScore}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xs">Fouls</p>
+                  <p className="text-3xl font-bold">{teamAFouls}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-span-1 flex items-center justify-center">
+              <div className="text-center">
+                <p className="text-6xl font-bold">:</p>
+                <p className="text-2xl">Period {currentPeriod}</p>
+              </div>
+            </div>
+            <div className="col-span-1">
+              <div className="rounded-lg bg-gray-900 p-4 text-white">
+                <div className="mb-4 text-center">
+                  <h2 className="text-lg font-semibold">{teamBName}</h2>
+                  <p className="text-xs">Score</p>
+                  <p className="text-3xl font-bold">{teamBScore}</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xs">Fouls</p>
+                  <p className="text-3xl font-bold">{teamBFouls}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </body>
+      </div>
     </>
   )
 }

@@ -3,13 +3,11 @@ import Hotjar from "@hotjar/browser"
 import { AppProps } from "next/app"
 import Head from "next/head"
 import Script from "next/script"
-import { WebSocketProvider } from "../context/WebSocketContext"
 import { IsSsrMobileContext } from "../utils/useIsMobile"
 
 function MyApp({ Component, pageProps }: AppProps) {
   Hotjar.init(2349532, 6)
   return (
-    <WebSocketProvider>
     <IsSsrMobileContext.Provider value={pageProps.isSsrMobile}>
         <Head>
           <link rel="shortcut icon" href="/favicons/favicon.ico" />
@@ -27,9 +25,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <meta property="og:type" content="website" />
         </Head>
 
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
-        <Script id="google-analytics">
-          {`
+      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-G3GH38QDFZ" />
+      <Script id="google-analytics">
+        {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
@@ -40,7 +38,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       {/*<Script async src="https://arc.io/widget.min.js#5WRuQUdc"></Script>  */}
     </IsSsrMobileContext.Provider>
-    </WebSocketProvider>
   )
 }
 

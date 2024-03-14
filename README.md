@@ -1,6 +1,8 @@
 # ScoreConnect 
 
 
+Git might be kinda fucked at the moment ngl, I have no idea what the current commit is so the prod ver. might be kinda behind.
+
 ![uptime](https://status.necrozma.xyz/api/v1/endpoints/_scoreconnect/uptimes/24h/badge.svg) [![Code Style](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/check.yml) [![Next.js Bundle Analysis](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/nextjs_bundle_analysis.yml/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/nextjs_bundle_analysis.yml) [![CodeQL](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/TheBozzz34/ScoreConnect/actions/workflows/github-code-scanning/codeql)
 
 - [Production site](https://sc.necrozma.xyz)

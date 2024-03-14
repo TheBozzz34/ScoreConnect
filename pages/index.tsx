@@ -1,7 +1,7 @@
 // app/page.tsx
 "use client"
 
-import { Card, CardFooter, Code, Divider, Image, Link, Snippet, Spacer } from "@nextui-org/react"
+import { Card, CardFooter, Code, Image, Link, Snippet, Spacer } from "@nextui-org/react"
 import { onAuthStateChanged } from "firebase/auth"
 import { User } from "firebase/auth/cordova"
 import { useEffect, useState } from "react"
@@ -70,7 +70,7 @@ export default function Page() {
         </div>
       </section>
 
-      <hr className="border-t border-white w-2/3 mx-auto" />
+      <hr className="mx-auto w-2/3 border-t border-white" />
 
       <section id="feature-cards" className="flex flex-col items-center justify-start gap-4 py-8 md:py-10">
         <div className="inline-block max-w-lg justify-start text-right">
@@ -168,11 +168,11 @@ export default function Page() {
         </div>
       </section>
 
-      <hr className="border-t border-white w-2/3 mx-auto" />
+      <hr className="mx-auto w-2/3 border-t border-white" />
 
       <Spacer y={20} />
 
-      <footer className="mx-4 rounded-lg bg-transparent border-2 border-white shadow">
+      <footer className="mx-4 rounded-lg border-2 border-white bg-transparent shadow">
         <div className="mx-auto w-full max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
           <span className="text-sm">
             © 2024{" "}

@@ -1,17 +1,29 @@
 import { onAuthStateChanged, User } from "firebase/auth"
 import Head from "next/head"
-import { useRouter } from "next/navigation"
-import React, { use, useEffect, useRef, useState } from "react"
+// import { useRouter } from "next/navigation"
+import React, { useEffect, useRef, useState } from "react"
 import { BsPencilSquare } from "react-icons/bs"
 import { useTimer } from "react-timer-hook"
+import useWebSocket, { ReadyState } from "react-use-websocket"
 import { Navbar } from "components/Navbar/nav-bar.component"
-import { useWebSocket } from "../../context/WebSocketContext"
 import { auth } from "../../firebase"
-import { useIsMobile } from "../../utils/useIsMobile"
+// import { useIsMobile } from "../../utils/useIsMobile"
 
 export default function Scoreboard() {
   const [userAccount, setUserAccount] = useState<User | null>(null)
-  const { messages, sendMessage, connectionStatus } = useWebSocket()
+  const [messageHistory, setMessageHistory] = useState<MessageEvent<any>[]>([])
+  // const { messages, sendMessage, connectionStatus } = useWebSocket()
+
+  const { sendMessage, lastMessage, readyState } = useWebSocket("wss://wss.catgirlsaresexy.org", {
+    share: true,
+    shouldReconnect: () => true,
+  })
+
+  useEffect(() => {
+    if (lastMessage !== null) {
+      setMessageHistory((prev) => prev.concat(lastMessage))
+    }
+  }, [lastMessage])
 
   const ignore = useRef<boolean>(false)
 
@@ -26,18 +38,20 @@ export default function Scoreboard() {
   }, [])
 
   useEffect(() => {
+    if (ignore.current) return
 
-    if (ignore.current) {
-      ignore.current = false
-      return
-    }
+    if (readyState !== ReadyState.OPEN) return
+
+    if (!userAccount) return
+
     const message = {
       action: "get",
       boardId: userAccount?.uid,
     }
     sendMessage(JSON.stringify(message))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userAccount])
+
+    ignore.current = true
+  }, [readyState, sendMessage, userAccount])
 
   const [teamAScore, setTeamAScore] = useState(0)
   const [teamBScore, setTeamBScore] = useState(0)
@@ -66,8 +80,10 @@ export default function Scoreboard() {
 
   const [possession, setPossession] = useState(0)
 
+  /*
   const router = useRouter()
   const isMobile = useIsMobile()
+  */
 
   const now = new Date()
 
@@ -108,6 +124,9 @@ export default function Scoreboard() {
       boardId: userAccount?.uid,
       boardData: dataJson,
     }
+
+    if (areAllZero) return
+
     sendMessage(JSON.stringify(messageJson))
   }
 
@@ -117,34 +136,73 @@ export default function Scoreboard() {
       return
     }
     reportData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamAScore, teamBScore, teamAFouls, teamBFouls, currentPeriod, minutes, seconds, possession])
 
   useEffect(() => {
-    messages.forEach((message) => {
-      const messageJson = JSON.parse(message) as { boardId: string; boardData: string }
-      if (messageJson.boardId === userAccount?.uid) {
-        const data = JSON.parse(messageJson.boardData)
-        setTeamAName((data as { teamAName: string }).teamAName)
-        setTeamBName((data as { teamBName: string }).teamBName)
-        setTeamAScore(parseInt((data as { teamAScore: string }).teamAScore))
-        setTeamBScore(parseInt((data as { teamBScore: string }).teamBScore))
-        setTeamAFouls(parseInt((data as { teamAFouls: string }).teamAFouls))
-        setTeamBFouls(parseInt((data as { teamBFouls: string }).teamBFouls))
-        setCurrentPeriod(parseInt((data as { currentPeriod: string }).currentPeriod))
-        setPossession(parseInt((data as { possession: string }).possession))
+    messageHistory.forEach((message) => {
+      const messageJson = JSON.parse(message.data) as {
+        boardId?: string
+        boardData?: string
+      }
+
+      if (messageJson.boardId && messageJson.boardData) {
+        const data = JSON.parse(messageJson.boardData) as {
+          teamAName: string
+          teamBName: string
+          teamAScore: number
+          teamBScore: number
+          teamAFouls: number
+          teamBFouls: number
+          currentPeriod: number
+          minutes: number
+          seconds: number
+          possession: number
+        }
+
+        setTeamAName(data.teamAName)
+        setTeamBName(data.teamBName)
+        setTeamAScore(data.teamAScore)
+        setTeamBScore(data.teamBScore)
+        setTeamAFouls(data.teamAFouls)
+        setTeamBFouls(data.teamBFouls)
+        setCurrentPeriod(data.currentPeriod)
+        setPossession(data.possession)
       }
     })
-  }, [router, messages, userAccount?.uid])
-
+  }, [messageHistory])
 
   const incrementTeamAScore = () => {
     setTeamAScore(teamAScore + 1)
   }
 
+  const decrementTeamAScore = () => {
+    if (teamAScore > 0) {
+      setTeamAScore(teamAScore - 1)
+    }
+  }
+
   // Function to increment the score for Team B
   const incrementTeamBScore = () => {
     setTeamBScore(teamBScore + 1)
+  }
+
+  const decrementTeamBScore = () => {
+    if (teamBScore > 0) {
+      setTeamBScore(teamBScore - 1)
+    }
+  }
+
+  const decrementTeamAFouls = () => {
+    if (teamAFouls > 0) {
+      setTeamAFouls(teamAFouls - 1)
+    }
+  }
+
+  const decrementTeamBFouls = () => {
+    if (teamBFouls > 0) {
+      setTeamBFouls(teamBFouls - 1)
+    }
   }
 
   const handleTeamANameChange = (newName: React.SetStateAction<string>) => {
@@ -161,6 +219,18 @@ export default function Scoreboard() {
     pause()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const areAllZero =
+    teamAScore === 0 &&
+    teamBScore === 0 &&
+    teamAFouls === 0 &&
+    teamBFouls === 0 &&
+    currentPeriod === 1 &&
+    minutes === 30 &&
+    seconds === 0 &&
+    possession === 0 &&
+    teamAName === "Team A" &&
+    teamBName === "Team B"
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -417,65 +487,38 @@ export default function Scoreboard() {
                   {teamAName}
                   <BsPencilSquare className="ml-2 " onClick={() => setShowTeamAPopup(true)} />
                 </h2>
-                <button
-                  onClick={incrementTeamAScore}
-                  className="glass-button"
-                >
+                <button onClick={incrementTeamAScore} className="glass-button">
                   Increment score
                 </button>
-                <button
-                  onClick={() => setTeamAScore(teamAScore - 1)}
-                  className="glass-button"
-                >
+                <button onClick={decrementTeamAScore} className="glass-button">
                   Decrement score
                 </button>
                 <br />
-                <button
-                  onClick={() => setTeamAScore(0)}
-                  className="glass-button"
-                >
+                <button onClick={() => setTeamAScore(0)} className="glass-button">
                   Reset score
                 </button>
-                <span
-                  className="glass-button"
-                  onClick={() => setTeamAScore(teamAScore + 2)}
-                >
+                <span className="glass-button" onClick={() => setTeamAScore(teamAScore + 2)}>
                   {" "}
                   +2
                 </span>
-                <span
-                  className="glass-button"
-                  onClick={() => setTeamAScore(teamAScore + 3)}
-                >
+                <span className="glass-button" onClick={() => setTeamAScore(teamAScore + 3)}>
                   {" "}
                   +3
                 </span>
-                <span
-                  className="glass-button"
-                  onClick={() => setTeamAScore(teamAScore + 4)}
-                >
+                <span className="glass-button" onClick={() => setTeamAScore(teamAScore + 4)}>
                   {" "}
                   +4
                 </span>
 
                 <br />
-                <button
-                  onClick={() => setTeamAFouls(teamAFouls + 1)}
-                  className="glass-button"
-                >
+                <button onClick={() => setTeamAFouls(teamAFouls + 1)} className="glass-button">
                   Increment fouls
                 </button>
-                <button
-                  onClick={() => setTeamAFouls(teamAFouls - 1)}
-                  className="glass-button"
-                >
+                <button onClick={decrementTeamAFouls} className="glass-button">
                   Decrement fouls
                 </button>
                 <br />
-                <button
-                  onClick={() => setTeamAFouls(0)}
-                  className="glass-button"
-                >
+                <button onClick={() => setTeamAFouls(0)} className="glass-button">
                   Reset fouls
                 </button>
               </div>
@@ -487,64 +530,37 @@ export default function Scoreboard() {
                   {teamBName}
                   <BsPencilSquare className="ml-2 " onClick={() => setShowTeamBPopup(true)} />
                 </h2>
-                <button
-                  onClick={incrementTeamBScore}
-                  className="glass-button"
-                >
+                <button onClick={incrementTeamBScore} className="glass-button">
                   Increment score
                 </button>
-                <button
-                  onClick={() => setTeamBScore(teamBScore - 1)}
-                  className="glass-button"
-                >
+                <button onClick={decrementTeamBScore} className="glass-button">
                   Decrement score
                 </button>
                 <br />
-                <button
-                  onClick={() => setTeamBScore(0)}
-                  className="glass-button"
-                >
+                <button onClick={() => setTeamBScore(0)} className="glass-button">
                   Reset score
                 </button>
-                <span
-                  className="glass-button"
-                  onClick={() => setTeamBScore(teamBScore + 2)}
-                >
+                <span className="glass-button" onClick={() => setTeamBScore(teamBScore + 2)}>
                   {" "}
                   +2
                 </span>
-                <span
-                  className="glass-button"
-                  onClick={() => setTeamBScore(teamBScore + 3)}
-                >
+                <span className="glass-button" onClick={() => setTeamBScore(teamBScore + 3)}>
                   {" "}
                   +3
                 </span>
-                <span
-                  className="glass-button"
-                  onClick={() => setTeamBScore(teamBScore + 4)}
-                >
+                <span className="glass-button" onClick={() => setTeamBScore(teamBScore + 4)}>
                   {" "}
                   +4
                 </span>
                 <br />
-                <button
-                  onClick={() => setTeamBFouls(teamBFouls + 1)}
-                  className="glass-button"
-                >
+                <button onClick={() => setTeamBFouls(teamBFouls + 1)} className="glass-button">
                   Increment fouls
                 </button>
-                <button
-                  onClick={() => setTeamBFouls(teamBFouls - 1)}
-                  className="glass-button"
-                >
+                <button onClick={decrementTeamBFouls} className="glass-button">
                   Decrement fouls
                 </button>
                 <br />
-                <button
-                  onClick={() => setTeamBFouls(0)}
-                  className="glass-button"
-                >
+                <button onClick={() => setTeamBFouls(0)} className="glass-button">
                   Reset fouls
                 </button>
               </div>
@@ -707,10 +723,10 @@ export default function Scoreboard() {
       )}
       <div className="flex flex-col items-center justify-center">
         <div className="flex !w-2/3 items-start justify-start">
-          <div className="flex flex-none items-center justify-center glass">
+          <div className="glass flex flex-none items-center justify-center">
             <div className="w-fit rounded-lg">
               <h1 className="flex items-center justify-center p-2 text-2xl font-semibold ">
-                Preview 
+                Preview
                 <button
                   className="ml-2 rounded border border-white bg-white px-4 text-black transition duration-200 ease-in-out hover:bg-transparent"
                   onClick={() => {

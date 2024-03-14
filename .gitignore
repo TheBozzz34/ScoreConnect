@@ -33,3 +33,24 @@ yarn-error.log*
 /playwright/.cache/
 
 /.npm-only-allow
+# next-video
+videos/*
+!videos/*.json
+!videos/*.js
+!videos/*.ts
+public/_next-video
+
+# next-video
+videos/*
+!videos/*.json
+!videos/*.js
+!videos/*.ts
+public/_next-video
+
+# next-video
+videos/*
+!videos/*.json
+!videos/*.js
+!videos/*.ts
+public/_next-video
+ScoreConnectIAMUser_accessKeys.csv
