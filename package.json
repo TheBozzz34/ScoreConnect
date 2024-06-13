@@ -57,7 +57,7 @@
     "@vercel/otel": "^0.3.0",
     "ably": "^1.2.47",
     "class-variance-authority": "^0.7.0",
-    "firebase": "^10.5.0",
+    "firebase": "^10.5.2",
     "framer-motion": "^11.0.5",
     "hls.js": "^1.5.7",
     "konva": "^9.2.3",
